@@ -1,0 +1,207 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage[frenchb]{babel}
+\usepackage{fullpage}
+\usepackage[T1]{fontenc} 
+\usepackage{graphicx}  
+\usepackage[final]{pdfpages}
+\usepackage{amsmath, amssymb, wasysym, amsthm}
+\usepackage{listingsutf8}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\newtheorem{mydef}{Définition}
+\newtheorem{thm}{Théorème}
+\newtheorem{lem}{Lemme}
+\newtheorem{cor}{Corollaire}
+\newtheorem{prop}{Propriété}
+
+\title{Rapport de Méthodes approchées.}
+\author{Dyce William, Loukil Amal, Ouazzani-chahdi Sabrina : \\ M1 MOCA}
+\date{semestre 2 : 2011-2012}
+
+\begin{document} 
+
+\maketitle
+
+\begin{abstract}
+  Le présent document consiste en un mémoire au sujet
+  d'exercices à la fois théoriques et pratiques sur diverses
+  problèmatiques liées à l'étude de méthodes approchées pour la
+  résolution de problèmes NP-difficiles. 
+\end{abstract}
+\vspace{2cm}
+\textit{Travelling salesman's problem :}
+\begin{figure}[h!]
+\centering
+\includegraphics[height = 9cm]{commerce.png}
+\end{figure}
+
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\listoffigures
+
+
+\pagebreak
+
+\section{Généralités et notations}
+
+\section{Partie théorique}
+
+\subsection{Programmation linéaire en nombres entiers}
+
+\subsubsection*{Exercice 1}
+
+\paragraph{Question 1}
+
+\begin{itemize}
+\item[] a) Le programme linéaire en nombre entier présenté dans
+  l'énoncé se justifie de la manière suivante~:
+\begin{itemize}
+\item $x_j \in \{0,1\}, j=1..n$ car on a le choix binaire entre prendre un
+  sommet (donc le compter avec 1), ou ne pas le prendre (ne pas le
+  compter avec 0, élement neutre de l'addition). Il y a bien
+  évidemment n sommets, d'où l'indexation de 1 à n.
+\item $min z = \sum^n _{i=1} x_i$ car on souhaite minimiser le nombre
+  de sommets pris.
+\item $x_r + x_s \geq 1$ car au moins un sommet doit être pris pour
+  couvrir une arête.
+\end{itemize}
+Ces trois conditions décrivent donc bien le problème de la couverture minimale.
+\item[] b) exemple du triangle (à faire en dessin), cette condition
+  n'est donc pas suffisante.
+\item[] c) Montrons par l'absurde que le programme linéaire en nombres
+  entiers est une borne inférieure de toute solution optimale.
+\begin{proof}
+Supposons que pour une instance donnée, on ait une solution
+  optimale de vertex cover qui soit meilleure que PLNE. Cela veut donc
+  dire que PLNE garde au au moins un sommet <<~en trop~>>. Or PLNE
+  devrait minimiser le nombre de sommets. Le résultat est donc absurde
+  et contredit notre hypothèse de départ.
+\end{proof}
+\item[] d) Nous allons ici montrer de deux manières différentes que la
+  relaxation des contraintes d'intégrité implique $x_r \geq
+  \frac{1}{2}$ ou $x_s \geq \frac{1}{2}$.
+\begin{itemize}
+\item Première démonstration.
+\begin{proof}
+On veut, malgré la relaxation des contraintes d'intégrité, conserver
+l'inégalité $x_r + x_s \geq 1$. Ainsi, on a $\neg (x_r + x_s < 1)$
+d'où $\neg (x_r < \frac{1}{2} \wedge x_s < \frac{1}{2})$, et donc
+($x_r \geq \frac{1}{2} \vee x_s \geq \frac{1}{2}) $ de par la loi de
+De Morgan.
+\end{proof}
+\item Deuxième démonstration.
+\begin{proof}
+On sait que $A \Rightarrow B \equiv \neg A \vee B$. 
+Or, pour respecter l'inégalité $x_r + x_s \geq 1$, on a $(x_r <
+\frac{1}{2} \Rightarrow x_s \geq \frac{1}{2})$. On a ainsi $(x_r \geq
+\frac{1}{2} \vee x_s \geq \frac{1}{2})$. 
+\end{proof}
+\end{itemize}
+\item[] e) Montrons que l'algorithme 1 conduit à un algorithme
+  approché avec une performance relative de de deux. 
+\begin{proof}
+Soit $C^{*}$ une solution optimale du problème de la couverture de
+sommet. Soit $C$ la solution donnée par l'algorithme. 
+TODO
+\end{proof}
+\item[] f)
+\begin{itemize}
+\item i)
+Le programme linéaire correspondant à rajouter un poids aux arêtes au
+problème du vertex cover est le suivant~:
+\begin{itemize}
+\item  $x_j \in \{0,1\}, j=1..n$,  TODO
+\item TODO écriture matricielle
+\item TODO démo 2-approché
+\end{itemize}
+\item ii)
+\item iii)
+\end{itemize}
+\end{itemize}
+
+\paragraph{Question 2}
+
+\begin{itemize}
+\item[] a) Montrons que l'algorithme 2 est 2-approché.
+\begin{proof}
+Soit $C^{*}$ une solution optimale du problème de la couverture de
+sommet. Soit $C$ la solution donnée par l'algorithme. 
+\begin{itemize}
+\item[] $|M| \leq C^{*}$ car deux arêtes adjacentes ne peuvent être
+  couvertes par un même sommet.
+\item[] $C^{*} \leq C = 2 |M|$ car une arête a deux sommets.
+\item[] On a donc $\frac{C}{C^{*}} \leq \frac{2|M|}{|M|} = 2$.
+\end{itemize}
+\end{proof}
+\item[] b) Il suffit de prendre $C_4$.
+\item[] c) 
+\begin{itemize}
+\item[] Dans le pire des cas donné à la figure 1, l'algorithme renvoie
+  une solution $C$ de taille 8. Or la solution optimale $C^*$ pour cette
+  instance est de taille 5. En effet, aucun des sommets de plus haut
+  degré n'est inclus dans $C^{*}$. Le choix du sommet de plus haut
+  degré n'est donc pas une bonne heuristique. 
+\item[] En revanche, on peut remarquer que cet algorithme trouve la
+  solution optimale sur $C_4$ (qui était le cas limite de l'algorithme 2).
+\end{itemize}
+\end{itemize}
+
+\subsubsection*{Exercice 2}
+
+\subsubsection*{Exercice 3}
+
+\paragraph{Question 1}
+\paragraph{Question 2}
+\paragraph{Question 3}
+\paragraph{Question 4}
+\paragraph{Question 5}
+
+\subsection{Problèmes appartenant à la classe APX}
+
+\subsubsection*{Exercice 4}
+
+\paragraph{Question 1}
+
+\subsection{Constructions de PTAS}
+
+\subsubsection*{Exercice 5}
+
+\subsubsection*{Exercice 6}
+
+\subsection{Utilisation de méthodes exactes}
+
+\subsubsection*{Exercice 7}
+
+\subsubsection*{Exercice 8}
+
+\subsection{Méthode Primal-Dual}
+
+\subsubsection*{Exercice 9}
+
+cf p86
+
+\subsection{Borne de non-approximation}
+
+\subsubsection*{Exercice 10}
+
+\subsubsection*{Exercice 11}
+
+\subsection{Comparaison de méthodes}
+
+\subsubsection*{Exercice 12}
+
+\section{Partie pratique}
+
+\subsection{Programmation dynamique}
+
+\subsection{Branch and bound}
+
+\end{document}
