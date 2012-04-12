@@ -47,7 +47,7 @@
 
 \listoffigures
 
-
+\listoftables
 \pagebreak
 
 \section{Généralités et notations}
@@ -157,8 +157,8 @@ sommet. Soit $C$ la solution donnée par l'algorithme.
 \subsubsection*{Exercice 2}
 
 \subsubsection*{Exercice 3}
-\begin{enumerate}
-\item Le programme linéaire en nombres entiers qui modélise le
+
+\paragraph{Question 1}Le programme linéaire en nombres entiers qui modélise le
   problème du couplage maximum de poids minimum est le suivant~:
   (notons $u_{ij}$ les arêtes du graphe)
 \begin{itemize}
@@ -167,13 +167,7 @@ sommet. Soit $C$ la solution donnée par l'algorithme.
 \item todo
 \item todo
 \end{itemize}
-\item
-\item
-\item
-\item
-\end{enumerate}
 
-\paragraph{Question 1}
 \paragraph{Question 2}
 \paragraph{Question 3}
 \paragraph{Question 4}
@@ -212,6 +206,139 @@ cf p86
 \subsection{Comparaison de méthodes}
 
 \subsubsection*{Exercice 12}
+
+\paragraph{Question 1}
+
+Vous trouverez sur le graphique ci-dessous une représentation du
+polytope associé aux équations de $PL_0$ (aire située à la fois sous la courbe
+bleue et sous la courbe rouge).
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \begin{axis}[title=PL, xlabel=x1, ylabel=x2]
+      \addplot
+        table[col sep=comma]{equ1.csv};
+        \addplot
+        table[col sep=comma]{equ2.csv};
+        \addplot
+        table[col sep=comma]{abs.csv};
+        \addplot
+        table[col sep=comma]{ord.csv};
+        \legend{contrainte1, contrainte2}
+    \end{axis}
+\end{tikzpicture}
+\caption{Polytope exercice 12}
+\end{figure}
+
+\paragraph{Question 2}
+De manière graphique, on trouve environ $x_1 = 1.5$, $x_2 = 3$, $z = 6$.
+
+\paragraph{Question 3}
+
+Résolution du problème donné par la méthode du simplexe.
+
+\begin{table}[h!]	
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+      & c & 2 & 1 & 0 & 0 \\ 
+      \cline{2-6}
+       &  & $x_{1}$ & $x_{2}$  & $x_{3}$  & $x_{4}$ \\
+       \hline
+   0 & $x_{3}$  $=$ 17 & 2 & 5 & 1 & 0 \\
+      \hline
+	0 & $x_{4}$ $=$ 10  & 3 & 2 & 0 & 1 \\
+	  \hline
+	 & Z($x$)$=$ 0 & -2 & -1 & 0 & 0\\
+	  \hline
+	\end{tabular}
+\caption {Tableau 1 du simplex}
+\end{table}
+
+
+\begin{table}[h!]	
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+      & c & 2 & 1 & 0 & 0 \\ 
+      \cline{2-6}
+       &  & $x_{1}$ & $x_{2}$  & $x_{3}$  & $x_{4}$ \\
+       \hline
+   0 & $x_{3}$  $=$ $\frac{31}{3}$ & 0 & $\frac{11}{3}$ & 1 & $\frac{-2}{3}$ \\
+      \hline
+	2 & $x_{1}$ $=$ $\frac{10}{3}$  & 1 & $\frac{2}{3}$ & 0 & $\frac{1}{3}$ \\
+	  \hline
+	 & Z($x$)$=$ $\frac{20}{3}$ & 0 & $\frac{1}{3}$ & 0 & $\frac{2}{3}$\\
+	  \hline
+	\end{tabular}
+\caption {Tableau 2 du simplex}
+\end{table}
+
+\paragraph{Question 4}
+\begin{itemize}
+\item[a)] TODO au propre
+\item[b)] A FINIR 
+\begin{table}[h!]	
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|}
+	\hline
+      & c & 0 & 0 & 0 & 0 & 0 & -1 \\ 
+      \cline{2-8}
+       &  & $x_{1}$ & $x_{2}$  & $x_{3}$  & $x_{4}$ & $x_{5}$ & $y$ \\
+       \hline
+   0 & $x_{3}$  $=$ $\frac{31}{3}$ & 0 & $\frac{11}{3}$ & 1 & $\frac{-2}{3}$ & 0 & 0 \\
+      \hline
+	0 & $x_{1}$ $=$ $\frac{10}{3}$  & 1 & $\frac{2}{3}$ & 0 & $\frac{1}{3}$ & 0 & 0 \\
+	  \hline
+	  -1 & $y$ $=$ $\frac{1}{3}$  & 0 & $\frac{2}{3}$ & 0 & $\frac{1}{3}$ & -1 & 1 \\
+	    \hline
+	 $\frac{-1}{3}$ & Z($x$)$=$ 0 & 0 & $\frac{-2}{3}$ & 0 & $\frac{-1}{3}$ & 1 & 0\\
+	  \hline
+	\end{tabular}
+\caption {Tableau 1 des coupes de Gomory}
+\end{table}
+\begin{table}[h!]	
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+      & c & 2 & 1 & 0 & 0 & 0 \\ 
+      \cline{2-7}
+       &  & $x_{1}$ & $x_{2}$  & $x_{3}$  & $x_{4}$ & $x_{5}$ \\
+       \hline
+   0 & $x_{3}$  $=$ $\frac{31}{3}$ & 0 & $\frac{11}{3}$ & 1 & $\frac{-2}{3}$ & 0 \\
+      \hline
+	2 & $x_{1}$ $=$ $\frac{10}{3}$  & 1 & $\frac{2}{3}$ & 0 & $\frac{1}{3}$ & 0 \\
+	  \hline
+	0 & $y$ $=$ $\frac{1}{3}$  & 0 & $\frac{2}{3}$ & 0 & $\frac{1}{3}$ & -1 \\
+	  \hline
+	 & Z($x$)$=$ $\frac{20}{3}$ & 0 & $\frac{-2}{3}$ & 0 & $\frac{-1}{3}$ & 1\\
+	  \hline
+	\end{tabular}
+\caption {Tableau 1 de la méthode à deux phases}
+\end{table}
+\begin{table}[h!]	
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+      & c & 2 & 1 & 0 & 0 & 0 \\ 
+      \cline{2-7}
+       &  & $x_{1}$ & $x_{2}$  & $x_{3}$  & $x_{4}$ & $x_{5}$ \\
+       \hline
+   0 & $x_{3}$  $=$ $\frac{17}{2}$ & 0 & 0 & 1 & $\frac{-15}{6}$ & $\frac{11}{2}$ \\
+      \hline
+	2 & $x_{1}$ $=$ 3 & 1 & 0 & 0 & 0 & 1 \\
+	  \hline
+	1 & $x_{2}$ $=$ $\frac{1}{2}$  & 0 & 1 & 0 & $\frac{1}{2}$ & $\frac{-3}{2}$\\
+	  \hline
+	 & Z($x$)$=$ $\frac{13}{2}$ & 0 & 0 & 0 & $\frac{1}{2}$ & $\frac{1}{2}$\\
+	  \hline
+	\end{tabular}
+\caption {Tableau 2 de la méthode à deux phases}
+\end{table}
+
+
+\end{itemize}
 
 \section{Partie pratique}
 
