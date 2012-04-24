@@ -1,11 +1,12 @@
 \documentclass[a4paper, 12pt]{article}
-\usepackage[utf8]{inputenc} 
+%\usepackage[utf8]{inputenc} 
 \usepackage[frenchb]{babel}
 \usepackage{fullpage}
 \usepackage[T1]{fontenc} 
 \usepackage{graphicx}  
 \usepackage[final]{pdfpages}
 \usepackage{amsmath, amssymb, wasysym, amsthm}
+\usepackage{algorithm,algorithmic}
 \usepackage{listingsutf8}
 \usepackage{lmodern}
 \usepackage{tikz}
@@ -47,7 +48,7 @@
 
 \listoffigures
 
-
+\listoftables
 \pagebreak
 
 \section{Généralités et notations}
@@ -156,9 +157,34 @@ sommet. Soit $C$ la solution donnée par l'algorithme.
 
 \subsubsection*{Exercice 2}
 
+\paragraph{Question 1}
+
+Nous proposons la modélisation suivante en programmation linéaire en
+nombres entiers pour le problème de la couverture d'ensembles~:
+\begin{equation}
+\begin{cases}
+min \sum_{j \in I} \omega_j \\
+\sum_{i=1}^{n} \sum_{j=1}^{m} x_{ij} \geq 1  avec i=1, \dots, n \\
+\omega_j \geq 0 \\
+\end{cases}
+\end{equation}
+avec $x_{ij} = 1$ si l'objet $e_i$ est pris dans l'ensemble $S_j$, 0 sinon.
+\paragraph{Question 2}
+
+\paragraph{Question 3}
+
+\paragraph{Question 4}
+
+\paragraph{Question 5}
+
+Quand $f_i = 2$, $e_i$ appartient à deux sous-ensembles. On retrouve
+donc le problème de la couverture de sommets par des arêtes. En effet,
+un sommet représente ici un élément, et une arête un sous-ensemble à
+deux éléments.
+
 \subsubsection*{Exercice 3}
-\begin{enumerate}
-\item Le programme linéaire en nombres entiers qui modélise le
+
+\paragraph{Question 1}Le programme linéaire en nombres entiers qui modélise le
   problème du couplage maximum de poids minimum est le suivant~:
   (notons $u_{ij}$ les arêtes du graphe)
 \begin{itemize}
@@ -167,17 +193,13 @@ sommet. Soit $C$ la solution donnée par l'algorithme.
 \item todo
 \item todo
 \end{itemize}
-\item
-\item
-\item
-\item
-\end{enumerate}
 
-\paragraph{Question 1}
 \paragraph{Question 2}
 \paragraph{Question 3}
 \paragraph{Question 4}
 \paragraph{Question 5}
+La formulation initialement proposée n'est pas pertinente car elle ne couvre pas tous les cas. On peut ainsi considérer
+les contre-exemples suivants~: TODO !
 
 \subsection{Problèmes appartenant à la classe APX}
 
@@ -195,6 +217,74 @@ sommet. Soit $C$ la solution donnée par l'algorithme.
 
 \subsubsection*{Exercice 7}
 
+\paragraph{Sur le problème de la partition}
+
+\begin{itemize}
+\item a) La condition nécessaire sur la somme des poids des $n$ objets
+  est la suivante~: on veut $\sum_{a \in A'} p(a)= \sum_{a \in A
+    \backslash A'}p(a)$
+\item b) 
+\begin{itemize}
+\item i) La formule qui lie les lignes $i$, $i-1$ et $p(a_i)$ est $A_i
+  := A_{i-1} \bigcup A_{i, p(a_i)} \bigcup A_{i-1}+p(a_i)$ avec
+  $A_{i-1}+p(a_i) \leq P$.
+\item ii) TODO
+\item iii) Nous proposons les deux algorithmes ci-dessous.
+\begin{algorithm}[t]
+\caption{Algorithme général}
+\label{algoexo7}
+\begin{algorithmic}[1]
+\STATE $P_1 := \emptyset $
+\FOR{$i=1 \to n$}
+\WHILE{$P_1 < P$ et $P_2 < P$}
+\STATE remplir $A_i$ en utilisant la formule présentée avant
+\STATE faire Test
+\IF {$A(i,j) == 1$}
+\STATE $A(i,j):=0$
+\ENDIF
+\ENDWHILE
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t]
+\caption{Test}
+\label{algoexo7test}
+\begin{algorithmic}[1]
+\FOR{$j=0 \to P$}
+\IF{$A(i,j) == 1$ et $P_{1}+j \leq P$}
+\STATE $P_1 := P_1 \bigcup j$
+\ELSE
+\STATE $P_2 := P_2 \bigcup j$
+\ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+\end{itemize}
+
+\item c) La complexité est donc $O(n\times P)$.
+\item d) Nous proposons les traces suivantes pour nos algorithmes~:
+  TODO
+\begin{itemize}
+\item La première trace que nous proposons est réalisée à partir des
+  données fournies dans l'énoncé. On obtient ainsi $P_1 := \{ 0, 5, 9,
+  2, 0\}$, $P_2 := \{ 0, 0, 3, 8, 5\}$.
+\item
+\end{itemize}
+\end{itemize}
+
+\paragraph{Le problème du sac à dos}
+\begin{itemize}
+\item a) Nous justifions les formules proposées en énonçant que l'on
+  prend le maximum des $x_ju_j$ pour $j$ de 1 à $k-1$ en enlevant le
+  poids de l'objet $x_k$, et l'on rajoute à $x_ju_j$ l'utilité de
+  l'objet en cours.
+\item b) TODO
+\item c) TODO
+\end{itemize}
+
+\paragraph{Le problème du voyageur de commerce}
+
 \subsubsection*{Exercice 8}
 
 \subsection{Méthode Primal-Dual}
@@ -207,11 +297,248 @@ cf p86
 
 \subsubsection*{Exercice 10}
 
+\paragraph{Question 1}
+
+Le problème de bin packing est le problème de trouver un rangement
+valide pour tous nos articles, qui minimise le nombre de boîtes
+utilisées (avec, bien sûr, la contrainte qu'un objet n'appartienne
+qu'à une seule boîte, d'où la troisième ligne de la modélisation
+proposée).  On l'exprime de la manière suivante~:
+\begin{equation}
+\begin{cases}
+min \sum_{j=1}^{n}y_j \\
+\sum_{i=2}^{n} c_ix_{ij} \leq C_{y_j}, j = 1, \dots, n \\
+\sum_{j=1}^{n}x_{ij}=1, i=1, \dots, n \\
+x_{i,j} \in \{ 0,1 \} \\
+y_j \in \{ 0,1 \} \\
+\end{cases}
+\end{equation}
+Avec $y_j = 1$ si la boîte $j$ est utilisée, 0 sinon. \\
+Avec $x_{ij} = 1 $ si article $i$ est rangé dans la boîte $j$, 0
+sinon. \\
+Avec $c_i$ taille de l'article $i$ et C la taille d'une boîte.
+
+
+\paragraph{Question 2}
+\begin{itemize}
+\item a) $B = 32$, $P(a_1') = \frac{5 \times 2}{32} = \frac{10}{32}$,
+  $P(a_2') = \frac{9}{16}$, $P(a_3')=\frac{6}{32}$,
+  $P(a_4')=\frac{1}{2}$, $P(a_5')=\frac{4}{32}$, $P(a_6')=\frac{10}{32}$.
+\item b) $B = 180$, $P(a_1') = \frac{154}{180}$,
+  $P(a_2') = \frac{82}{180}$, $P(a_3')=\frac{6}{180}$,
+  $P(a_4')=\frac{60}{180}$, $P(a_5')=\frac{34}{180}$, $P(a_6')=\frac{24}{180}$.
+\end{itemize}
+
+\paragraph{Question 3}
+
+\paragraph{Question 4}
+
 \subsubsection*{Exercice 11}
+
+\paragraph{Question 1}
+
+Les deux problèmes considérés sont NP-complets. Plus exactement, la
+coloration de sommet est un problème non-APX tandis que la coloration
+d'arêtes est un problème APX. 
+
+\paragraph{Question 2~:}
+\begin{itemize}
+\item Si $OPT(I) \leq 3$ alors on a
+\begin{equation}
+A(I) \leq \frac{4}{3}OPT(I) 
+\end{equation}
+TODO !!!
+\item
+\end{itemize}
+
+\paragraph{Question 3~:}
 
 \subsection{Comparaison de méthodes}
 
 \subsubsection*{Exercice 12}
+
+\paragraph{Question 1}
+
+Vous trouverez sur le graphique ci-dessous une représentation du
+polytope associé aux équations de $PL_0$ (aire située à la fois sous la courbe
+bleue et sous la courbe rouge).
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \begin{axis}[title=PL, xlabel=x1, ylabel=x2]
+      \addplot
+        table[col sep=comma]{equ1.csv};
+        \addplot
+        table[col sep=comma]{equ2.csv};
+        \addplot
+        table[col sep=comma]{abs.csv};
+        \addplot
+        table[col sep=comma]{ord.csv};
+        \legend{contrainte1, contrainte2}
+    \end{axis}
+\end{tikzpicture}
+\caption{Polytope exercice 12}
+\end{figure}
+
+\paragraph{Question 2}
+De manière graphique, on trouve environ $x_1 = 1.5$, $x_2 = 3$, $z = 6$.
+
+\paragraph{Question 3}
+
+Résolution du problème donné par la méthode du simplexe.
+
+\begin{table}[h!]	
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+      & c & 2 & 1 & 0 & 0 \\ 
+      \cline{2-6}
+       &  & $x_{1}$ & $x_{2}$  & $x_{3}$  & $x_{4}$ \\
+       \hline
+   0 & $x_{3}$  $=$ 17 & 2 & 5 & 1 & 0 \\
+      \hline
+	0 & $x_{4}$ $=$ 10  & 3 & 2 & 0 & 1 \\
+	  \hline
+	 & Z($x$)$=$ 0 & -2 & -1 & 0 & 0\\
+	  \hline
+	\end{tabular}
+\caption {Tableau 1 du simplex}	
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+      & c & 2 & 1 & 0 & 0 \\ 
+      \cline{2-6}
+       &  & $x_{1}$ & $x_{2}$  & $x_{3}$  & $x_{4}$ \\
+       \hline
+   0 & $x_{3}$  $=$ $\frac{31}{3}$ & 0 & $\frac{11}{3}$ & 1 & $\frac{-2}{3}$ \\
+      \hline
+	2 & $x_{1}$ $=$ $\frac{10}{3}$  & 1 & $\frac{2}{3}$ & 0 & $\frac{1}{3}$ \\
+	  \hline
+	 & Z($x$)$=$ $\frac{20}{3}$ & 0 & $\frac{1}{3}$ & 0 & $\frac{2}{3}$\\
+	  \hline
+	\end{tabular}
+\caption {Tableau 2 du simplex}
+\end{table}
+
+
+
+\paragraph{Question 4, a) Branch and Bound}
+\begin{itemize}
+\item Nous utilisons la solution initiale suivante~:
+\begin{equation}
+\begin{cases}
+x_1 = \frac{10}{3} \\
+x_2 = 0 \\
+x_3 = \frac{31}{3} \\
+x_4 = 0 \\
+z(x) = \frac{20}{3} \\
+\end{cases}
+\end{equation}
+\item Nous procédons ensuite à la troncature suivante pour obtenir la
+  borne inférieure de notre programme en nombres entiers.
+\begin{equation}
+\begin{cases}
+x_1 = 3 \\
+x_2 = 0 \\
+z(x) = 2 \times 3 + 0 = 6 \\
+\end{cases}
+\end{equation}
+\item Effectuons désormais un branchement sur $x_1$.
+\end{itemize}
+ \includegraphics[height=60mm]{branchAndBound.eps}
+\paragraph{Question 4, b) Branch and Cut}
+
+Vous trouvez ci dessous les différents étapes des tableaux de la
+méthode de Branch and Cut. \\
+Les étapes intermédiaires sont les suivantes~:
+\begin{itemize}
+\item on commence par reprendre les résultats de la question
+  concernant la résolution par le simplexe, puis l'on fixe la deuxième
+  ligne, d'où $i = 2$.
+\item $x_2$ et $x_4$ sont les variables qui ne sont pas en base. On
+  peut donc écrire $\frac{2}{3} x_2 + \frac{1}{3} x_4 \geq
+  \frac{1}{3}$.
+\item Graphiquement, cela correspond à $x_1 \leq 3$ car on a 
+\begin{equation}
+\begin{cases}
+2x_1 + 5x_2 + x_3  = 17 \\
+3x_1 + 2x_2 + x_4  = 10 \\
+\end{cases}
+\\
+\Rightarrow x_4  = 10 - 3x_1 - 2x_2 
+\end{equation}
+Ainsi, en remplaçant $x_4$ dans l'équation de l'item précédent, on a
+\\
+$\frac{2}{3}x_2 + \frac{1}{3}(10-3x_1-2x_2) \geq \frac{1}{3}$ \\
+$\frac{2}{3}x_2 + \frac{10}{3} - x_1 - \frac{2}{3}x_2 \geq
+\frac{1}{3}$ \\
+$\frac{10}{3} - x_1 \geq \frac{1}{3}$ \\
+$-x_1 \geq \frac{-9}{3} = -3$ \\
+$\Rightarrow x_1 \leq 3$.
+\item On rajoute la nouvelle contrainte obtenue dans notre tableau du
+  simplexe, que nous résolvons alors par la méthode à deux phases.
+\end{itemize}
+
+TODO : étapes intermédiaires !!
+
+\begin{table}[h!]	
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|}
+	\hline
+      & c & 0 & 0 & 0 & 0 & 0 & -1 \\ 
+      \cline{2-8}
+       &  & $x_{1}$ & $x_{2}$  & $x_{3}$  & $x_{4}$ & $x_{5}$ & $y$ \\
+       \hline
+   0 & $x_{3}$  $=$ $\frac{31}{3}$ & 0 & $\frac{11}{3}$ & 1 & $\frac{-2}{3}$ & 0 & 0 \\
+      \hline
+	0 & $x_{1}$ $=$ $\frac{10}{3}$  & 1 & $\frac{2}{3}$ & 0 & $\frac{1}{3}$ & 0 & 0 \\
+	  \hline
+	  -1 & $y$ $=$ $\frac{1}{3}$  & 0 & $\frac{2}{3}$ & 0 & $\frac{1}{3}$ & -1 & 1 \\
+	    \hline
+	 $\frac{-1}{3}$ & Z($x$)$=$ 0 & 0 & $\frac{-2}{3}$ & 0 & $\frac{-1}{3}$ & 1 & 0\\
+	  \hline
+	\end{tabular}
+\caption {Tableau 1 des coupes de Gomory}
+\end{table}
+\begin{table}[h!]	
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+      & c & 2 & 1 & 0 & 0 & 0 \\ 
+      \cline{2-7}
+       &  & $x_{1}$ & $x_{2}$  & $x_{3}$  & $x_{4}$ & $x_{5}$ \\
+       \hline
+   0 & $x_{3}$  $=$ $\frac{31}{3}$ & 0 & $\frac{11}{3}$ & 1 & $\frac{-2}{3}$ & 0 \\
+      \hline
+	2 & $x_{1}$ $=$ $\frac{10}{3}$  & 1 & $\frac{2}{3}$ & 0 & $\frac{1}{3}$ & 0 \\
+	  \hline
+	0 & $y$ $=$ $\frac{1}{3}$  & 0 & $\frac{2}{3}$ & 0 & $\frac{1}{3}$ & -1 \\
+	  \hline
+	 & Z($x$)$=$ $\frac{20}{3}$ & 0 & $\frac{-2}{3}$ & 0 & $\frac{-1}{3}$ & 1\\
+	  \hline
+	\end{tabular}
+\caption {Tableau 1 de la méthode à deux phases}
+\end{table}
+\begin{table}[h!]	
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+      & c & 2 & 1 & 0 & 0 & 0 \\ 
+      \cline{2-7}
+       &  & $x_{1}$ & $x_{2}$  & $x_{3}$  & $x_{4}$ & $x_{5}$ \\
+       \hline
+   0 & $x_{3}$  $=$ $\frac{17}{2}$ & 0 & 0 & 1 & $\frac{-15}{6}$ & $\frac{11}{2}$ \\
+      \hline
+	2 & $x_{1}$ $=$ 3 & 1 & 0 & 0 & 0 & 1 \\
+	  \hline
+	1 & $x_{2}$ $=$ $\frac{1}{2}$  & 0 & 1 & 0 & $\frac{1}{2}$ & $\frac{-3}{2}$\\
+	  \hline
+	 & Z($x$)$=$ $\frac{13}{2}$ & 0 & 0 & 0 & $\frac{1}{2}$ & $\frac{1}{2}$\\
+	  \hline
+	\end{tabular}
+\caption {Tableau 2 de la méthode à deux phases}
+\end{table}
 
 \section{Partie pratique}
 
