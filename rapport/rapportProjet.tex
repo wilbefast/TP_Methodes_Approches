@@ -234,7 +234,7 @@ les contre-exemples suivants~: TODO !
 \caption{Algorithme général}
 \label{algoexo7}
 \begin{algorithmic}[1]
-\STATE $P_1 := \emptyset $
+\STATE $P_1 := \emptyset $,  $P_1 := \emptyset $
 \FOR{$i=1 \to n$}
 \WHILE{$P_1 < P$ et $P_2 < P$}
 \STATE remplir $A_i$ en utilisant la formule présentée avant
@@ -267,9 +267,17 @@ les contre-exemples suivants~: TODO !
   TODO
 \begin{itemize}
 \item La première trace que nous proposons est réalisée à partir des
-  données fournies dans l'énoncé. On obtient ainsi $P_1 := \{ 0, 5, 9,
+  données fournies dans l'énoncé. Ici, $P=16$. On obtient ainsi $P_1 := \{ 0, 5, 9,
   2, 0\}$, $P_2 := \{ 0, 0, 3, 8, 5\}$.
-\item
+\item Prenons désormais $P(a_1)=2$, $P(a_2)=4$, $P(a_3)=3$,
+  $P(a_4)=1$. Ici, $P=5$. On obtient ainsi  $P_1 := \{ 0, 2, 3\}$,
+  $P_2 := \{ 0, 4, 1\}$.
+\item Prenons désormais $P(a_1)=2$, $P(a_2)=4$, $P(a_3)=3$,
+  $P(a_4)=6$. Il n'est dans cet exemple pas possible de partager en
+  deux sous-ensembles de même poids nos objets. Soit P n'existe pas et
+  notre algorithme ne pourra être lancé. Soit P existe et l'algorithme
+  donnera le résultat le plus proche possible pour $P_1$, et remplira
+  $P_2$ avec tous les objets <<~en trop~>>.
 \end{itemize}
 \end{itemize}
 
