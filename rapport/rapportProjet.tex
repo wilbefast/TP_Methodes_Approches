@@ -1,5 +1,5 @@
 \documentclass[a4paper, 12pt]{article}
-\usepackage[utf8]{inputenc} 
+%\usepackage[utf8]{inputenc} 
 \usepackage[frenchb]{babel}
 \usepackage{fullpage}
 \usepackage[T1]{fontenc} 
@@ -156,6 +156,31 @@ sommet. Soit $C$ la solution donnée par l'algorithme.
 
 \subsubsection*{Exercice 2}
 
+\paragraph{Question 1}
+
+Nous proposons la modélisation suivante en programmation linéaire en
+nombres entiers pour le problème de la couverture d'ensembles~:
+\begin{equation}
+\begin{cases}
+min \sum_{j \in I} \omega_j \\
+\sum_{i=1}^{n} \sum_{j=1}^{m} x_{ij} \geq 1  avec i=1, \dots, n \\
+\omega_j \geq 0 \\
+\end{cases}
+\end{equation}
+avec $x_{ij} = 1$ si l'objet $e_i$ est pris dans l'ensemble $S_j$, 0 sinon.
+\paragraph{Question 2}
+
+\paragraph{Question 3}
+
+\paragraph{Question 4}
+
+\paragraph{Question 5}
+
+Quand $f_i = 2$, $e_i$ appartient à deux sous-ensembles. On retrouve
+donc le problème de la couverture de sommets par des arêtes. En effet,
+un sommet représente ici un élément, et une arête un sous-ensemble à
+deux éléments.
+
 \subsubsection*{Exercice 3}
 
 \paragraph{Question 1}Le programme linéaire en nombres entiers qui modélise le
@@ -271,11 +296,7 @@ Résolution du problème donné par la méthode du simplexe.
 	 & Z($x$)$=$ 0 & -2 & -1 & 0 & 0\\
 	  \hline
 	\end{tabular}
-\caption {Tableau 1 du simplex}
-\end{table}
-
-
-\begin{table}[h!]	
+\caption {Tableau 1 du simplex}	
 \centering
 	\begin{tabular}{|c|c|c|c|c|c|}
 	\hline
@@ -293,10 +314,67 @@ Résolution du problème donné par la méthode du simplexe.
 \caption {Tableau 2 du simplex}
 \end{table}
 
-\paragraph{Question 4}
+
+
+\paragraph{Question 4, a) Branch and Bound}
 \begin{itemize}
-\item[a)] TODO au propre
-\item[b)] A FINIR 
+\item Nous utilisons la solution initiale suivante~:
+\begin{equation}
+\begin{cases}
+x_1 = \frac{10}{3} \\
+x_2 = 0 \\
+x_3 = \frac{31}{3} \\
+x_4 = 0 \\
+z(x) = \frac{20}{3} \\
+\end{cases}
+\end{equation}
+\item Nous procédons ensuite à la troncature suivante pour obtenir la
+  borne inférieure de notre programme en nombres entiers.
+\begin{equation}
+\begin{cases}
+x_1 = 3 \\
+x_2 = 0 \\
+z(x) = 2 \times 3 + 0 = 6 \\
+\end{cases}
+\end{equation}
+\item Effectuons désormais un branchement sur $x_1$.
+\end{itemize}
+ \includegraphics[height=60mm]{branchAndBound.eps}
+\paragraph{Question 4, b) Branch and Cut}
+
+Vous trouvez ci dessous les différents étapes des tableaux de la
+méthode de Branch and Cut. \\
+Les étapes intermédiaires sont les suivantes~:
+\begin{itemize}
+\item on commence par reprendre les résultats de la question
+  concernant la résolution par le simplexe, puis l'on fixe la deuxième
+  ligne, d'où $i = 2$.
+\item $x_2$ et $x_4$ sont les variables qui ne sont pas en base. On
+  peut donc écrire $\frac{2}{3} x_2 + \frac{1}{3} x_4 \geq
+  \frac{1}{3}$.
+\item Graphiquement, cela correspond à $x_1 \leq 3$ car on a 
+\begin{equation}
+\begin{cases}
+2x_1 + 5x_2 + x_3  = 17 \\
+3x_1 + 2x_2 + x_4  = 10 \\
+\end{cases}
+\\
+\Rightarrow x_4  = 10 - 3x_1 - 2x_2 
+\end{equation}
+Ainsi, en remplaçant $x_4$ dans l'équation de l'item précédent, on a
+\\
+$\frac{2}{3}x_2 + \frac{1}{3}(10-3x_1-2x_2) \geq \frac{1}{3}$ \\
+$\frac{2}{3}x_2 + \frac{10}{3} - x_1 - \frac{2}{3}x_2 \geq
+\frac{1}{3}$ \\
+$\frac{10}{3} - x_1 \geq \frac{1}{3}$ \\
+$-x_1 \geq \frac{-9}{3} = -3$ \\
+$\Rightarrow x_1 \leq 3$.
+\item On rajoute la nouvelle contrainte obtenue dans notre tableau du
+  simplexe, que nous résolvons alors par la méthode à deux phases.
+\end{itemize}
+
+TODO : étapes intermédiaires !!
+
 \begin{table}[h!]	
 \centering
 	\begin{tabular}{|c|c|c|c|c|c|c|c|}
@@ -354,9 +432,6 @@ Résolution du problème donné par la méthode du simplexe.
 	\end{tabular}
 \caption {Tableau 2 de la méthode à deux phases}
 \end{table}
-
-
-\end{itemize}
 
 \section{Partie pratique}
 
