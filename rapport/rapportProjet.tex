@@ -197,6 +197,8 @@ deux éléments.
 \paragraph{Question 3}
 \paragraph{Question 4}
 \paragraph{Question 5}
+La formulation initialement proposée n'est pas pertinente car elle ne couvre pas tous les cas. On peut ainsi considérer
+les contre-exemples suivants~: TODO !
 
 \subsection{Problèmes appartenant à la classe APX}
 
@@ -213,6 +215,35 @@ deux éléments.
 \subsection{Utilisation de méthodes exactes}
 
 \subsubsection*{Exercice 7}
+
+\paragraph{Sur le problème de la partition}
+
+\begin{itemize}
+\item a) La condition nécessaire sur la somme des poids des $n$ objets
+  est la suivante~: on veut $\sum_{a \in A'} p(a)= \sum_{a \in A
+    \backslash A'}$
+\item b) 
+\begin{itemize}
+\item i) La formule qui lie les lignes $i$, $i-1$ et $p(a_i)$ est $A_i
+  := A_{i-1} + A_{i tq p(a_i)} $ TODO.
+\item ii) TODO
+\item iii) Nous proposons les deux algorithmes suivants. TODO
+\end{itemize}
+\item c) La complexité est donc $O(n\times P)$.
+\item d) Nous proposons les traces suivantes pour nos algorithmes~: TODO
+\end{itemize}
+
+\paragraph{Le problème du sac à dos}
+\begin{itemize}
+\item a) Nous justifions les formules proposées en énonçant que l'on
+  prend le maximum des $x_ju_j$ pour $j$ de 1 à $k-1$ en enlevant le
+  poids de l'objet $x_k$, et l'on rajoute à $x_ju_j$ l'utilité de
+  l'objet en cours.
+\item b) TODO
+\item c) TODO
+\end{itemize}
+
+\paragraph{Le problème du voyageur de commerce}
 
 \subsubsection*{Exercice 8}
 
