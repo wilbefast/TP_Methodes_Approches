@@ -136,7 +136,7 @@ problème du vertex cover est le suivant~:
 Soit $C^{*}$ une solution optimale du problème de la couverture de
 sommet. Soit $C$ la solution donnée par l'algorithme. 
 \begin{itemize}
-\item[] $|M| \leq C^{*}$ car deux arêtes adjacentes ne peuvent être
+\item[] $|M| \leq C^{*}$ car deux arêtes adjacentes peuvent être
   couvertes par un même sommet.
 \item[] $C^{*} \leq C = 2 |M|$ car une arête a deux sommets.
 \item[] On a donc $\frac{C}{C^{*}} \leq \frac{2|M|}{|M|} = 2$.
@@ -171,7 +171,8 @@ w_j \geq 0 \\
 \end{equation}
 avec $s_j = 1$ si l'ensemble $S_j$ est choisi, 0 sinon.
 
-Proposition de William avec une écriture matricielle~:
+Proposition sous forme  d'écriture matricielle, avec M matrice
+d'appartenance d'un élément $e_i$ à un ensemble $S_j$~:
 
 \begin{equation}
 \begin{cases}
@@ -180,8 +181,10 @@ min \sum_{j=1}^m w_j x_j\\
 \forall i \in \{1, \dots n\} x_i \in \{0,1\} \\
 \end{cases}
 \end{equation}
+avec $x_j = 1$ si l'ensemble $S_j$ est choisi, 0 sinon.
+
 \paragraph{Question 2}
- Dans un programme en nombre réels, on a plutôt$ s_i \in [0,1]$. Nous
+ Dans un programme en nombre réels, on a plutôt$ s_j \in [0,1]$. Nous
  proposons donc la procédure d'arrondis suivante sur les $s_j$~:
 \begin{itemize}
 \item Si $s_j \geq \frac{1}{f}$ alors $s_j = 1$,
@@ -196,27 +199,25 @@ la question 1.
 
 \paragraph{Question 4}
 
-TODO
+Montrons que le problème de la couverture d'ensemble possède un
+algorithme $f$-approché.
 
-Pour montrer l'existence d'un algorithme $f$-approché pour résoudre le
-problème de la couverture d'ensembles, montrons par l'absurde qu'il
-n'existe pas d'algorithme $(f - \epsilon)$-approché pour ce problème.
 \begin{proof}
-Supposons qu'il existe un algorithme $\rho$-approché pour le problème
-de la couverture d'ensembles, avec $\rho<f$. 
+Soit $C^*$ une solution optimale pour le problème de la couverture
+d'ensemble, soit C la solution renvoyée par un algorithme
+$f$-approché.
 
-Soit P le poids renvoyé par l'algorithme $\rho$-approché. \\
-Si $P > 3f$ alors on aurait $P^* > \frac{3f}{f} = 3 $ pour une
-collection de sous-ensembles\\
-Si $P \leq 3f$ alors on aurait $P^* \leq \frac{3f}{f} = 3 $ \\
+$C^* \geq  \sum_{i=1}^n w_{e_i}$ car deux éléments peuvent appartenir à un même sous-ensemble.
+$C \leq f * \sum_{i=1}^n w_{e_i}$ car un élément appartient a au plus $f$ sous-ensembles \\
+
+On a donc $\frac{C}{C^*} \leq f$.
 \end{proof}
-On pourrait alors décider si étant donné un poids P, \\
-TODO !!
 
 \paragraph{Question 5}
 
 Quand $f_i = 2$, $e_i$ appartient à deux sous-ensembles. On retrouve
-donc le problème de la couverture de sommets par des arêtes.
+donc le problème de la couverture d'arêtes (les éléments) par des
+sommets (les sous-ensembles) (vertex cover).
 
 \subsubsection*{Exercice 3}
 
