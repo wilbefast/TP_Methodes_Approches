@@ -164,14 +164,14 @@ nombres entiers pour le problème de la couverture d'ensembles~:
 \begin{equation}
 \begin{cases}
 min \sum_{j=1}^m w_j s_j\\
-\forall i \in \{1, \dots n \} \sum_{j=1}^{m} x_{ij} \geq 1 \\
+\sum_{j=1}^{m} s_{j} \geq 1 \\
+s_i \in \{0,1\} \\
 w_j \geq 0 \\
 \end{cases}
 \end{equation}
-avec $x_{ij} = 1$ si l'objet $e_i$ est pris dans l'ensemble $S_j$, 0
-sinon, et $s_j = 1$ si l'ensemble $S_j$ est choisi, 0 sinon.
+avec $s_j = 1$ si l'ensemble $S_j$ est choisi, 0 sinon.
 
-
+Proposition de William avec une écriture matricielle~:
 
 \begin{equation}
 \begin{cases}
@@ -181,16 +181,22 @@ min \sum_{j=1}^m w_j x_j\\
 \end{cases}
 \end{equation}
 \paragraph{Question 2}
-
-TODO
+ Dans un programme en nombre réels, on a plutôt$ s_i \in [0,1]$. Nous
+ proposons donc la procédure d'arrondis suivante sur les $s_j$~:
+\begin{itemize}
+\item Si $s_j \geq \frac{1}{f}$ alors $s_j = 1$,
+\item si $s_j < \frac{1}{f}$ alors $s_j = 0$.
+\end{itemize}
 
 \paragraph{Question 3}
 
 La procédure d'arrondie précédente garantie une solution réalisable
-car elle ne produit que des poids entiers et la somme de ces poids ne
-peut être inférieure à la valeur optimale en nombres réels.
+car elle respecte toutes les contraintes de la modélisation énoncée à
+la question 1.
 
 \paragraph{Question 4}
+
+TODO
 
 Pour montrer l'existence d'un algorithme $f$-approché pour résoudre le
 problème de la couverture d'ensembles, montrons par l'absurde qu'il
@@ -210,9 +216,7 @@ TODO !!
 \paragraph{Question 5}
 
 Quand $f_i = 2$, $e_i$ appartient à deux sous-ensembles. On retrouve
-donc le problème de la couverture de sommets par des arêtes. En effet,
-un sommet représente ici un élément, et une arête un sous-ensemble à
-deux éléments.
+donc le problème de la couverture de sommets par des arêtes.
 
 \subsubsection*{Exercice 3}
 
