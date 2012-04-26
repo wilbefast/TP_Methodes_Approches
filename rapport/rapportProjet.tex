@@ -163,17 +163,49 @@ Nous proposons la modélisation suivante en programmation linéaire en
 nombres entiers pour le problème de la couverture d'ensembles~:
 \begin{equation}
 \begin{cases}
-min \sum_{j \in I} \omega_j \\
-\sum_{i=1}^{n} \sum_{j=1}^{m} x_{ij} \geq 1  avec i=1, \dots, n \\
-\omega_j \geq 0 \\
+min \sum_{j=1}^m w_j s_j\\
+\forall i \in \{1, \dots n \} \sum_{j=1}^{m} x_{ij} \geq 1 \\
+w_j \geq 0 \\
 \end{cases}
 \end{equation}
-avec $x_{ij} = 1$ si l'objet $e_i$ est pris dans l'ensemble $S_j$, 0 sinon.
+avec $x_{ij} = 1$ si l'objet $e_i$ est pris dans l'ensemble $S_j$, 0
+sinon, et $s_j = 1$ si l'ensemble $S_j$ est choisi, 0 sinon.
+
+
+
+\begin{equation}
+\begin{cases}
+min \sum_{j=1}^m w_j x_j\\
+\forall i \in \{1, \dots n \} \sum_{j=1}^{m} M_{ij}x_{j} \geq 1 \\
+\forall i \in \{1, \dots n\} x_i \in \{0,1\} \\
+\end{cases}
+\end{equation}
 \paragraph{Question 2}
+
+TODO
 
 \paragraph{Question 3}
 
+La procédure d'arrondie précédente garantie une solution réalisable
+car elle ne produit que des poids entiers et la somme de ces poids ne
+peut être inférieure à la valeur optimale en nombres réels.
+
 \paragraph{Question 4}
+
+Pour montrer l'existence d'un algorithme $f$-approché pour résoudre le
+problème de la couverture d'ensembles, montrons par l'absurde qu'il
+n'existe pas d'algorithme $(f - \epsilon)$-approché pour ce problème.
+\begin{proof}
+Supposons qu'il existe un algorithme $\rho$-approché pour le problème
+de la couverture d'ensembles, avec $\rho<f$. 
+
+Soit P le poids renvoyé par l'algorithme $\rho$-approché. \\
+Si $P > 3f$ alors on aurait $P^* > \frac{3f}{f} = 3 $ pour une
+collection de sous-ensembles\\
+Si $P \leq 3f$ alors on aurait $P^* \leq \frac{3f}{f} = 3 $ \\
+\end{proof}
+On pourrait alors décider si étant donné un poids P, \\
+TODO !!
 
 \paragraph{Question 5}
 
