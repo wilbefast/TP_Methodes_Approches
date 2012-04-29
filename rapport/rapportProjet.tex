@@ -330,6 +330,26 @@ les contre-exemples suivants~: TODO !
 
 \subsubsection*{Exercice 8}
 
+\paragraph{Question 1}
+
+\begin{itemize}
+\item Pour le premier produit, on doit effectuer $P_{k-1}.P_k.P_{k+1}
+  + P_{k-2}.P_{k-1}.P_{k+1} + \dots + P_2.P_3.P_{k+1} + P_1.P_2.P_{k+1}$ opérations.
+\item Pour le parenthésage symétrique, on doit effectuer $P_1.P_2.P_3
+  + P_1.P_3.P_4 + P_1.P_4.P_5 + \dots + P_1.P_{k-1}.P_{k} + P_1.P_k+P_{k+1}$ opérations.
+\end{itemize}
+
+On remarque que le \textit{coefficient} le plus au bout de la matrice
+la plus imbriquée (càd $p_{k+1}$ pour le premier produit, et $P_1$
+pour le second) est \textit{reporté} à chaque \textit{séquence} de calcul, et que l'on
+peut donc factoriser le calcul global par ce terme.
+
+\paragraph{Question 2}
+
+\paragraph{Question 3}
+
+\paragraph{Question 4}
+
 \subsection{Méthode Primal-Dual}
 
 \subsubsection*{Exercice 9}
