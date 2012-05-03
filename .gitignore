@@ -4,4 +4,4 @@
 
 # Compiled units
 **/bin/**
-**.obj
+**.o
