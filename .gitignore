@@ -1,0 +1,7 @@
+# Codeblocks project files
+**.cbp
+**.depend
+
+# Compiled units
+**/bin/**
+**.obj
