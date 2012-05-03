@@ -1,9 +1,9 @@
 #modele de sac a dos
 #donnees
 param n ; #nombre d’objets
-param C{i in 1..n}; #utilité de l’objet i
+param C{i in 1..n}; #utilite de l’objet i
 param A{i in 1..n}; #poids de l’objet i
-param B; #capacité du sac
+param B; #capacite du sac
 #variables
 var x{1..n} binary;
 #objectif
