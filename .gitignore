@@ -3,5 +3,5 @@
 **.depend
 
 # Compiled units
-project/**/bin/**
+projet/glpk/bin/
 **.o
