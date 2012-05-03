@@ -3,5 +3,5 @@
 **.depend
 
 # Compiled units
-**/bin/**
+project/**/bin/**
 **.o
