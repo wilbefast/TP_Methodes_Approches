@@ -666,6 +666,86 @@ TODO : étapes intermédiaires !!
 
 \subsection{Programmation dynamique}
 
+Dans cette partie, nous nous servirons de l'outil GLPK, et en
+particulier de la syntaxe du langage Gnu MathProg. Pour chaque
+problème présenté, un fichier .mod contenant la modélisation du
+problème est créé ainsi qu'autant de fichiers .dat que de jeux de test.
+
+\paragraph{Sac à dos}
+
+Le problème du sac à dos se modélise en programmation linéaire de la
+manière suivante~:
+
+\begin{equation}
+\begin{cases}
+Max~z=\sum_{i=1}^nc_ix_i \\
+\sum_{i=1}^na_ix_i \leq b \\
+x_i \in\{0, 1\}, i=1\dots n\\
+\end{cases}
+\end{equation}
+
+Ainsi, nous prenons en paramètre~:
+\begin{itemize}
+\item le nombre $n$ d'objets sur lesquels nous
+désirons travailler, 
+\item le poids $b$ du sac que nous ne pouvons pas
+dépasser, 
+\item une variable binaire $x$, 
+\item un ensemble $C$ d'utilités à associer à chaque objet,
+\item un ensemble $A$ de poids à associer à chaque objet.
+\end{itemize}
+
+Ce qui nous donne des fichiers modèles de la forme suivante~:
+
+\begin{lstlisting}
+#modele de sac a dos
+#donnees
+param n ; #nombre d’objets
+param C{i in 1..n}; #utilite de l’objet i
+param A{i in 1..n}; #poids de l’objet i
+param B; #capacite du sac
+#variables
+var x{1..n} binary;
+#objectif
+maximize f :sum {i in 1..n} C[i]*x[i] ;
+#contraintes
+subject to
+capacite : sum{i in 1..n} A[i]*x[i] <= B ;
+printf "------Debut de la resolution -----\n";
+solve;
+printf "------Fin de la resolution -----\n";
+display x;
+end;
+\end{lstlisting}
+
+Exemple de jeu de test~:
+\begin{lstlisting}
+data;
+param n := 5;
+
+param C := 1 12
+2 15
+3 5
+4 16
+5 17;
+
+param A := 1 2
+2 6
+3 1
+4 7
+5 8;
+
+param B := 20;
+
+end;
+\end{lstlisting}
+
+TODO : présenter les résultats
+
+\paragraph{Partition}
+
+\paragraph{Voyageur de commerce}
+
 \subsection{Branch and bound}
 
 \end{document}
