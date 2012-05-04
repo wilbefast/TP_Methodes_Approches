@@ -84,6 +84,81 @@ int tab[N];
 
 /* Voyageur de commerce */
 
+//procedure qui calcule le min entre deux valeurs
+
+int min(int a, int b){
+
+  if(a > b) {return b;}
+  else{return a;}
+}
+
+//procedure qui calcule le min d'un tableau
+
+int minT(int** tab, int taille){
+
+  int i, j;
+  int minimum = tab[0][0];
+  for(i = 0; i < (taille - 1); i++){
+
+    for(j = 0; j < taille; j++){ 
+
+    minimum = min(tab[i][j], tab[i+1][j]);
+
+    }
+
+  }
+
+  return minimum;
+
+}
+
+//algo du voyageur de commerce en lui-mêm
+
+int salesman(int** poids, int nbObjets){ 
+  int i, k, j, s;
+
+  int C[nbObjets][nbObjets];
+
+  //initialisation du tableau (avec de grosses valeurs pour les cases)
+
+  for(i = 0; i < nbObjets; i++){
+
+    for(j = 0; j < nbObjets; j++){
+
+      C[i][j] = 9999999;
+
+    }
+
+  }
+
+  //initialisation de la première ligne (cas de base récurrence)
+
+  for(i = 1; i < nbObjets; i++){
+
+    C[0][i] = poids[0][i];
+  
+  }
+  
+  //remplissage du tableau
+
+  for(i = 1; i < nbObjets; i++){
+
+    for( s = 2; s < nbObjets; s ++){
+
+    if(s != i){
+      C[s][i] = C[s-1][i] + poids[i][0];
+    }
+    
+    }
+
+  }
+
+  //la valeur qui nous intéresse
+  return minT(C, nbObjets);
+
+}
+
+
 int main(){
 
   /* instance sac a dos : on veut maximiser l'utilite */
@@ -104,7 +179,7 @@ int main(){
 
   puts("fin resolution sac a dos");
 
-/* instance partition */
+/* instance partition : on veut savoir si on peut partager en deux*/
 
   int nPart = 2;
   int pPart[nPart];
@@ -117,6 +192,23 @@ int main(){
 
   puts("fin resolution partition");
   
-/* instance voyageur de commerce */
+/* instance voyageur de commerce : on veut minimiser la valeur du circuit hamiltonien */
+
+//Remarque : tsp symétrique
+
+  int nTSP = 3;
+
+  int** pTSP[nTSP][nTSP];
+
+  pTSP[0][0] = 0; pTSP[0][1] = 4; pTSP[0][2] = 3; 
+  pTSP[1][0] = 4; pTSP[1][1] = 0; pTSP[1][2] = 3;
+  pTSP[2][0] = 6; pTSP[2][1] = 3; pTSP[2][2] = 0;
+ 
+
+  puts("debut resolution TSP");
+  
+  salesman(pTSP, nTSP);
+
+  puts("fin resolution TSP ");
 
 }
