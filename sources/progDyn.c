@@ -117,29 +117,31 @@ int salesman(int** poids, int nbObjets){
 
   //initialisation de la premiere ligne (cas de base recurrence)
 
-  for(i = 0; i < nbObjets; i++){
+  for(i = 1; i < nbObjets; i++){
     
-    C[i][i] = 999999;
     C[0][i] = poids[0][i];
+    C[i][i] = 99999;
      
   
   }
   
   //remplissage du tableau
 
-  for( s = 0; s < nbObjets; s ++){
+int tab[nbObjets]; // pr stocker les valeurs en attendant de faire le min
+  for( s = 1; s < nbObjets ; s ++){
 
     for(i = 0; i < nbObjets; i++){
 
-      for(k = 0; k < s + 1; k++){
-	int tab[nbObjets]; // pr stocker les valeurs en attendant de faire le min
-	if(s != i && k != i){
+      for(k = 0; k < nbObjets ; k++){
+	
+	if(s != i && k != i && k != s-1){
 	  tab[k] = C[s-1][k] + poids[k][i];
+	}
+      }
 	  C[s][i] = minT(tab, nbObjets) ;
 	  printf(" C[%d][%d]= %d \n", s, i, C[s][i]);
 	  puts("Tableau tsp rempli");
-	}
-      }
+	
     }
   }
 
