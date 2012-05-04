@@ -92,71 +92,49 @@ int min(int a, int b){
   else{return a;}
 }
 
-//procedure qui calcule le min d'un tableau
-
-int minT(int** tab, int taille){
-
-  int i, j;
-  int minimum = tab[0][0];
-  for(i = 0; i < (taille - 1); i++){
-
-    for(j = 0; j < taille; j++){ 
-
-    minimum = min(tab[i][j], tab[i+1][j]);
-
-    }
-
-  }
-
-  return minimum;
-
-}
-
-//algo du voyageur de commerce en lui-mêm
+//algo du voyageur de commerce en lui-meme
 
 int salesman(int** poids, int nbObjets){ 
   int i, k, j, s;
 
   int C[nbObjets][nbObjets];
 
-  //initialisation du tableau (avec de grosses valeurs pour les cases)
+  //initialisation de la premiere ligne (cas de base recurrence)
 
   for(i = 0; i < nbObjets; i++){
-
-    for(j = 0; j < nbObjets; j++){
-
-      C[i][j] = 9999999;
-
-    }
-
-  }
-
-  //initialisation de la première ligne (cas de base récurrence)
-
-  for(i = 1; i < nbObjets; i++){
-
+    
     C[0][i] = poids[0][i];
+    C[i][i] = 999999;
   
   }
   
   //remplissage du tableau
 
-  for(i = 1; i < nbObjets; i++){
+  for( s = 0; s < nbObjets; s ++){
 
-    for( s = 2; s < nbObjets; s ++){
+    for(i = 0; i < nbObjets; i++){
 
-    if(s != i){
-      C[s][i] = C[s-1][i] + poids[i][0];
+	if(s != i){
+	  
+	  //cas particulier ou les elements se suivent : to change pr prendre en compte le fait qu'on relie pas forcement les villes ds l'odre
+	  C[s][i] = C[s-1][s] + poids[s][i] ;
+	  printf(" C[%d][%d]= %d \n", s, i, C[s][i]);
+	  puts("Tableau tsp rempli");
+	}
     }
-    
-    }
-
   }
 
   //la valeur qui nous intéresse
-  return minT(C, nbObjets);
+  //for(i = 0; i < nbObjets; i++){
+  // int mini = C[0][0];
+  //if (C[i][0] < mini){
+  //  puts("hello");
+  //   mini = C[i][0];
+  // }
 
-}
+  printf("Valeur du cycle : %d \n", C[nbObjets -1][0]);
+  return 1;
+ }
 
 
 int main(){
@@ -194,21 +172,28 @@ int main(){
   
 /* instance voyageur de commerce : on veut minimiser la valeur du circuit hamiltonien */
 
-//Remarque : tsp symétrique
+//Remarque : tsp symetrique
 
+  int i;
   int nTSP = 3;
 
-  int** pTSP[nTSP][nTSP];
+  int **pTSP = malloc(sizeof *pTSP * nTSP);
+
+  pTSP[0] = malloc(sizeof *pTSP[0] * nTSP * nTSP);
+
+  for(i = 1; i < nTSP; i++) pTSP[i] = pTSP[i-1] + nTSP;
 
   pTSP[0][0] = 0; pTSP[0][1] = 4; pTSP[0][2] = 3; 
   pTSP[1][0] = 4; pTSP[1][1] = 0; pTSP[1][2] = 3;
-  pTSP[2][0] = 6; pTSP[2][1] = 3; pTSP[2][2] = 0;
+  pTSP[2][0] = 3; pTSP[2][1] = 3; pTSP[2][2] = 0;
  
 
   puts("debut resolution TSP");
   
   salesman(pTSP, nTSP);
+  puts("tsp appele");
 
   puts("fin resolution TSP ");
+  free(pTSP[0]); free(pTSP);
 
 }
