@@ -92,6 +92,22 @@ int min(int a, int b){
   else{return a;}
 }
 
+//procedure qui calcule le min d'un tableau
+ 	
+int minT(int* tab, int taille){
+	
+  int i;
+ 	
+  int minimum = tab[0];
+ 		
+  for(i = 0; i < taille; i++){	
+	
+    minimum = min(minimum, tab[i]);
+	
+  }	
+  return minimum;
+}
+
 //algo du voyageur de commerce en lui-meme
 
 int salesman(int** poids, int nbObjets){ 
@@ -103,8 +119,9 @@ int salesman(int** poids, int nbObjets){
 
   for(i = 0; i < nbObjets; i++){
     
-    C[0][i] = poids[0][i];
     C[i][i] = 999999;
+    C[0][i] = poids[0][i];
+     
   
   }
   
@@ -114,25 +131,19 @@ int salesman(int** poids, int nbObjets){
 
     for(i = 0; i < nbObjets; i++){
 
-	if(s != i){
-	  
-	  //cas particulier ou les elements se suivent : to change pr prendre en compte le fait qu'on relie pas forcement les villes ds l'odre
-	  C[s][i] = C[s-1][s] + poids[s][i] ;
+      for(k = 0; k < s + 1; k++){
+	int tab[nbObjets]; // pr stocker les valeurs en attendant de faire le min
+	if(s != i && k != i){
+	  tab[k] = C[s-1][k] + poids[k][i];
+	  C[s][i] = minT(tab, nbObjets) ;
 	  printf(" C[%d][%d]= %d \n", s, i, C[s][i]);
 	  puts("Tableau tsp rempli");
 	}
+      }
     }
   }
 
-  //la valeur qui nous intéresse
-  //for(i = 0; i < nbObjets; i++){
-  // int mini = C[0][0];
-  //if (C[i][0] < mini){
-  //  puts("hello");
-  //   mini = C[i][0];
-  // }
-
-  printf("Valeur du cycle : %d \n", C[nbObjets -1][0]);
+  printf("Valeur du cycle : %d \n", C[nbObjets-1][0]);
   return 1;
  }
 
