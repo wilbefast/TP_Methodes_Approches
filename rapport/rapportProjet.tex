@@ -666,12 +666,17 @@ TODO : étapes intermédiaires !!
 
 \subsection{Programmation dynamique}
 
-Dans cette partie, nous nous servirons de l'outil GLPK, et en
-particulier de la syntaxe du langage Gnu MathProg. Pour chaque
-problème présenté, un fichier .mod contenant la modélisation du
-problème est créé ainsi qu'autant de fichiers .dat que de jeux de test.
+Nous effectuerons ici les simulations du problème de la partition, du sac
+à dos et du voyageur de commerce selon une implémentation
+d'algorithmes basés sur de la programmation dynamique. Les programmes
+seront écrits en langage C.
 
-\paragraph{Sac à dos}
+\subsubsection{Sac à dos}
+
+Nous avons commencé par nous intéresser au problème du sac à dos avant
+partition car celui-ci est le plus général.
+
+\paragraph{Modélisation}
 
 Le problème du sac à dos se modélise en programmation linéaire de la
 manière suivante~:
@@ -684,68 +689,192 @@ x_i \in\{0, 1\}, i=1\dots n\\
 \end{cases}
 \end{equation}
 
-Ainsi, nous prenons en paramètre~:
-\begin{itemize}
-\item le nombre $n$ d'objets sur lesquels nous
-désirons travailler, 
-\item le poids $b$ du sac que nous ne pouvons pas
-dépasser, 
-\item une variable binaire $x$, 
-\item un ensemble $C$ d'utilités à associer à chaque objet,
-\item un ensemble $A$ de poids à associer à chaque objet.
-\end{itemize}
+%Ainsi, nous prenons en paramètre~:
+%\begin{itemize}
+%\item le nombre $n$ d'objets sur lesquels nous
+%désirons travailler, 
+%\item le poids $b$ du sac que nous ne pouvons pas
+%dépasser, 
+%\item une variable binaire $x$, 
+%\item un ensemble $C$ d'utilités à associer à chaque objet,
+%\item un ensemble $A$ de poids à associer à chaque objet.
+%\end{itemize}
 
-Ce qui nous donne des fichiers modèles de la forme suivante~:
+\paragraph{Formules de programmation dynamique}
+
+
+
+\paragraph{Implémentation en C}
+
+Nous avons donc implémenté l'algorithme suivant (avec la fonction très
+simple \textit{min} de calcul de minimum entre deux valeurs que nous
+ne faisons pas figurer ici).
 
 \begin{lstlisting}
-#modele de sac a dos
-#donnees
-param n ; #nombre d’objets
-param C{i in 1..n}; #utilite de l’objet i
-param A{i in 1..n}; #poids de l’objet i
-param B; #capacite du sac
-#variables
-var x{1..n} binary;
-#objectif
-maximize f :sum {i in 1..n} C[i]*x[i] ;
-#contraintes
-subject to
-capacite : sum{i in 1..n} A[i]*x[i] <= B ;
-printf "------Debut de la resolution -----\n";
-solve;
-printf "------Fin de la resolution -----\n";
-display x;
-end;
+
+int sacADos(int W, int* poids, int* utilite, int nbObjets){ 
+//W represente la capacite max du sac
+
+// tableau central de la programmation dynamique
+int tab[nbObjets][W+1]; 
+int w;
+
+//initialisation de la table
+for (w = 0; w < W + 1; w++){
+  tab[0][w] = 0;
+    }
+
+//remplissage de la table selon les formules de la prog dyn
+ int i, j;
+ for (i = 1; i < nbObjets ; i++){
+  for (j = 0; j < W + 1 ; j++) {
+    if (j >= poids[i]) {
+      tab[i][j] = max(tab[i-1] [j], 
+(tab[i-1] [j-poids[i]] + utilite[i]));
+    }
+      else{
+      tab[i][j] = tab[i-1] [j];
+      }
+    }
+  }
+//la valeur qui nous interesse
+ printf(" poids : \%d \n", W);
+ printf("meilleure solution (utilite) :
+\%d \n", tab[nbObjets -1] [W]);
+ return (tab[nbObjets -1] [W]);
+}
+
 \end{lstlisting}
 
-Exemple de jeu de test~:
+\paragraph{Complexité théorique}
+
+\paragraph{Jeux de tests et temps d'exécution}
+
+\subsubsection{Partition}
+
+\paragraph{Modélisation}
+
+\paragraph{Formules de programmation dynamique}
+
+\paragraph{Implémentation en C}
+
+Nous présentons donc l'algorithme suivant, qui est une sorte de
+restriction (cas particulier) de l'algorithme proposé pour la
+résolution du problème du sac à dos~:
+
 \begin{lstlisting}
-data;
-param n := 5;
+int partition(int* poids, int nbObjets){ 
 
-param C := 1 12
-2 15
-3 5
-4 16
-5 17;
 
-param A := 1 2
-2 6
-3 1
-4 7
-5 8;
+//calcul de la somme totale des poids
+ int i, j;
+int N = 0;
+for(i = 0; i < nbObjets; i++ ) {N += poids[i];}
 
-param B := 20;
+int tab[N]; 
 
-end;
+//initialisation de la table de booleens
+
+ tab[0] = 1;
+ for(i = 1; i <= N; i ++ )  {tab[i] = 0;}
+
+
+//remplissage de la table selon les formules de la prog dyn
+
+ for(i = 0; i < nbObjets; i++ ){
+   for(j = N - poids[i]; j >= 0; j-- ){
+     if( tab[j] == 1 ) {
+       tab[j + poids[i]] = 1;
+     }
+   }
+ }
+
+//la reponse qui nous interesse
+ if(tab[N / 2] == 1){ 
+   printf("vrai avec %d \n", N/2);
+   }
+ else{puts("faux");}
+
+ return tab[N / 2];
+}
+
 \end{lstlisting}
 
-TODO : présenter les résultats
+\paragraph{Complexité théorique}
 
-\paragraph{Partition}
+\paragraph{Jeux de tests et temps d'exécution}
 
-\paragraph{Voyageur de commerce}
+\subsubsection{Voyageur de commerce}
+
+TODO
+
+\paragraph{Modélisation}
+
+\paragraph{Formules de programmation dynamique}
+
+\paragraph{Implémentation en C}
+
+\paragraph{Complexité théorique}
+
+\paragraph{Jeux de tests et temps d'exécution}
+
+
+
+\pagebreak
 
 \subsection{Branch and bound}
+
+
+Nous nous intéresserons au sein de cette section à la programmation de
+la méthode de branch and bound pour résoudre le problème du voyageur
+de commerce (tsp).
+
+\subsubsection{Détermination de la solution initiale}
+
+Dans cette partie, nous nous servirons de l'outil GLPK, et en
+particulier de la syntaxe du langage Gnu MathProg. Pour le problème
+présenté, un fichier .mod contenant la modélisation du problème est
+créé ainsi qu'autant de fichiers .dat que de jeux de test. Nous nous
+intéresserons à trois heuristiques en particulier.
+
+\paragraph{Chaîne de poids le plus faible et ajout d'une arête pour le
+  cycle}
+
+
+\paragraph{Voisinage 2--opt}
+
+\paragraph{Voisinage 3--opt}
+
+\subsubsection{Programmation de l'algorithme $\frac{3}{2}$}
+
+\paragraph{Principe de l'algorithme}
+
+\paragraph{Complexité théorique}
+
+\paragraph{Langage de programmation et bibliothèques}
+
+\paragraph{Structures de données utilisées}
+
+\paragraph{Principales fonctions}
+
+\paragraph{Remarques}
+
+\subsubsection{Tests}
+
+\paragraph{Outils}
+
+Nous utiliserons ici l'utilitaire console Unix time pour mesurer le
+temps de calcul de nos programmes. Gprof sera également utilisé pour
+une analyse un peu plus fine du temps de calcul (outil de profiling).
+
+\paragraph{Tests de validité de notre programme}
+
+\paragraph{Comparaison de l'efficacité de l'algorithme selon les
+  trois heuristiques}
+
+
+\paragraph{Comparaison entre la programmation dynamique et le branch and bound}
+
+\subsection{Conclusion}
 
 \end{document}
