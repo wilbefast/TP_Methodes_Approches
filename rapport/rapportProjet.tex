@@ -764,16 +764,16 @@ même pour la complexité mémoire.
 
 \paragraph{Jeux de tests et temps d'exécution}
 
+TODO
+
 \subsubsection{Partition}
 
 \paragraph{Modélisation}
 
 Le problème de la partition se modélise de la manière suivante~:
 \begin{equation}
-\begin{cases}
-
-hh \\
-\end{cases}
+\sum_{a \in A'} p(a)= \sum_{a \in A
+    \backslash A'}p(a)
 \end{equation}
 
 \paragraph{Formules de programmation dynamique}
@@ -835,28 +835,63 @@ int tab[N];
 
 \paragraph{Complexité théorique}
 
-\paragraph{Jeux de tests et temps d'exécution}
+Soit $N$ la somme des poids.
+La complexité en temps de notre algorithme est $O(nN)$.
+La complexité mémoire est $O(N).$
 
-\subsubsection{Voyageur de commerce}
+\paragraph{Jeux de tests et temps d'exécution}
 
 TODO
 
+\subsubsection{Voyageur de commerce}
+
 \paragraph{Modélisation}
+
+Le problème du voyageur de commerce peut se modéliser de la manière
+suivante~:
+
+
+on se donne un graphe complet $K_n=(X,E)$ et on note $c_{ij}$ le poids
+de l'arête $\{i,j\}$.
+\begin{equation}
+\begin{cases}
+min \sum_{\{i, j\} \in E} c_{ij}.x_{ij} \\
+\sum_{i=0}^n \sum_{j=0}^n x_{ij} = 1 \\
+\forall (S, \bar{S}) \sum_{i \in S, j \in \bar{S}} x_{ij} \geq 1 \\
+x_{ij} \in \{0, 1\} \\
+\end{cases}
+\end{equation}
 
 \paragraph{Formules de programmation dynamique}
 
+On note $C(S,i)$ la longueur d'une plus courte chaîne du sommet $0$ au
+sommet $i$ qui passe une et une seule fois par tout sommet de $S$ et
+qui n'utilise pas de sommet non dans $S$ autre que $i$. On a ainsi les
+formules suivantes pour le problème du voyageur de commerce~:
+
+\begin{equation}
+\begin{cases}
+C[S][i] = poids[0][i] \text{si S ne contient que $0$} \\
+C[S][i] = min_{k \in S - \{ 0 \}} \{ C[S- \{ k \}][k] + poids[k][i]  \}
+\end{cases}
+\end{equation}
+
 \paragraph{Implémentation en C}
+
+TODO
 
 \paragraph{Complexité théorique}
 
+TODO
+
 \paragraph{Jeux de tests et temps d'exécution}
 
+TODO
 
 
 \pagebreak
 
 \subsection{Branch and bound}
-
 
 Nous nous intéresserons au sein de cette section à la programmation de
 la méthode de branch and bound pour résoudre le problème du voyageur
