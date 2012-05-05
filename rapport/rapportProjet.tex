@@ -671,6 +671,10 @@ Nous effectuerons ici les simulations du problème de la partition, du sac
 d'algorithmes basés sur de la programmation dynamique. Les programmes
 seront écrits en langage C.
 
+La programmation dynamique permet de trouver la solution optimale d'un
+problème en combinant les solutions optimales de sous-problèmes de ce
+problème.
+
 \subsubsection{Sac à dos}
 
 Nous avons commencé par nous intéresser au problème du sac à dos avant
@@ -702,7 +706,14 @@ x_i \in\{0, 1\}, i=1\dots n\\
 
 \paragraph{Formules de programmation dynamique}
 
-
+Les formules de programmation dynamique pour le problème du sac à dos
+sont les suivantes~:
+\begin{equation}
+\begin{cases}
+tab[0][w] = 0 \\
+tab[i][j] = max(tab[i-1] [j], (tab[i-1] [j-poids[i]] + utilite[i])); \\
+\end{cases}
+\end{equation}
 
 \paragraph{Implémentation en C}
 
@@ -748,13 +759,35 @@ for (w = 0; w < W + 1; w++){
 
 \paragraph{Complexité théorique}
 
+La complexité en temps de notre algorithme est en $O(nW)$. Il en va de
+même pour la complexité mémoire.
+
 \paragraph{Jeux de tests et temps d'exécution}
 
 \subsubsection{Partition}
 
 \paragraph{Modélisation}
 
+Le problème de la partition se modélise de la manière suivante~:
+\begin{equation}
+\begin{cases}
+
+hh \\
+\end{cases}
+\end{equation}
+
 \paragraph{Formules de programmation dynamique}
+
+On se basera sur la récurrence suivante~:
+
+\begin{equation}
+\begin{cases}
+tab[0] = 1; \\
+si ( tab[j] == 1 ) {
+       tab[j + poids[i]] = 1;
+     } \\
+\end{cases}
+\end{equation}
 
 \paragraph{Implémentation en C}
 
