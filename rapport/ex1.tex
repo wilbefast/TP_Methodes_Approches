@@ -14,8 +14,18 @@
   couvrir une arête.
 \end{itemize}
 Ces trois conditions décrivent donc bien le problème de la couverture minimale.
-\item[] b) exemple du triangle (à faire en dessin), cette condition
-  n'est donc pas suffisante.
+\item[] b) Le cas du triangle est un contre-exemple qui contredit cette
+égalité. En effet (cf le dessin ci-dessous) le fait de
+choisir l'arête $AC$, par exemple, empêcherait de sélectionner les
+autres arêtes (sous peine de violer la contrainte d'égalité) alors
+qu'un sommet resterait insaturé. Cette condition doit donc être
+élargie à une inégalité.
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[height=3cm]{triangle.eps}
+\end{center}
+\caption{Pourquoi on ne peut pas avoir $x_r + x_S = 1$.}
+\end{figure}
 \item[] c) Montrons par l'absurde que le programme linéaire en nombres
   entiers est une borne inférieure de toute solution optimale.
 \begin{proof}
