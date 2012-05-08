@@ -1,0 +1,50 @@
+\paragraph{Question 1}
+
+\begin{itemize}
+\item Pour le premier produit, on doit effectuer $P_{k-1}.P_k.P_{k+1}
+  + P_{k-2}.P_{k-1}.P_{k+1} + \dots + P_2.P_3.P_{k+1} + P_1.P_2.P_{k+1}$ opérations.
+\item Pour le parenthésage symétrique, on doit effectuer $P_1.P_2.P_3
+  + P_1.P_3.P_4 + P_1.P_4.P_5 + \dots + P_1.P_{k-1}.P_{k} + P_1.P_k+P_{k+1}$ opérations.
+\end{itemize}
+
+On remarque que le \textit{coefficient} le plus au bout de la matrice
+la plus imbriquée (càd $p_{k+1}$ pour le premier produit, et $P_1$
+pour le second) est \textit{reporté} à chaque \textit{séquence} de
+calcul, et que l'on peut donc factoriser le calcul global par ce
+terme. Par conséquent, selon la valeur du terme ainsi répété en
+fonction du parenthésage choisi, le nombre d'opérations pour un même
+produit de matrices peut énormément varier.
+
+\paragraph{Question 2}
+
+Montrons que le nombre $c(k)$ de parenthésages possibles d'un produit
+de $k$ matrices vérifie $\sum_{i=1}^{k-1}c(i).c(k-i)$ en posant
+$c(1)=1$. Procédons par récurrence.
+
+\begin{proof}
+\begin{itemize}
+\item Si l'on multiplie deux matrices, il est clair de voir que nous
+  n'avons qu'un seul parenthésage possible. Si l'on applique la
+  formule, alors $c(2) = c(1).c(2-1) = c(1).c(1) = 1$. La propriété
+  est donc vérifiée pour deux matrices.
+\item Supposons désormais que la propriété $c(k) =
+  \sum_{i=1}^{k-1}c(i).c(k-i)$ soit vérifiée pour $k$ matrices, et
+  montrons qu'elle l'est alors aussi pour $k+1$ matrices. Le fait de
+  rajouter une matrice implique de rajouter un certain nombre de
+  possibilités de parenthésages possibles. Étudions les~: on rajoute
+  autant de parenthésages que de parenthésages existant (une
+  parenthèse de plus pour englober ce qui existe déjà) pour chaque
+  possibilité de parenthésage. On a donc, $c(k+1)
+  =\sum_{i=1}^{k-1}c(i).c(k-i)+c(k).c(k+1-i)= \sum_{i=1}^{k}c(i).c(k+1-i)$.
+\end{itemize}
+\end{proof}
+A VERIFIER ENSEMBLE
+
+\paragraph{Question 3}
+
+TODO
+
+\paragraph{Question 4}
+
+TODO
+

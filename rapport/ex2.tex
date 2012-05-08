@@ -1,0 +1,64 @@
+\paragraph{Question 1}
+
+Nous proposons la modélisation suivante en programmation linéaire en
+nombres entiers pour le problème de la couverture d'ensembles~:
+\begin{equation}
+\begin{cases}
+min \sum_{j=1}^m w_j s_j\\
+\sum_{j=1}^{m} s_{j} \geq 1 \\
+s_i \in \{0,1\} \\
+\end{cases}
+\end{equation}
+avec $s_j = 1$ si l'ensemble $S_j$ est choisi, 0 sinon.
+
+Proposition sous forme  d'écriture matricielle, avec M matrice
+d'appartenance d'un élément $e_i$ à un ensemble $S_j$~:
+
+\begin{equation}
+\begin{cases}
+min \sum_{j=1}^m w_j x_j\\
+\forall i \in \{1, \dots n \} \sum_{j=1}^{m} M_{ij}x_{j} \geq 1 \\
+\forall i \in \{1, \dots n\} x_i \in \{0,1\} \\
+\end{cases}
+\end{equation}
+avec $x_j = 1$ si l'ensemble $S_j$ est choisi, 0 sinon.
+
+\paragraph{Question 2}
+ Dans un programme en nombre réels, on a plutôt$ s_j \in [0,1]$. Nous
+ proposons donc la procédure d'arrondis suivante sur les $s_j$~:
+\begin{itemize}
+\item Si $s_j \geq \frac{1}{f}$ alors $s_j = 1$,
+\item si $s_j < \frac{1}{f}$ alors $s_j = 0$.
+\end{itemize}
+
+\paragraph{Question 3}
+
+La procédure d'arrondie précédente garantie une solution réalisable
+car elle respecte toutes les contraintes de la modélisation énoncée à
+la question 1.
+
+\begin{proof}
+TODO : william
+\end{proof}
+
+\paragraph{Question 4}
+
+Montrons que le problème de la couverture d'ensemble possède un
+algorithme $f$-approché.
+
+\begin{proof}
+Soit $C^*$ une solution optimale pour le problème de la couverture
+d'ensemble, soit C la solution renvoyée par un algorithme
+$f$-approché.
+
+$C^* \geq  \sum_{i=1}^n w_{e_i}$ car deux éléments peuvent appartenir à un même sous-ensemble.
+$C \leq f * \sum_{i=1}^n w_{e_i}$ car un élément appartient a au plus $f$ sous-ensembles \\
+
+On a donc $\frac{C}{C^*} \leq f$.
+\end{proof}
+
+\paragraph{Question 5}
+
+Quand $f_i = 2$, $e_i$ appartient à deux sous-ensembles. On retrouve
+donc le problème de la couverture d'arêtes (les éléments) par des
+sommets (les sous-ensembles) (vertex cover).

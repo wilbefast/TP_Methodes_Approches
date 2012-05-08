@@ -1,0 +1,21 @@
+#un fichier de donnees pour le probleme de sac a dos
+data;
+param n := 5;
+
+param C := 1 12
+2 15
+3 5
+4 16
+5 17;
+
+param A := 1 2
+2 6
+3 1
+4 7
+5 8;
+
+param B := 20;
+
+end;
+
+

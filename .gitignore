@@ -1,0 +1,12 @@
+# Codeblocks project files
+**.cbp
+**.depend
+**.layout
+
+# Compiled units
+projet/glpk/bin/
+**.o
+
+# Affichage
+**.ps
+**.dot
