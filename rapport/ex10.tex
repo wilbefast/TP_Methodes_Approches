@@ -35,19 +35,11 @@ Avec $c_i$ taille de l'article $i$ et C la taille d'une boîte.
 \item Quand nous avons une instance positive, $\sum_{i=1}^n p(a'_i) =\frac{2*B}{B}=2$.
 \item Quand nous avons une instance négative, $\sum_{i=1}^n p(a'_i)
   =\frac{B+\frac{B}{2}}{B}=3$ car $\sum_{i=1}^n p(a_i)= B+\frac{B}{2}$
-  de manière à ne pas pouvoir partager $B$ .
+  de manière à ne pas pouvoir partager $B$ (on doit rajouter une boîte).
 \end{itemize}
 
 \paragraph{Question 4}
 
-Bin Packing peut donc se réduire au problème de la coloration ou à
-SAT~: pour une valeur de 2, on peut trouver un rangement valide, pour
-une valeur de 3 on ne peut trouver de tel rangement. Il est donc
-NP-Complet.
-
-On peut proposer comme seuil d'approximation $\frac{2*(seuill~partition)}{B}$.
-
-
-A VERIFIER
+Bin Packing est donc inapproximable.
 
 
