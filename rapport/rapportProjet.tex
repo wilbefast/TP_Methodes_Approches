@@ -11,6 +11,12 @@
 \usepackage{lmodern}
 \usepackage{tikz}
 \usepackage{pgfplots}
+\usepackage{fancybox}
+%\usepackage{slashbox}
+\usepackage{makecell}
+\usepackage{array, multirow, tabularx}
+\usepackage{xcolor}
+\setlength{\parskip}{\bigskipamount}
 
 \newtheorem{mydef}{Définition}
 \newtheorem{thm}{Théorème}
@@ -84,96 +90,7 @@
 \subsection{Utilisation de méthodes exactes}
 
 \subsubsection*{Exercice 7}
-
-\paragraph{Sur le problème de la partition}
-
-\begin{itemize}
-\item a) La condition nécessaire sur la somme des poids des $n$ objets
-  est la suivante~: on veut $\sum_{a \in A'} p(a)= \sum_{a \in A
-    \backslash A'}p(a)$
-\item b) 
-\begin{itemize}
-\item i) La formule qui lie les lignes $i$, $i-1$ et $p(a_i)$ est $A_i
-  := A_{i-1} \bigcup A_{i, p(a_i)} \bigcup A_{i-1}+p(a_i)$ avec
-  $A_{i-1}+p(a_i) \leq P$.
-\item ii) Construisons le tableau à partir de l'exemple donné:
-\begin{table}[h!]
-\centering
-	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-    \hline
-     $ i \diagdown p $ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
-    \hline
-   1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-     \hline
-	2& 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
-   \hline
-	3 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 1 & 0 & 0 \\
-	\hline
-	4 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 0 \\
-	  \hline
-	5 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 \\
-	\hline
-	6 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 \\
-	\hline
-\end{tabular}
-\caption {Remplissage du tableau sur l'exemple donné}
-\end{table} 
-\item iii) Nous proposons les deux algorithmes ci-dessous.
-\begin{algorithm}[t]
-\caption{Algorithme général}
-\label{algoexo7}
-\begin{algorithmic}[1]
-\STATE $P_1 := \emptyset $
-\FOR{$i=1 \to n$}
-\WHILE{$P_1 < P$ et $P_2 < P$}
-\STATE remplir $A_i$ en utilisant la formule présentée avant
-\STATE faire Test
-\IF {$A(i,j) == 1$}
-\STATE $A(i,j):=0$
-\ENDIF
-\ENDWHILE
-\ENDFOR
-\end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}[t]
-\caption{Test}
-\label{algoexo7test}
-\begin{algorithmic}[1]
-\FOR{$j=0 \to P$}
-\IF{$A(i,j) == 1$ et $P_{1}+j \leq P$}
-\STATE $P_1 := P_1 \bigcup j$
-\ELSE
-\STATE $P_2 := P_2 \bigcup j$
-\ENDIF
-\ENDFOR
-\end{algorithmic}
-\end{algorithm}
-\end{itemize}
-
-\item c) La complexité est donc $O(n\times P)$.
-\item d) Nous proposons les traces suivantes pour nos algorithmes~:
-  TODO
-\begin{itemize}
-\item La première trace que nous proposons est réalisée à partir des
-  données fournies dans l'énoncé. On obtient ainsi $P_1 := \{ 0, 5, 9,
-  2, 0\}$, $P_2 := \{ 0, 0, 3, 8, 5\}$.
-\item
-\end{itemize}
-\end{itemize}
-
-\paragraph{Le problème du sac à dos}
-\begin{itemize}
-\item a) Nous justifions les formules proposées en énonçant que l'on
-  prend le maximum des $x_ju_j$ pour $j$ de 1 à $k-1$ en enlevant le
-  poids de l'objet $x_k$, et l'on rajoute à $x_ju_j$ l'utilité de
-  l'objet en cours.
-\item b) TODO
-\item c) TODO
-\end{itemize}
 \input{ex7.tex}
-
-\paragraph{Le problème du voyageur de commerce}
 
 \subsubsection*{Exercice 8}
 \input{ex8.tex}
