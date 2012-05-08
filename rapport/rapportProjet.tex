@@ -228,7 +228,28 @@ les contre-exemples suivants~: TODO !
 \item i) La formule qui lie les lignes $i$, $i-1$ et $p(a_i)$ est $A_i
   := A_{i-1} \bigcup A_{i, p(a_i)} \bigcup A_{i-1}+p(a_i)$ avec
   $A_{i-1}+p(a_i) \leq P$.
-\item ii) TODO
+\item ii) Construisons le tableau à partir de l'exemple donné:
+\begin{table}[h!]
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+     $ i \diagdown p $ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
+    \hline
+   1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+     \hline
+	2& 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+   \hline
+	3 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 1 & 0 & 0 \\
+	\hline
+	4 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 0 \\
+	  \hline
+	5 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 \\
+	\hline
+	6 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 \\
+	\hline
+\end{tabular}
+\caption {Remplissage du tableau sur l'exemple donné}
+\end{table} 
 \item iii) Nous proposons les deux algorithmes ci-dessous.
 \begin{algorithm}[t]
 \caption{Algorithme général}
