@@ -372,6 +372,16 @@ C[S][i] = min_{k \in S - \{ 0 \}} \{ C[S- \{ k \}][k] + poids[k][i]  \}
 \end{cases}
 \end{equation}
 
+Le principe appliqué à un chemin/cycle (il y a autant de chemins que de
+sommets moins un) peut être résumé sur le schéma présenté ci-dessous.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[height=5cm]{tspDyn.eps}
+\end{center}
+\caption{Exemple de calcul d'un chemin pour le tsp en programmation dynamique.}
+\end{figure}
+
 \paragraph{Implémentation en C}
 
 TODO
