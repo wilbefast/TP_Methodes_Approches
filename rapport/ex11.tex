@@ -1,0 +1,29 @@
+\paragraph{Question 1}
+
+Les deux problèmes considérés sont NP-complets. Plus exactement, la
+coloration de sommet est un problème non-APX tandis que la coloration
+d'arêtes est un problème APX. 
+
+\paragraph{Question 2~:}
+\begin{itemize}
+\item Si $OPT(I) \leq 3$ alors on a \\
+$\frac{A(I)}{OPT(I)} < \frac{4}{3}$ \\
+d'où $A(I) < 4$.
+\item Si $OPT(I) \geq 4$ alors on a \\
+$\frac{A(I)}{OPT(I)} < \frac{4}{3}$ \\
+d'où $A(I) \geq 3$.
+\end{itemize}
+
+\paragraph{Question 3~:}
+
+\begin{proof}
+Le problème de 3--coloration est NP-complet. Or, à partir de la
+question 2, on peut décider si 3 couleur suffisent pour colorier les
+sommets ou les arêtes de notre graphe. Donc il est absurde de supposer
+qu'il existe un algorithme avec une performance relative strictement
+inférieure à $\frac{4}{3}$.
+\end{proof}
+
+\subsection{Comparaison de méthodes}
+
+

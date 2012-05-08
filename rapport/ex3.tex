@@ -1,0 +1,29 @@
+\paragraph{Question 1}Le programme linéaire en nombres entiers qui modélise le
+  problème du couplage maximum de poids minimum est le suivant.
+  (notons $u_{ij}$ les arêtes du graphe)
+Notons que $u_{ij} \in \{0, 1\}$ car on prend une arête ou on ne la
+prend pas.
+
+\begin{equation}
+\begin{cases}
+min \sum w_{ij} u_{ij} \\
+\forall x_{ij} \in E ~ \sum u_{i' j'} = 1 \\
+ x_{i' j'} \in adj(x_{ij}) \cup \{ x_{ij} \} \\
+\end{cases}
+\end{equation}
+
+En effet, soit $\{ i, j \}$ une arête qui appartient à un couplage
+$M$. Par définition, $\Gamma^{-1}(i) $ et $\Gamma^{+1}(j)$
+n'appartiennent pas à $M$.
+
+\paragraph{Question 2}
+
+Pour obtenir un couplage de poids minimum, on doit plutôt choisir des
+arêtes de valuation $\epsilon$.
+
+\paragraph{Question 3}
+\paragraph{Question 4}
+\paragraph{Question 5}
+La formulation initialement proposée n'est pas pertinente car elle ne
+couvre pas tous les cas. On peut ainsi considérer les contre-exemples
+suivants~: TODO !
