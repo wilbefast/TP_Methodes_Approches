@@ -17,13 +17,35 @@ $M$. Par définition, $\Gamma^{-1}(i) $ et $\Gamma^{+1}(j)$
 n'appartiennent pas à $M$.
 
 \paragraph{Question 2}
-
-Pour obtenir un couplage de poids minimum, on doit plutôt choisir des
-arêtes de valuation $\epsilon$.
+Les équations des contraintes pour le graphe donné par la figure 2
+sont les suivantes~:
+\begin{equation}
+\begin{cases}
+u_{ab}+u_{ac}+u_{ae}=1 \\
+u_{ab}+u_{bc}+u_{bf}=1 \\
+u_{fb}+u_{fd}+u_{fe}=1 \\
+u_{ca}+u_{cb}+u_{cd}=1 \\
+u_{dc}+u_{df}+u_{de}=1 \\
+u_{ef}+u_{ed}+u_{ea}=1 \\
+\end{cases}
+\end{equation}
 
 \paragraph{Question 3}
+Une solution optimale $z(ILP)$ pour le graphe de la figure 2 est un
+couplage de taille 3 et de poids $2.\epsilon + M$, qui peut par
+exemple être $\{
+ac, bf, de \}$. 
+
 \paragraph{Question 4}
+Le programme relaxé consiste à considérer $0 \leq u_{ij} \leq 1$. \\
+TODO avec glpsol
 \paragraph{Question 5}
 La formulation initialement proposée n'est pas pertinente car elle ne
-couvre pas tous les cas. On peut ainsi considérer les contre-exemples
-suivants~: TODO !
+couvre pas tous les cas. On peut ainsi considérer le contre-exemple
+suivant dans lequel le couplage obtenu n'est pas maximum~: 
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[height=2cm]{exo3.eps}
+\end{center}
+\caption{Contre exemple pour la formulation proposée à l'exercice 3}
+\end{figure}
