@@ -1,14 +1,25 @@
-Amal
 \paragraph{Question 1}
 
 \paragraph{Question 2}
-
+On suppose que $r < 2$
 \begin{itemize}
-\item a)
-\item b)
-\item c)
+\item a) Montrons que $w(Y_{1}) - L \leqslant \frac{p(a_{h})}{2}$\\
+On a $w(Y_{1})$ - $p(a_{h})$ $\leqslant$ $w(Y_{2})$. On ajoute $w(Y_{1})$ de chaque côté, on obtient 2$w(Y_{1})$ - $p(a_{h})$ $\leqslant$ $w(Y_{2})$ + $w(Y_{1})$ et par suite 2$w(Y_{1})$ - $p(a_{h})$ $\leqslant$ 2L ce qui nous donne $w(Y_{1})$ - L $\leqslant$ $\frac{p(a_{h})}{2}$.
+\item b) En insérant l'objet $a_{h}$ dans $w(Y_{1})$ durant la première phase de l'algorithme, on obtient une solution optimale. 
+\item c) Si l'objet $a_{h}$ est inséré dans $w(Y_{1})$ durant la seconde phase, c'est à dire que le poids de l'objet  $p(a_{h})$ $\leqslant$ $p(a_{j})$ puisque les objets sont triés par ordre décroissant.\\
+Montrons ici que 2L $\geqslant$ $p(a_{h})$ (k(r)+1).
+Précédons comme suit:\\
+On a $p(a_{h})$ $\leqslant$ $p(a_{j})$ et par suite $\sum_{j=1}^{(k(r)+1)} p(a_{h})$ $\leqslant$ $\sum_{j=1}^(k(r)+1)} p(a_{j})$ or $\sum_{j=1}^{(k(r)+1)} p(a_{j})$ $\leqslant$ W(A) et donc (k(r)+1)$p(a_{h})$ $\leqslant$ W(A) = 2L. 
+\item d) $m^{*}$ $\geqslant$ L
+\item e) Montrons que le ratio est majoré par $r$.\\
+On a $w(Y_{1})$ $\geqslant$ L, servons nous du résultat trouvé dans la question $d$ on a $m^{*}$ $\geqslant$ L.\\
+$\frac{1}{m^{*}}$ $\leqslant$ $\frac{1}{L}$, multiplions par $w(Y_{1})$ de chaque côté, on obtient $\frac{w(Y_{1})}{m^{*}}$ $\leqslant$ $\frac{w(Y_{1})}{L}$.\\
+On a donc $\frac{w(Y_{1})}{m^{*}}$ $\leqslant$ $\frac {L + \frac {p(a_{h})}{2}}{L}$ $\leqslant$ $1 + \frac{p(a_{h})}{2L}$ $\leqslant$ $1 + \frac{1}{(k(r)+1)}$ $\leqslant$ $1 + \frac{1}{\frac{2-r}{r-1}+1}$ $\leqslant$ $r$
 \end{itemize}
-
 \paragraph{Question 3}
-
-La complexité de l'algorithme 
+La complexité de l'algorithme est: 
+\begin{itemize}
+\item nlogn pour le trie des objets 
+\item $2^{k(r)}$ pour la partition des objets.
+\end{itemize}
+Donc, la complexité est de $2^{k(r)}$ +  nlogn
