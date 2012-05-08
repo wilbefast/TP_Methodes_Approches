@@ -137,6 +137,25 @@ En rajoutant l'utilité de l'objet $4$, on obtient $z=16$.
 \paragraph{Le problème du voyageur de commerce}
 
 \begin{itemize}
-\item a)
-\item b)
+\item a) En appliquant la méthode présentée sur la figure 4, nous
+obtenons la matrice $C$ suivante, avec respectivement pour chaque case la valeur du
+chemin en cours et le dernier sommet choisi ayant mené à cette valeur~:
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline  card(S) $\diagdown$ i  & $1$ & $2$ & $3$ & $4$ \\
+\hline $1$ & $1,\textcolor{blue}{1}$ & $2,2$ & $1,\textcolor{blue}{3}$ & $0,4$ \\
+\hline $2$ & $1,\textcolor{blue}{4}$ & $3,4$ & $3,\textcolor{blue}{2}$ & $0,1$  \\
+\hline $3$ & $2,\textcolor{blue}{2}$ & $3,1$ & $4,\textcolor{blue}{4}$ & $3,2$ \\
+\hline $4$ & $4,\textcolor{blue}{3}$ & $8,3$ & $4,\textcolor{blue}{1}$ & $5,3$ \\
+\hline $5$ & $\textcolor{red}{5},\textcolor{blue}{0}$ & $9,0$ & $\textcolor{red}{5},\textcolor{blue}{0}$ & $6,0$ \\
+\hline
+\end{tabular}
+\end{center}
+\vspace{1cm}
+On obtient ainsi deux plus courts cycles hamiltoniens de longueur 5~:
+\begin{itemize}
+\item 0-1-4-2-3-0~;
+\item 0-3-2-4-1-0.
+\end{itemize}
+\item b) TODO après la prog!
 \end{itemize}
