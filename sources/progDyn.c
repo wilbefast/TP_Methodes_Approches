@@ -92,21 +92,17 @@ int min(int a, int b){
   else{return a;}
 }
 
-//procedure qui calcule le min d'un tableau
+//procedure qui calcule le min d'un tableau 
  	
-int minT(int** tab, int taille, int colonne){
+int minT(int** tab, int taille, int colonne, int ligne){
 	
-  int i, j;
+  int j;
  	
-  int minimum = tab[0][0];
+  int minimum = tab[ligne][0];
  		
-  for(i = 0; i < taille; i ++){	
-
     for(j = 0; j < taille; j ++){
 	
-    minimum = min(minimum, tab[i][j]);
-	
-    }
+    minimum = min(minimum, tab[ligne][j]);
   }
 	
   colonne = j;
@@ -115,12 +111,28 @@ int minT(int** tab, int taille, int colonne){
 
  //extraction du minimum dans la matrice de poids + recuperation du pere
 
-  int min minExtract(int** poids, int** pere, int indiceK){
+int min minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
 
-    // TODO : le plus delicat !
+  int  minimum, i, j;
+  // au dernier tour, cad qd l = nbObjets, on a le droit de prendre le sommet 0 
+  //on verifiera egalement qu'on ne prend pas un sommet deja choisi
+    int minimum = 9999999;
+		
+    for(j = 0; j < nbObjets; j ++){
 
-  }
+      for (i = 0; i < nbObjets; i ++){	
 
+	if(pere[k][i] != j &&  l !=  nbObjets && j != 0){
+	  minimum = min(minimum, poids[val][j]);
+	}
+	else if (pere[k][i] != j &&  l ==  nbObjets){
+	  minimum = min(minimum, poids[val][j]);
+	}
+      }
+    }
+	pere[k][val] = j;	
+	return minimum;
+}
 
 //algo du voyageur de commerce en lui-meme
 
@@ -132,7 +144,7 @@ int salesman(int** poids, int nbObjets){
 
   //initialisation de la premiere ligne (cas de base recurrence)
 
-  for(i = 1; i < nbObjets; i++){
+  for(i = 1; i < nbObjets; i ++){
     
     C[0][i] = poids[0][i];
     C[i][i] = 99999;
@@ -152,29 +164,29 @@ int salesman(int** poids, int nbObjets){
       }
     }
   }
-
-
   
   //remplissage du tableau C
 
-  int indiceK, l;
+  int l;
 
-  for(l = 1; l < nbObjets; l++){ // 1 car on a deja initialise la ligne 0 avec la base de la recurrence
+    for(k = 1; k < nbObjets ; k++){ //k designe le chemin
 
-      for(k = 0; k < nbObjets -1 ; k++){
-	
-	C[l][k] = C[l-1][k] + minExtract(poids, pere, indiceK);
-	
+      int ancien = pere[k-1][k];
+
+      for(l = 1; l < nbObjets; l++){ // 1 car on a deja initialise la ligne 0 avec la base de la recurrence	
+      
+	C[l][k] = C[l-1][k] + minExtract(poids, pere, k, l, nbObjets, pere[k-1][ancien]); // le dernier argument est le sommet duquel on part, cad le "pere" de la case d'avant
+	ancien = pere[k-1][ancien];
       }
-	  printf(" C[%d][%d]= %d \n", l, k, C[l][k]);
+      printf(" C[%d][%d]= %d \n", l, k, C[l][k]);
 	  puts("Tableau tsp rempli");
-	
+	  
     }
   
   //valeur du plus petit cycle
   int pluspetit, cpt;
   int colonne, old;
-  pluspetit = minT(C, nbObjets, colonne);
+  pluspetit = minT(C, nbObjets, colonne, nbObjets - 1);
   printf("Valeur du cycle : %d \n", pluspetit);
 
   //ordre de parcours des sommets du cylcle
