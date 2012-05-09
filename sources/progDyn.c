@@ -111,27 +111,27 @@ int minT(int** tab, int taille, int colonne, int ligne){
 
  //extraction du minimum dans la matrice de poids + recuperation du pere
 
-int min minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
+int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
 
-  int  minimum, i, j;
+  int i, j;
   // au dernier tour, cad qd l = nbObjets, on a le droit de prendre le sommet 0 
   //on verifiera egalement qu'on ne prend pas un sommet deja choisi
-    int minimum = 9999999;
+    int mini = 9999999;
 		
     for(j = 0; j < nbObjets; j ++){
 
       for (i = 0; i < nbObjets; i ++){	
 
 	if(pere[k][i] != j &&  l !=  nbObjets && j != 0){
-	  minimum = min(minimum, poids[val][j]);
+	  mini = min(mini, poids[val][j]);
 	}
 	else if (pere[k][i] != j &&  l ==  nbObjets){
-	  minimum = min(minimum, poids[val][j]);
+	  mini = min(mini, poids[val][j]);
 	}
       }
     }
 	pere[k][val] = j;	
-	return minimum;
+	return mini;
 }
 
 //algo du voyageur de commerce en lui-meme
@@ -140,7 +140,7 @@ int salesman(int** poids, int nbObjets){
   int i, k, j, s;
 
   int C[nbObjets][nbObjets];
-  int pere[nbObjets-1][nbObjets] //la premiere dimension désigne le chemin
+  int pere[nbObjets-1][nbObjets]; //la premiere dimension désigne le chemin
 
   //initialisation de la premiere ligne (cas de base recurrence)
 
@@ -175,7 +175,7 @@ int salesman(int** poids, int nbObjets){
 
       for(l = 1; l < nbObjets; l++){ // 1 car on a deja initialise la ligne 0 avec la base de la recurrence	
       
-	C[l][k] = C[l-1][k] + minExtract(poids, pere, k, l, nbObjets, pere[k-1][ancien]); // le dernier argument est le sommet duquel on part, cad le "pere" de la case d'avant
+	C[l][k] = C[l-1][k] + (minExtract(poids, pere, k, l, nbObjets, pere[k-1][ancien])); // le dernier argument est le sommet duquel on part, cad le "pere" de la case d'avant
 	ancien = pere[k-1][ancien];
       }
       printf(" C[%d][%d]= %d \n", l, k, C[l][k]);
