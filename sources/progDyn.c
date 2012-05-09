@@ -94,19 +94,33 @@ int min(int a, int b){
 
 //procedure qui calcule le min d'un tableau
  	
-int minT(int* tab, int taille){
+int minT(int** tab, int taille, int colonne){
 	
-  int i;
+  int i, j;
  	
-  int minimum = tab[0];
+  int minimum = tab[0][0];
  		
-  for(i = 0; i < taille; i++){	
+  for(i = 0; i < taille; i ++){	
+
+    for(j = 0; j < taille; j ++){
 	
-    minimum = min(minimum, tab[i]);
+    minimum = min(minimum, tab[i][j]);
 	
-  }	
+    }
+  }
+	
+  colonne = j;
   return minimum;
 }
+
+ //extraction du minimum dans la matrice de poids + recuperation du pere
+
+  int min minExtract(int** poids, int** pere, int indiceK){
+
+    // TODO : le plus delicat !
+
+  }
+
 
 //algo du voyageur de commerce en lui-meme
 
@@ -114,6 +128,7 @@ int salesman(int** poids, int nbObjets){
   int i, k, j, s;
 
   int C[nbObjets][nbObjets];
+  int pere[nbObjets-1][nbObjets] //la premiere dimension désigne le chemin
 
   //initialisation de la premiere ligne (cas de base recurrence)
 
@@ -121,33 +136,56 @@ int salesman(int** poids, int nbObjets){
     
     C[0][i] = poids[0][i];
     C[i][i] = 99999;
-     
-  
+    
   }
-  
-  //remplissage du tableau
 
-int tab[nbObjets]; // pr stocker les valeurs en attendant de faire le min
-  for( s = 1; s < nbObjets ; s ++){
+  //initialisation du tableau des peres : on decide que le pere du premier objet est lui meme
 
-    for(i = 0; i < nbObjets; i++){
+  for( i = 0; i < nbObjets - 1; i++){
 
-      for(k = 0; k < nbObjets ; k++){
-	
-	if(s != i && k != i && k != s-1){
-	  tab[k] = C[s-1][k] + poids[k][i];
-	}
+    for( j = 0; j < nbObjets; j++){
+      if(j == i+1){
+	pere[i][j] = i+1;
       }
-	  C[s][i] = minT(tab, nbObjets) ;
-	  printf(" C[%d][%d]= %d \n", s, i, C[s][i]);
-	  puts("Tableau tsp rempli");
-	
+      else{
+	pere[i][j] = -1;
+      }
     }
   }
 
-  printf("Valeur du cycle : %d \n", C[nbObjets-1][0]);
+
+  
+  //remplissage du tableau C
+
+  int indiceK, l;
+
+  for(l = 1; l < nbObjets; l++){ // 1 car on a deja initialise la ligne 0 avec la base de la recurrence
+
+      for(k = 0; k < nbObjets -1 ; k++){
+	
+	C[l][k] = C[l-1][k] + minExtract(poids, pere, indiceK);
+	
+      }
+	  printf(" C[%d][%d]= %d \n", l, k, C[l][k]);
+	  puts("Tableau tsp rempli");
+	
+    }
+  
+  //valeur du plus petit cycle
+  int pluspetit, cpt;
+  int colonne, old;
+  pluspetit = minT(C, nbObjets, colonne);
+  printf("Valeur du cycle : %d \n", pluspetit);
+
+  //ordre de parcours des sommets du cylcle
+  old = pere[colonne-1][0]; // colonne-1 a cause du decalage avec l'indicage a 0 en C
+  for(cpt = 0; cpt < nbObjets; cpt ++){
+    printf("%d - ", old);
+    old = pere[colonne-1][old];
+  }
+  printf("\n");
   return 1;
- }
+}
 
 
 int main(){
