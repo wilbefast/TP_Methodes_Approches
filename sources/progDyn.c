@@ -150,7 +150,7 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
  
   if( l ==  nbObjets){
       pere[k][val] = 0; 
-      return poids[val][0];
+      mini = poids[val][0];
   }
     
   for(j = 0; j < nbObjets; j ++){
@@ -180,10 +180,12 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
   
   //initialisation de la premiere ligne (cas de base recurrence)
   
-  for(i = 1; i < nbObjets; i ++){
+  for(i = 0; i < nbObjets -1; i ++){
     
     C[0][i] = poids[0][i];
-    C[i][i] = 99999;
+    printf(" C[0][%d]= %d \n", i, C[0][i]);
+    //C[i][i] = 99999;
+    //printf(" C[%d][%d]= %d \n", i, i, C[i][i]);
     
   }
   
@@ -205,15 +207,15 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
   
   int l;
   
-  for(k = 1; k < nbObjets -1 ; k++){ //k designe le chemin
+  for(k = 0; k < nbObjets -2 ; k++){ //k designe le chemin
       
-    int ancien = pere[k-1][k];
+    int ancien = pere[k][k];
       
     for(l = 1; l < nbObjets; l++){ // 1 car on a deja initialise la ligne 0 avec la base de la recurrence	
 	
-      C[l][k] = C[l-1][k] + (minExtract(poids, pere, k, l, nbObjets, pere[k-1][ancien])); // le dernier argument est le sommet duquel on part, cad le "pere" de la case d'avant
-      printf(" %d \n", minExtract(poids, pere, k, l, nbObjets, pere[k-1][ancien]) );
-      ancien = pere[k-1][ancien];
+      C[l][k] = C[l-1][k] + (minExtract(poids, pere, k, l, nbObjets, pere[k][ancien])); // le dernier argument est le sommet duquel on part, cad le "pere" de la case d'avant
+      printf(" %d \n", minExtract(poids, pere, k, l, nbObjets, pere[k][ancien]) );
+      ancien = pere[k][ancien];
       printf(" C[%d][%d]= %d \n", l, k, C[l][k]);
     }
    
@@ -225,7 +227,7 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
   int pluspetit, cpt;
   int colonne = 1;
   int old;
-  pluspetit = minT(C, nbObjets, &colonne, nbObjets - 1);
+  pluspetit = minT(C, nbObjets, &colonne, nbObjets -1);
   printf("Valeur du cycle : %d \n", pluspetit);
     
   //ordre de parcours des sommets du cylcle
