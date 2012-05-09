@@ -126,6 +126,19 @@ int partition(int* poids, int nbObjets){
 
 /* Voyageur de commerce */
 
+//teste si un sommet est déjà pris
+
+int estDansPere(int** pere, int sommet, int k, int nbObjets){
+
+  int i;
+    
+    for (i = 0; i < nbObjets; i ++){
+
+      if (pere[k][i] == sommet) {return 1;}
+    }
+    return 0;
+}
+
 //extraction du minimum dans la matrice de poids + recuperation du pere
 
 int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
@@ -134,27 +147,30 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
   // au dernier tour, cad qd l = nbObjets, on a le droit de prendre le sommet 0 
   //on verifiera egalement qu'on ne prend pas un sommet deja choisi
   int mini = 9999999;
-  
+ 
+  if( l ==  nbObjets){
+      pere[k][val] = 0; 
+      return poids[val][0];
+  }
+    
   for(j = 0; j < nbObjets; j ++){
     
-    for (i = 0; i < nbObjets; i ++){	
-      
-      if(pere[k][i] != j &&  l !=  nbObjets && j != 0){
-	mini = min(mini, poids[val][j]);
+      if( j !=  k && j != 0){
+	
+	if(poids[val][j] < mini && !estDansPere(pere, j, k, nbObjets)){
+	  mini = poids[val][j];
+	  pere[k][val] = j;
+	}
       }
-      else if (pere[k][i] != j &&  l ==  nbObjets){
-	mini = min(mini, poids[val][j]);
-      }
-    }
   }
-  pere[k][val] = j;	
+  	
   return mini;
 }
-
-
-//algo du voyageur de commerce en lui-meme
-
-int salesman(int** poids, int nbObjets){ 
+  
+  
+  //algo du voyageur de commerce en lui-meme
+  
+  int salesman(int** poids, int nbObjets){ 
   int i, k, j;
   
   //allocation des tableaux
@@ -196,6 +212,7 @@ int salesman(int** poids, int nbObjets){
     for(l = 1; l < nbObjets; l++){ // 1 car on a deja initialise la ligne 0 avec la base de la recurrence	
 	
       C[l][k] = C[l-1][k] + (minExtract(poids, pere, k, l, nbObjets, pere[k-1][ancien])); // le dernier argument est le sommet duquel on part, cad le "pere" de la case d'avant
+      printf(" %d \n", minExtract(poids, pere, k, l, nbObjets, pere[k-1][ancien]) );
       ancien = pere[k-1][ancien];
       printf(" C[%d][%d]= %d \n", l, k, C[l][k]);
     }
@@ -206,16 +223,16 @@ int salesman(int** poids, int nbObjets){
     
   //valeur du plus petit cycle
   int pluspetit, cpt;
-  int colonne = 0;
+  int colonne = 1;
   int old;
   pluspetit = minT(C, nbObjets, &colonne, nbObjets - 1);
   printf("Valeur du cycle : %d \n", pluspetit);
     
   //ordre de parcours des sommets du cylcle
-  old = pere[colonne][0]; 
+  old = pere[colonne-1][0]; 
   for(cpt = 0; cpt < nbObjets; cpt ++){
     printf("%d - ", old);
-    old = pere[colonne][old];
+    old = pere[colonne-1][old];
   }
   printf("\n");
     
@@ -263,14 +280,14 @@ int main(){
   
   //Remarque : tsp symetrique
   
-  int nTSP = 3;
-  
-  
+  int nTSP = 5; 
   int** pTSP = multi_malloc(nTSP, nTSP);
   
-  pTSP[0][0] = 0; pTSP[0][1] = 4; pTSP[0][2] = 3; 
-  pTSP[1][0] = 4; pTSP[1][1] = 0; pTSP[1][2] = 3;
-  pTSP[2][0] = 3; pTSP[2][1] = 3; pTSP[2][2] = 0;
+  pTSP[0][0] = 0; pTSP[0][1] = 1; pTSP[0][2] = 2; pTSP[0][3] = 1; pTSP[0][4] = 0;
+  pTSP[1][0] = 1; pTSP[1][1] = 0; pTSP[1][2] = 3; pTSP[1][3] = 5; pTSP[1][4] = 0;
+  pTSP[2][0] = 2; pTSP[2][1] = 3; pTSP[2][2] = 0; pTSP[2][3] = 2; pTSP[2][4] = 1;
+ pTSP[3][0] = 1; pTSP[3][1] = 5; pTSP[3][2] = 2; pTSP[3][3] = 0; pTSP[3][4] = 4;
+ pTSP[4][0] = 0; pTSP[4][1] = 0; pTSP[4][2] = 1; pTSP[4][3] = 4; pTSP[4][4] = 0;
   
   
   puts("debut resolution TSP");
