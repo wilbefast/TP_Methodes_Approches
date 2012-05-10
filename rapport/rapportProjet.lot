@@ -1,2 +1,7 @@
 \select@language {french}
-\contentsline {table}{\numberline {1}{\ignorespaces Remplissage du tableau sur l'exemple donné}}{10}
+\contentsline {table}{\numberline {1}{\ignorespaces Remplissage du tableau sur l'exemple donné}}{11}
+\contentsline {table}{\numberline {2}{\ignorespaces Tableau 1 du simplex}}{16}
+\contentsline {table}{\numberline {3}{\ignorespaces Tableau 2 du simplex}}{16}
+\contentsline {table}{\numberline {4}{\ignorespaces Tableau 1 des coupes de Gomory}}{18}
+\contentsline {table}{\numberline {5}{\ignorespaces Tableau 1 de la méthode à deux phases}}{18}
+\contentsline {table}{\numberline {6}{\ignorespaces Tableau 2 de la méthode à deux phases}}{18}
