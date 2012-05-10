@@ -4,23 +4,34 @@
 #include "math.h"
 #include "matrix.h"
 
-#define KNAPS_N_OBJ 7
-#define KNAPS_CAPACITY 2
-#define KNAPS_WEIGHTS {3,5,1,5,7,2,6}
-#define KNAPS_UTILITIES {2,5,3,3,6,2,4}
+/* UNIT TEST */
 
-bool_t knapsack_unit()
+#include "assert.h"
+
+#define UNIT_KNAPS_N_OBJ 7
+#define UNIT_KNAPS_CAPACITY 2
+#define UNIT_KNAPS_WEIGHTS {3,5,1,5,7,2,6}
+#define UNIT_KNAPS_UTILITIES {2,5,3,3,6,2,4}
+#define UNIT_KNAPS_RIGHT_ANSWER 3 // take item number 2, with utility 3
+
+
+int knapsack_unit()
 {
   // instance sac a dos : on veut maximiser l'utilite
-  size_t weights[KNAPS_N_OBJ] = KNAPS_WEIGHTS;
-  size_t utilities[KNAPS_N_OBJ] = KNAPS_UTILITIES;
+  size_t weights[UNIT_KNAPS_N_OBJ] = UNIT_KNAPS_WEIGHTS;
+  size_t utilities[UNIT_KNAPS_N_OBJ] = UNIT_KNAPS_UTILITIES;
 
   // solve the problem
-  knapsack(KNAPS_CAPACITY, KNAPS_N_OBJ, weights, utilities);
+  size_t max_utility =
+    knapsack(UNIT_KNAPS_CAPACITY, UNIT_KNAPS_N_OBJ, weights, utilities);
+
+  ASSERT(max_utility == UNIT_KNAPS_RIGHT_ANSWER, "knapsack result check");
 
   // unit test result
-  return TRUE;
+  return EXIT_SUCCESS;
 }
+
+/* KNAPSACK PROBLEM SOLVER */
 
 size_t knapsack(size_t capacity, size_t n_obj, size_t weights[], size_t utilities[])
 {
@@ -36,21 +47,22 @@ size_t knapsack(size_t capacity, size_t n_obj, size_t weights[], size_t utilitie
     m.t[0][col] = 0;
 
   // remplissage de la table selon les formules de la prog dyn
-  size_t line;
-  for (line = 1; line < n_obj; line++)
+  size_t row;
+  for (row = 1; row < n_obj; row++)
     for (col = 0; col < capacity + 1; col++)
     {
-      if (col >= weights[line])
-        m.t[line][col] =
-          max(m.t[line-1][col], m.t[line-1][col-weights[line]] + utilities[line]);
+      if (col >= weights[row])
+        m.t[row][col] =
+          max(m.t[row-1][col], m.t[row-1][col-weights[row]] + utilities[row]);
       else
-        m.t[line][col] = m.t[line-1] [col];
+        m.t[row][col] = m.t[row-1] [col];
     }
 
-  // free the matrix
+  // store the result and free the matrix
+  size_t result = m.t[n_obj -1][capacity];
   free_matrix(&m);
 
   // la valeur qui nous interesse
-  return (m.t[n_obj -1][capacity]);
+  return result;
 }
 

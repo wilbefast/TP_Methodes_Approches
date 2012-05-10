@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-bool_t unit_partition();
+int partition_unit();
 size_t partition(size_t n_obj, size_t weights[]);
 
 #endif // PARTITION_H_INCLUDED
