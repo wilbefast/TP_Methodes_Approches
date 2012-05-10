@@ -286,10 +286,8 @@ int main(){
   
   /* instance partition : on veut savoir si on peut partager en deux*/
   
-  int nPart = 2;
-  int pPart[nPart];
-  
-  pPart[0] = 5; pPart[1] = 5; 
+  int nPart = 4;
+  int pPart[4] = { 1, 6, 2, 2 };
   
   puts("debut resolution partition");
   
