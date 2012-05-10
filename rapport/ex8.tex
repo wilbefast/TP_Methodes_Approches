@@ -2,9 +2,11 @@
 
 \begin{itemize}
 \item Pour le premier produit, on doit effectuer $P_{k-1}.P_k.P_{k+1}
-  + P_{k-2}.P_{k-1}.P_{k+1} + \dots + P_2.P_3.P_{k+1} + P_1.P_2.P_{k+1}$ opérations.
+  + P_{k-2}.P_{k-1}.P_{k+1} + \dots + P_2.P_3.P_{k+1} +
+  P_1.P_2.P_{k+1}$ opérations. Donc $O(k^4)$.
 \item Pour le parenthésage symétrique, on doit effectuer $P_1.P_2.P_3
-  + P_1.P_3.P_4 + P_1.P_4.P_5 + \dots + P_1.P_{k-1}.P_{k} + P_1.P_k+P_{k+1}$ opérations.
+  + P_1.P_3.P_4 + P_1.P_4.P_5 + \dots + P_1.P_{k-1}.P_{k} +
+  P_1.P_k+P_{k+1}$ opérations. Donc $O(k^3)$.
 \end{itemize}
 
 On remarque que le \textit{coefficient} le plus au bout de la matrice
