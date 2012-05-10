@@ -170,6 +170,31 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
 	  
   return mini;
 }
+
+int newColonne(int** poids, int** pere, int k, int l, int nbObjets, int val){
+  
+  int i, j;
+  // au dernier tour, cad qd l = nbObjets, on a le droit de prendre le sommet 0 
+  //on verifiera egalement qu'on ne prend pas un sommet deja choisi
+  int mini = 9999999;
+ 
+  if( l ==  nbObjets -1){
+      pere[k][0] = val; 
+      mini = poids[val][0];
+  }
+    
+  for(j = 0; j < nbObjets; j ++){
+    
+      if( j !=  k+1 && j != 0){
+	
+	if(poids[val][j] < mini && !estDansPere(pere, j, k, nbObjets)){
+	  mini = poids[val][j];
+	}
+      }
+  }
+ //la nouvelle ligne devient la colonne qu'on vient de choisir
+  return j;
+}
   
   
   //algo du voyageur de commerce en lui-meme
@@ -220,7 +245,8 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
       
     for(l = 1; l < nbObjets; l++){ // 1 car on a deja initialise la ligne 0 avec la base de la recurrence	
 	
-      C[l][k] = C[l-1][k] + (minExtract(poids, pere, k, l, nbObjets, ancien)); 
+      int prochainSommet = newColonne(poids, pere, k, l, nbObjets, ancien);
+      C[l][k] = C[l-1][k] + (minExtract(poids, pere, k, l, nbObjets, prochainSommet)); 
       printf(" le min des poids: %d \n", minExtract(poids, pere, k, l, nbObjets, ancien) );
       printf("valeur nouvel ancien : %d \n", ancien);
       printf(" C[%d][%d]= %d \n", l, k, C[l][k]);
