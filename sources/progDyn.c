@@ -3,6 +3,11 @@
 
 /* Utilitaires */
 
+typedef struct{
+    int valeur;
+    int index;
+  } pitit;
+
 //procedure qui calcule le max entre deux valeurs
 
 int max(int a, int b){
@@ -141,27 +146,29 @@ int estDansPere(int** pere, int sommet, int k, int nbObjets){
 
 //extraction du minimum dans la matrice de poids + recuperation du pere
 
-int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
+pitit minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
   
   int i, j;
   // au dernier tour, cad qd l = nbObjets, on a le droit de prendre le sommet 0 
   //on verifiera egalement qu'on ne prend pas un sommet deja choisi
-  int mini = 9999999;
+
+  pitit mini;
+  mini.index = 9999999;
  
   if( l ==  nbObjets -1){
       pere[k][0] = val; 
-      mini = poids[val][0];
+      mini.valeur = poids[val][0];
   }
     
-  for(j = 0; j < nbObjets; j ++){
+  for(j = 0; j < nbObjets - 1; j ++){
     
       if( j !=  k+1 && j != 0){
 	
-	if(poids[val][j] < mini && !estDansPere(pere, j, k, nbObjets)){
-	  mini = poids[val][j];
+	if(poids[val][j] < mini.valeur && !estDansPere(pere, j, k, nbObjets)){
+	  mini.valeur = poids[val][j];
 	  pere[k][j] = val;
 	  //la nouvelle ligne devient la colonne qu'on vient de choisir
-	  val = j;
+	  mini.index = j;
 	}
       }
   }
@@ -170,32 +177,6 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
 	  
   return mini;
 }
-
-int newColonne(int** poids, int** pere, int k, int l, int nbObjets, int val){
-  
-  int i, j;
-  // au dernier tour, cad qd l = nbObjets, on a le droit de prendre le sommet 0 
-  //on verifiera egalement qu'on ne prend pas un sommet deja choisi
-  int mini = 9999999;
- 
-  if( l ==  nbObjets -1){
-      pere[k][0] = val; 
-      mini = poids[val][0];
-  }
-    
-  for(j = 0; j < nbObjets; j ++){
-    
-      if( j !=  k+1 && j != 0){
-	
-	if(poids[val][j] < mini && !estDansPere(pere, j, k, nbObjets)){
-	  mini = poids[val][j];
-	}
-      }
-  }
- //la nouvelle ligne devient la colonne qu'on vient de choisir
-  return j;
-}
-  
   
   //algo du voyageur de commerce en lui-meme
   
@@ -238,6 +219,7 @@ int newColonne(int** poids, int** pere, int k, int l, int nbObjets, int val){
   
   int l;
   
+  
   for(k = 0; k < nbObjets -1 ; k++){ //k designe le chemin
       
     int ancien = pere[k][k+1];
@@ -245,9 +227,13 @@ int newColonne(int** poids, int** pere, int k, int l, int nbObjets, int val){
       
     for(l = 1; l < nbObjets; l++){ // 1 car on a deja initialise la ligne 0 avec la base de la recurrence	
 	
-      int prochainSommet = newColonne(poids, pere, k, l, nbObjets, ancien);
-      C[l][k] = C[l-1][k] + (minExtract(poids, pere, k, l, nbObjets, prochainSommet)); 
+      puts("blabla");
+      
+      C[l][k] = C[l-1][k] + (minExtract(poids, pere, k, l, nbObjets, ancien).valeur); 
+      // ligne qui segfault :  ancien = (minExtract(poids, pere, k, l, nbObjets, ancien)).index;
+
       printf(" le min des poids: %d \n", minExtract(poids, pere, k, l, nbObjets, ancien) );
+
       printf("valeur nouvel ancien : %d \n", ancien);
       printf(" C[%d][%d]= %d \n", l, k, C[l][k]);
     }
