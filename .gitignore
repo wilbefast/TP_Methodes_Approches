@@ -10,3 +10,6 @@ projet/glpk/bin/
 # Affichage
 **.ps
 **.dot
+
+# Latex
+**.lot
