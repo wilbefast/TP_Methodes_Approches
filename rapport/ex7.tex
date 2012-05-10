@@ -7,9 +7,30 @@
 \item b) 
 \begin{itemize}
 \item i) La formule qui lie les lignes $i$, $i-1$ et $p(a_i)$ est $A_i
-  := A_{i-1} \bigcup A_{i, p(a_i)} \bigcup A_{i-1}+p(a_i)$ avec
+  := A_{i-1} \cup A_{i, p(a_i)} \cup A_{i-1}+p(a_i)$ avec
   $A_{i-1}+p(a_i) \leq P$.
-\item ii) TODO
+\item ii) Construisons le tableau à partir de l'exemple donné:
+\begin{table}[h!]
+\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+     i $\diagdown$ p & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
+    \hline
+   1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+     \hline
+	2& 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+   \hline
+	3 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 1 & 0 & 0 \\
+	\hline
+	4 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 0 \\
+	  \hline
+	5 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 \\
+	\hline
+	6 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 \\
+	\hline
+\end{tabular}
+\caption {Remplissage du tableau sur l'exemple donné}
+\end{table} 
 \item iii) Nous proposons les deux algorithmes ci-dessous.
 \begin{algorithm}[t]
 \caption{Algorithme général}
@@ -64,10 +85,79 @@
 \paragraph{Le problème du sac à dos}
 \begin{itemize}
 \item a) Nous justifions les formules proposées en énonçant que l'on
-  prend le maximum des $x_ju_j$ pour $j$ de 1 à $k-1$ en enlevant le
-  poids de l'objet $x_k$, et l'on rajoute à $x_ju_j$ l'utilité de
-  l'objet en cours.
-\item b) TODO
-\item c) TODO
+  obtient la solution optimale pour le problème $P(k,v)$ en calculant
+  l'utilité maximale de $1$ à $k-1$ et en lui ajoutant l'utilité de
+  l'objet $k$. $x_k = \frac{v}{v_k}$ représente le nombre de fois
+  qu'on peut faire rentrer notre objet $k$ dans le sac. C'est pour
+  cela qu'on retire $v - v_kx_k$.
+\item b) Nous proposons l'exemple suivant~:
+\begin{itemize}
+\item Le nombres d'objets est $n = 4$
+\item La capacité du sac est $V = 14$
+\item $p(a_1)=2$,$p(a_2)=3$, $p(a_3)=4$, $p(a_4)=2$
+\item $u(a_1)=4$,$u(a_2)=3$, $u(a_3)=2$, $u(a_4)=1$
+\end{itemize}
+On note ici $v_i=a_i$ le poids de l'objet $i$.
+
+On obtient donc~:
+\begin{equation}
+\begin{cases}
+\max z = \sum_{j=1}^3 x_ju_j \\
+\sum_{j=1}^3v_jx_j \leq v - v_4x_4 \\
+\end{cases}
+\end{equation}
+
+On propose donc le tableau suivant~:
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline  i $\diagdown$ p  & $p(a_i)$ & $u_i$ & $x_i$  \\
+\hline $1$ & $2$ & $4$ & $3$ \\
+\hline $2$ & $3$ & $3$ & $2$  \\
+\hline $3$ & $4$ & $2$ & $1$ \\
+\hline $4$ & $2$ & $1$ & $2$ \\
+\hline
+\end{tabular}
+\end{center}
+\vspace{1cm}
+Ici, on peut prendre les objets $1$ et $3$ pour une utilité de
+$3 \times 4 + 2 \times 1 = 14$.
+
+
+On pourrait aussi prendre les objets $2$ et $3$ mais pour une utilité
+inférieure ($8$).
+
+Remarquons que les objets $1$ et $2$ violent la contrainte de poids.
+
+
+On garde donc les objets $1$ et $3$.
+
+En rajoutant l'utilité de l'objet $4$, on obtient $z=16$.
+
+\item c) La complexité de l'algorithme est donc de $O(k \times V)$.
 \end{itemize}
 
+\paragraph{Le problème du voyageur de commerce}
+
+\begin{itemize}
+\item a) En appliquant la méthode présentée sur la figure 4, nous
+obtenons la matrice $C$ suivante, avec respectivement pour chaque case la valeur du
+chemin en cours et le dernier sommet choisi ayant mené à cette valeur~:
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline  card(S) $\diagdown$ i  & $1$ & $2$ & $3$ & $4$ \\
+\hline $1$ & $1,\textcolor{blue}{1}$ & $2,2$ & $1,\textcolor{blue}{3}$ & $0,4$ \\
+\hline $2$ & $1,\textcolor{blue}{4}$ & $3,4$ & $3,\textcolor{blue}{2}$ & $0,1$  \\
+\hline $3$ & $2,\textcolor{blue}{2}$ & $3,1$ & $4,\textcolor{blue}{4}$ & $3,2$ \\
+\hline $4$ & $4,\textcolor{blue}{3}$ & $8,3$ & $4,\textcolor{blue}{1}$ & $5,3$ \\
+\hline $5$ & $\textcolor{red}{5},\textcolor{blue}{0}$ & $9,0$ & $\textcolor{red}{5},\textcolor{blue}{0}$ & $6,0$ \\
+\hline
+\end{tabular}
+\end{center}
+\vspace{1cm}
+On obtient ainsi deux plus courts cycles hamiltoniens de longueur 5~:
+\begin{itemize}
+\item 0-1-4-2-3-0~;
+\item 0-3-2-4-1-0.
+\end{itemize}
+\item b) TODO après la prog!
+\end{itemize}

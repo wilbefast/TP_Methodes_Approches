@@ -14,8 +14,18 @@
   couvrir une arête.
 \end{itemize}
 Ces trois conditions décrivent donc bien le problème de la couverture minimale.
-\item[] b) exemple du triangle (à faire en dessin), cette condition
-  n'est donc pas suffisante.
+\item[] b) Le cas du triangle est un contre-exemple qui contredit cette
+égalité. En effet (cf le dessin ci-dessous) le fait de
+choisir l'arête $AC$, par exemple, empêcherait de sélectionner les
+autres arêtes (sous peine de violer la contrainte d'égalité) alors
+qu'un sommet resterait insaturé. Cette condition doit donc être
+élargie à une inégalité.
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[height=3cm]{triangle.eps}
+\end{center}
+\caption{Pourquoi on ne peut pas avoir $x_r + x_S = 1$.}
+\end{figure}
 \item[] c) Montrons par l'absurde que le programme linéaire en nombres
   entiers est une borne inférieure de toute solution optimale.
 \begin{proof}
@@ -52,8 +62,17 @@ Soit $C^{*}$ une solution optimale du problème de la couverture de
 sommet. Soit $C$ la solution donnée par l'algorithme. 
 $x_r=x_s=\frac{1}{2}$. Après la phase d'arrondi $x_r=x_s= 1$. D'où $
 OPT = \frac{approche}{2}$.
-En effet, on a pour exemple de pire des cas un carré. cf dessin.
+En effet, on a pour exemple de pire des cas un carré, cf figure
+ci-dessous.
 \end{proof}
+
+\begin{figure}
+\begin{center}
+\includegraphics[height=3cm]{carre.eps}
+\end{center}
+\caption{Pire des cas pour l'algorithme 1}
+\end{figure}
+
 \item[] f)
 \begin{itemize}
 \item i)
