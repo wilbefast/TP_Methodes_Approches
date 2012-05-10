@@ -148,22 +148,26 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
   //on verifiera egalement qu'on ne prend pas un sommet deja choisi
   int mini = 9999999;
  
-  if( l ==  nbObjets){
-      pere[k][val] = 0; 
+  if( l ==  nbObjets -1){
+      pere[k][0] = val; 
       mini = poids[val][0];
   }
     
   for(j = 0; j < nbObjets; j ++){
     
-      if( j !=  k && j != 0){
+      if( j !=  k+1 && j != 0){
 	
 	if(poids[val][j] < mini && !estDansPere(pere, j, k, nbObjets)){
 	  mini = poids[val][j];
-	  pere[k][val] = j;
+	  pere[k][j] = val;
+	  //la nouvelle ligne devient la colonne qu'on vient de choisir
+	  val = j;
 	}
       }
   }
-  	
+  printf(" pere[%d][%d]= %d \n", k, j, pere[k][j]);
+  printf("valeur nouvelle colonne : %d \n", val);
+	  
   return mini;
 }
   
@@ -182,7 +186,7 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
   
   for(i = 0; i < nbObjets -1; i ++){
     
-    C[0][i] = poids[0][i];
+    C[0][i] = poids[0][i+1];
     printf(" C[0][%d]= %d \n", i, C[0][i]);
     //C[i][i] = 99999;
     //printf(" C[%d][%d]= %d \n", i, i, C[i][i]);
@@ -196,9 +200,11 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
     for( j = 0; j < nbObjets; j++){
       if(j == i+1){
 	pere[i][j] = i+1;
+	printf(" pere[%d][%d]= %d \n", i, j, pere[i][j]);
       }
       else{
 	pere[i][j] = -1;
+	printf(" pere[%d][%d]= %d \n", i, j, pere[i][j]);
       }
     }
   }
@@ -207,15 +213,16 @@ int minExtract(int** poids, int** pere, int k, int l, int nbObjets, int val){
   
   int l;
   
-  for(k = 0; k < nbObjets -2 ; k++){ //k designe le chemin
+  for(k = 0; k < nbObjets -1 ; k++){ //k designe le chemin
       
-    int ancien = pere[k][k];
+    int ancien = pere[k][k+1];
+    printf(" pere[%d][%d]= %d \n", k, k+1, pere[k][k+1]);
       
     for(l = 1; l < nbObjets; l++){ // 1 car on a deja initialise la ligne 0 avec la base de la recurrence	
 	
-      C[l][k] = C[l-1][k] + (minExtract(poids, pere, k, l, nbObjets, pere[k][ancien])); // le dernier argument est le sommet duquel on part, cad le "pere" de la case d'avant
-      printf(" %d \n", minExtract(poids, pere, k, l, nbObjets, pere[k][ancien]) );
-      ancien = pere[k][ancien];
+      C[l][k] = C[l-1][k] + (minExtract(poids, pere, k, l, nbObjets, ancien)); 
+      printf(" le min des poids: %d \n", minExtract(poids, pere, k, l, nbObjets, ancien) );
+      printf("valeur nouvel ancien : %d \n", ancien);
       printf(" C[%d][%d]= %d \n", l, k, C[l][k]);
     }
    
