@@ -8,50 +8,50 @@
 
 #include "assert.h"
 
-#define UNIT1_PART_N_OBJ 4
-#define UNIT1_PART_WEIGHTS {2,6,2,2}
-#define UNIT1_PART_RIGHT_ANSWER TRUE
+#define PART_UNIT1_N_OBJ 4
+#define PART_UNIT1_WEIGHTS {2,6,2,2}
+#define PART_UNIT1_RIGHT_ANSWER TRUE
 
-#define UNIT2_PART_N_OBJ 3
-#define UNIT2_PART_WEIGHTS {1,4,3}
-#define UNIT2_PART_RIGHT_ANSWER TRUE
+#define PART_UNIT2_N_OBJ 3
+#define PART_UNIT2_WEIGHTS {1,4,3}
+#define PART_UNIT2_RIGHT_ANSWER TRUE
 
-#define UNIT3_PART_N_OBJ 3
-#define UNIT3_PART_WEIGHTS {1,2,7}
-#define UNIT3_PART_RIGHT_ANSWER FALSE
+#define PART_UNIT3_N_OBJ 3
+#define PART_UNIT3_WEIGHTS {1,2,7}
+#define PART_UNIT3_RIGHT_ANSWER FALSE
 
-#define UNIT4_PART_N_OBJ 4
-#define UNIT4_PART_WEIGHTS {14,5,2,6}
-#define UNIT4_PART_RIGHT_ANSWER FALSE
+#define PART_UNIT4_N_OBJ 4
+#define PART_UNIT4_WEIGHTS {14,5,2,6}
+#define PART_UNIT4_RIGHT_ANSWER FALSE
 
 int partition_unit()
 {
   // test 1
   {
-    size_t weights[UNIT1_PART_N_OBJ] = UNIT1_PART_WEIGHTS;
-    bool_t result = partition(UNIT1_PART_N_OBJ, weights);
-    ASSERT(result == UNIT1_PART_RIGHT_ANSWER, "partition result check 1");
+    size_t weights[PART_UNIT1_N_OBJ] = PART_UNIT1_WEIGHTS;
+    bool_t result = partition(PART_UNIT1_N_OBJ, weights);
+    ASSERT(result == PART_UNIT1_RIGHT_ANSWER, "partition result check 1");
   }
 
   // test 2
   {
-    size_t weights[UNIT2_PART_N_OBJ] = UNIT2_PART_WEIGHTS;
-    bool_t result = partition(UNIT2_PART_N_OBJ, weights);
-    ASSERT(result == UNIT2_PART_RIGHT_ANSWER, "partition result check 2");
+    size_t weights[PART_UNIT2_N_OBJ] = PART_UNIT2_WEIGHTS;
+    bool_t result = partition(PART_UNIT2_N_OBJ, weights);
+    ASSERT(result == PART_UNIT2_RIGHT_ANSWER, "partition result check 2");
   }
 
   // test 3
   {
-    size_t weights[UNIT3_PART_N_OBJ] = UNIT3_PART_WEIGHTS;
-    bool_t result = partition(UNIT3_PART_N_OBJ, weights);
-    ASSERT(result == UNIT3_PART_RIGHT_ANSWER, "partition result check 3");
+    size_t weights[PART_UNIT3_N_OBJ] = PART_UNIT3_WEIGHTS;
+    bool_t result = partition(PART_UNIT3_N_OBJ, weights);
+    ASSERT(result == PART_UNIT3_RIGHT_ANSWER, "partition result check 3");
   }
 
   // test 4
   {
-    size_t weights[UNIT4_PART_N_OBJ] = UNIT4_PART_WEIGHTS;
-    bool_t result = partition(UNIT4_PART_N_OBJ, weights);
-    ASSERT(result == UNIT4_PART_RIGHT_ANSWER, "partition result check 4");
+    size_t weights[PART_UNIT4_N_OBJ] = PART_UNIT4_WEIGHTS;
+    bool_t result = partition(PART_UNIT4_N_OBJ, weights);
+    ASSERT(result == PART_UNIT4_RIGHT_ANSWER, "partition result check 4");
   }
 
   // all tests were successful
