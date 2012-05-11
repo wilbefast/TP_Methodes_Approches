@@ -62,30 +62,42 @@ int partition_unit()
 
 size_t partition(size_t n_obj, size_t weights[])
 {
-
   // calcul de la somme totale des poids
   size_t row, total_weight = 0;
   for(row = 0; row < n_obj; row++ )
     total_weight += weights[row];
 
   // initialisation du tableau de booleens
-  bool_t* bools = (bool_t*) malloc(sizeof(bool_t) * total_weight);
+  bool_t* bools = malloc(sizeof(bool_t) * total_weight);
   bools[0] = TRUE;
   memset(bools+1, FALSE, total_weight-1);
 
   // remplissage de la table selon les formules de la programmation dynamique
   int col;
   for(row = 0; row < n_obj; row++ )
-    for(col = total_weight-weights[row]; col >= 0; col--)
+    for(col = total_weight-weights[row]-1; col >= 0; col--)
       if(bools[col])
         bools[col + weights[row]] = TRUE;
 
 
   // free the table
   bool_t result = bools[total_weight / 2];
-  //free(bools);
-  /// TODO -- fixme: free causes crash, possible heap corruption (?)
+  free(bools);
 
   // la reponse qui nous interesse
   return result;
 }
+
+ initialize a list S to contain one element 0.
+ for each i from 1 to N do
+   let T be a list consisting of xi + y, for all y in S
+   let U be the union of T and S
+   sort U
+   make S empty
+   let y be the smallest element of U
+   add y to S
+   for each element z of U in increasing order do
+      //trim the list by eliminating numbers close to one another
+      //and throw out elements greater than s
+     if y + cs/N < z ≤ s, set y = z and add z to S
+ if S contains a number between (1 − c)s and s, output yes, otherwise no
