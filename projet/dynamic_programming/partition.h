@@ -4,6 +4,6 @@
 #include "types.h"
 
 int partition_unit();
-size_t partition(size_t n_obj, size_t weights[]);
+bool_t partition(size_t n_obj, size_t weights[]);
 
 #endif // PARTITION_H_INCLUDED

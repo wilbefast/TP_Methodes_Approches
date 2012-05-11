@@ -8,24 +8,26 @@
 
 #include "assert.h"
 
-#define UNIT_KNAPS_N_OBJ 7
-#define UNIT_KNAPS_CAPACITY 2
-#define UNIT_KNAPS_WEIGHTS {3,5,1,5,7,2,6}
-#define UNIT_KNAPS_UTILITIES {2,5,3,3,6,2,4}
-#define UNIT_KNAPS_RIGHT_ANSWER 3 // take item number 2, with utility 3
+#define KNAPS_UNIT1_N_OBJ 7
+#define KNAPS_UNIT1_CAPACITY 2
+#define KNAPS_UNIT1_WEIGHTS {3,5,1,5,7,2,6}
+#define KNAPS_UNIT1_UTILITIES {2,5,3,3,6,2,4}
+#define KNAPS_UNIT1_RIGHT_ANSWER 3 // take item number 2, with utility 3
 
 
 int knapsack_unit()
 {
-  // instance sac a dos : on veut maximiser l'utilite
-  size_t weights[UNIT_KNAPS_N_OBJ] = UNIT_KNAPS_WEIGHTS;
-  size_t utilities[UNIT_KNAPS_N_OBJ] = UNIT_KNAPS_UTILITIES;
-
-  // solve the problem
-  size_t max_utility =
-    knapsack(UNIT_KNAPS_CAPACITY, UNIT_KNAPS_N_OBJ, weights, utilities);
-
-  ASSERT(max_utility == UNIT_KNAPS_RIGHT_ANSWER, "knapsack result check");
+  // test 1
+  {
+    // instance sac a dos : on veut maximiser l'utilite
+    size_t weights[KNAPS_UNIT1_N_OBJ] = KNAPS_UNIT1_WEIGHTS;
+    size_t utilities[KNAPS_UNIT1_N_OBJ] = KNAPS_UNIT1_UTILITIES;
+    // solve the problem
+    size_t max_utility =
+      knapsack(KNAPS_UNIT1_CAPACITY, KNAPS_UNIT1_N_OBJ, weights, utilities);
+    // check the result
+    ASSERT(max_utility == KNAPS_UNIT1_RIGHT_ANSWER, "knapsack result check 1");
+  }
 
   // unit test result
   return EXIT_SUCCESS;
