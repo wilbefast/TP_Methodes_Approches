@@ -10,6 +10,7 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{epic, eepic}
+\usepackage{fancybox}
 \usepackage{array, multirow, tabularx}
 
 \usetheme{Warsaw}
@@ -34,16 +35,34 @@
 
 \begin{frame}
 \frametitle{Problème}
+\begin{itemize}
+\item problèmes d'optimisation 
+\begin{itemize}
+\item[] $\nearrow$ problèmes faciles
+\item[] $\searrow$ \fbox{problèmes NP-difficiles}
+\end{itemize}
+\item  $\Rightarrow$ méthodes exactes 
+\begin{itemize}
+\item[] $\nearrow$ programmation dynamique
+\item[] $\searrow$ branch and bound
+\end{itemize}
+
+
+\item  $\Rightarrow$ méthodes approchées
+\begin{itemize}
+\item[] $\longrightarrow$ algorithmes d'approximation
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Table of Contents}
 \begin{columns}
-\begin{column}[]{7cm}
+\begin{column}[]{5cm}
 \tableofcontents
 \end{column}
-\begin{column}[]{2cm}
-%\includegraphics[height=3cm]{cantor.jpg}
+\begin{column}[]{4cm}
+\includegraphics[height=3cm]{commerce.png}
 \end{column}
 \end{columns}
 \end{frame}
@@ -51,16 +70,34 @@
 \section{Programmation dynamique}
 
 \begin{frame}
-\frametitle{Principe}
-\begin{alertblock}{Formules}
-\end{alertblock}
+\frametitle{Outils}
 
 \begin{block}{Programmation}
 langage C
 \end{block}
 
+\begin{block}{Tests}
+\begin{itemize}
+\item tests unitaires
+\item tests de temps d'exécution
+\end{itemize}
+\end{block}
+
 \end{frame}
 
+\begin{frame}
+\frametitle{Partition}
+\begin{alertblock}{Formules}
+\begin{equation}
+\begin{cases}
+tab[0] = 1; \\
+si ( tab[j] == 1 ) {
+       tab[j + poids[i]] = 1;
+     } \\
+\end{cases}
+\end{equation}
+\end{alertblock}
+\end{frame}
 
 \begin{frame}
 \frametitle{Partition}
@@ -69,6 +106,22 @@ langage C
 \end{block}
 \end{frame}
 
+\begin{frame}
+\frametitle{Partition : courbe}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sac à dos}
+\begin{alertblock}{Formules}
+\begin{equation}
+\begin{cases}
+tab[0][w] = 0 \\
+tab[i][j] = max(tab[i-1] [j], (tab[i-1] [j-poids[i]] + utilite[i])); \\
+\end{cases}
+\end{equation}
+\end{alertblock}
+\end{frame}
 
 \begin{frame}
 \frametitle{Sac à dos}
@@ -78,13 +131,32 @@ langage C
 \end{frame}
 
 \begin{frame}
+\frametitle{Sac à dos : courbe}
+\end{frame}
+
+\begin{frame}
+\frametitle{Voyageur de commerce}
+\begin{alertblock}{Formules}
+\begin{equation}
+\begin{cases}
+C[S][i] = poids[0][i] \text{si S ne contient que $0$} \\
+C[S][i] = min_{k \in S - \{ 0 \}} \{ C[S- \{ k \}][k] + poids[k][i]  \}
+\end{cases}
+\end{equation}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
 \frametitle{Voyageur de commerce}
 \begin{block}{Jeux d'essai}
-
 \end{block}
 \end{frame}
 
-\section{Branch and Bound}
+\begin{frame}
+\frametitle{Voyageur de commerce : courbe}
+\end{frame}
+
+\section{Branch and Bound TSP}
 
 \begin{frame}
 \frametitle{Outils}
@@ -92,13 +164,12 @@ langage C
 \begin{itemize}
 \item GLPK
 \item langage C/C++
-\item bibliothèque
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Solution ininitale}
+\frametitle{Solution initiale}
 \begin{itemize}
 \item chaîne de poids le plus faible~;
 \item voisinage 2--opt~;
@@ -109,10 +180,6 @@ langage C
 
 \begin{frame}
 \frametitle{Comparaisons}
-\end{frame}
-
-\begin{frame}
-\frametitle{Algorithme $\frac{3}{2}$}
 \end{frame}
 
 \begin{frame}
@@ -127,17 +194,29 @@ langage C
 \frametitle{Temps d'exécution}
 \end{frame}
 
+\section{Algorithme $\frac{3}{2}$ TSP}
+
+\begin{frame}
+\frametitle{Complexité théorique}
+\end{frame}
+
+\begin{frame}
+\frametitle{Jeux d'essais}
+\end{frame}
+
+\begin{frame}
+\frametitle{Temps d'exécution}
+\end{frame}
 
 \section{Comparaisons}
 
-
 \begin{frame}
-\frametitle{Jeux d'essais selon la solution initiale}
+\frametitle{Jeux d'essais}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Temps d'exécution selon la solution initiale}
+\frametitle{Temps d'exécution}
 \end{frame}
 
 \section{Conclusion}
