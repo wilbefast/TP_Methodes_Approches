@@ -1,12 +1,16 @@
 #ifndef MATRIX_H_INCLUDED
 #define MATRIX_H_INCLUDED
 
-#define size_t unsigned int
+#include "types.h"
 
-// cell structure : a line-column pair
+// unit test
+
+int matrix_unit();
+
+// cell structure : a row-column pair
 typedef struct
 {
-  size_t line, col;
+  size_t row, col;
 }
 cell_t;
 
@@ -31,6 +35,6 @@ void malloc_matrix(matrix_t* m);
 void free_matrix(matrix_t* m);
 
 // query
-valued_index_t min_col(matrix_t* m, size_t line);
+valued_index_t min_col(matrix_t* m, size_t row);
 
 #endif // MATRIX_H_INCLUDED
