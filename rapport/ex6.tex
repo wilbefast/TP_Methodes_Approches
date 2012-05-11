@@ -21,10 +21,23 @@ doit donc vérifier le tri à chaque création $O(nlogn)$.
 sac. Si $p = k$ c'est que tous les objets rentrent dans le sac. 
 \item ii)
 \begin{itemize}
-\item A)
-\item B)
-\item C)
-\item D)
+\item A) Si $P^*=M$ alors c'est que la solution est optimale.
+\item B) Montrons que $\exists i_q > i_k \geq k$ tel que
+$cost(P^*)+w_iq > b \geq cost(M)$.
+\begin{proof}
+Par définition de l'optimalité, on a $cost(M) \leq b$. $k$ est
+l'indice associé à la solution optimale, par définition de la
+notation. \\
+$cost(P^*) \leq b$ mais $cost(P^*) + w_{i_q} > b$ car sinon $w_{i_q}$
+aurait déjà fait partie de la solution (on a $i_q > i_k$). 
+\end{proof}
+\item C) Montrons que $w_{i_q} \leq \frac{cost(M)}{k+1}$.
+\begin{proof}
+
+\end{proof}
+\item D) Évaluons le ratio $R(I, \epsilon)
+= \frac{cost(M)}{cost(P^*)}$. \\
+
 \end{itemize}
 \end{itemize}
 \end{itemize}
