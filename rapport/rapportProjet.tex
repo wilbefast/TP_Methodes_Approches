@@ -385,13 +385,37 @@ sommets moins un) peut être résumé sur le schéma présenté ci-dessous.
 \caption{Exemple de calcul d'un chemin pour le tsp en programmation dynamique.}
 \end{figure}
 
-\paragraph{Implémentation en C}
+\paragraph{Principe de l'algorithme}
 
-TODO
+Nous proposons l'algorithme suivant pour une programmation dynamique
+du TSP.
+
+\begin{algorithm}[!ht]
+\caption{Programmation dynamique pour le TSP}
+\label{Dyntsp}
+\begin{algorithmic}[1]
+\REQUIRE une matrice de poids, un ensemble de $n$ sommets
+\FOR{chaque sous-ensemble $S$ commençant par $0$}
+\IF{$|S| = 2$}
+\FOR{$i$ de $0$ à $n-1$}
+\STATE C[S][i] := poids[0][i]
+\ENDFOR
+\ELSE
+\FOR{$i$ de $0$ à $n-1$}
+\FOR{tous les $k$ $\notin$ $S - \{ 0 \}$}
+\STATE C[S][i] := $\min$ $\{$ C[$S - \{ k \} $][k] + poids[k][i] $\}$
+\ENDFOR
+\ENDFOR
+\ENDIF
+\ENDFOR
+\STATE retourner $\min$ $\{$ C[S][i] + poids[i][0] $\}$ avec $|S| = $
+(nombre de sommets - 1)
+\end{algorithmic}
+\end{algorithm}
 
 \paragraph{Complexité théorique}
 
-TODO
+La complexité théorique d'un tel algorithme est de $O(n^2.2^n)$.
 
 \paragraph{Jeux de tests et temps d'exécution}
 
@@ -408,33 +432,55 @@ de commerce (tsp).
 
 \subsubsection{Détermination de la solution initiale}
 
-Dans cette partie, nous nous servirons de l'outil GLPK, et en
-particulier de la syntaxe du langage Gnu MathProg. Pour le problème
-présenté, un fichier .mod contenant la modélisation du problème est
-créé ainsi qu'autant de fichiers .dat que de jeux de test. Nous nous
-intéresserons à trois heuristiques en particulier.
+ Nous nous intéresserons à trois heuristiques en particulier.
+\begin{itemize}
+\item Chaîne de poids le plus faible et ajout d'une arête pour le
+  cycle
+\item Voisinage 2--opt
+\item Voisinage 3--opt
+\end{itemize}
 
-\paragraph{Chaîne de poids le plus faible et ajout d'une arête pour le
-  cycle}
+\subsubsection{Principe de l'algorithme}
 
+\paragraph{Algorithme}
 
-\paragraph{Voisinage 2--opt}
+Nous proposons d'implémenter l'algorithme récursif présenté ci-dessous.
 
-\paragraph{Voisinage 3--opt}
+\begin{algorithm}[!ht]
+\caption{Branch and Bound pour le TSP}
+\label{BBtsp}
+\begin{algorithmic}[1]
+\REQUIRE un sommet racine, une borne inférieure, un graphe $G$
+\STATE faire ACPM $G - \{x \}$
+\STATE relier $x$ à ses deux voisins les plus proches en terme de coût
+\IF{valeur du cycle > borne inférieure}
+\IF{tous les sommets sont de degré $2$}
+\STATE mettre à jour le solution courante
+\ELSE
+\STATE choisir un sommet $y$ de degré $\geq$ 2
+\FOR{chaque arête $e_i$ issue de $y$}
+\STATE $G' := G - \{ e_i \}$
+\STATE BranchAndBound($y$, borne inférieure, $G'$)
+\ENDFOR
+\ENDIF
+\ENDIF
+\STATE retourner la plus petite des solutions acceptables
+\end{algorithmic}
+\end{algorithm}
 
-\subsubsection{Programmation de l'algorithme $\frac{3}{2}$}
-
-\paragraph{Principe de l'algorithme}
+La borne inférieure est une solution initiale obtenue grâce à une heuristique.
 
 \paragraph{Complexité théorique}
 
+\subsubsection{Implémentation}
+
 \paragraph{Langage de programmation et bibliothèques}
+
+Nous utiliserons le langage C ainsi que la bibliothèque Boost::Graph.
 
 \paragraph{Structures de données utilisées}
 
 \paragraph{Principales fonctions}
-
-\paragraph{Remarques}
 
 \subsubsection{Tests}
 
@@ -446,12 +492,40 @@ une analyse un peu plus fine du temps de calcul (outil de profiling).
 
 \paragraph{Tests de validité de notre programme}
 
-\paragraph{Comparaison de l'efficacité de l'algorithme selon les
-  trois heuristiques}
+\paragraph{Tests de temps d'exécution}
 
 
-\paragraph{Comparaison entre la programmation dynamique et le branch and bound}
+\subsection{Programmation de l'algorithme $\frac{3}{2}$}
 
-\subsection{Conclusion}
+\subsubsection{Principe de l'algorithme}
+
+\paragraph{Algorithme}
+
+\paragraph{Complexité théorique}
+
+\subsubsection{Implémentation}
+
+\paragraph{Langage de programmation et bibliothèques}
+
+\paragraph{Structures de données utilisées}
+
+\paragraph{Principales fonctions}
+
+\subsubsection{Tests}
+
+\paragraph{Outils}
+
+Nous utiliserons ici l'utilitaire console Unix time pour mesurer le
+temps de calcul de nos programmes. Gprof sera également utilisé pour
+une analyse un peu plus fine du temps de calcul (outil de profiling).
+
+\paragraph{Tests de validité de notre programme}
+
+\paragraph{Tests de temps d'exécution}
+
+\section{Comparaison des différentes implémentations du TSP}
+
+
+\section{Conclusion}
 
 \end{document}
