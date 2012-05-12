@@ -21,7 +21,9 @@ de k parmi n, c'est à dire en $O(n^k)$.
 arrêtés avant le $k$).
 \item ii)
 \begin{itemize}
-\item A) Si $P^*=M$ alors c'est que la solution est optimale.
+\item A) Si $P^*=M$ alors c'est que la solution est unique (en triant
+selon l'ordre croissante de $M$ et selon l'ordre décroissant de
+l'algorithme glouton, on tombe sur la même solution).
 \item B) Montrons que $\exists i_q > i_k \geq k$ tel que
 $cost(P^*)+w_iq > b \geq cost(M)$.
 \begin{proof}
@@ -40,9 +42,9 @@ de plus que ce qu'on a pris jusqu'à présent.
 \end{proof}
 \item D) Évaluons le ratio $R(I, \epsilon)
 = \frac{cost(M)}{cost(P^*)}$. \\
-TODO
-
-
+Si $R(I, \epsilon) = 1$, alors on a une solution unique. \\
+Si $R(I, \epsilon) < 1$, alors l'algorithme glouton est plus efficace. \\
+Si $R(I, \epsilon) > 1$, alors le PTAS est plus efficace. \\
 \end{itemize}
 \end{itemize}
 \end{itemize}
