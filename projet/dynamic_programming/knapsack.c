@@ -33,13 +33,19 @@ size_t knapsack_aux(size_t capacity, size_t n_obj, size_t weights[],
 #define KNAPS_UNIT2_CAPACITY 5
 #define KNAPS_UNIT2_WEIGHTS   {1,2,3,4,5,1,2,3,4,5}
 #define KNAPS_UNIT2_UTILITIES {4,3,1,3,6,2,2,4,3,7}
-#define KNAPS_UNIT2_RIGHT_ANSWER 9 // take items 1, 2 and 7
+#define KNAPS_UNIT2_RIGHT_ANSWER 10 // take items 1, 6 and 8
 
 #define KNAPS_UNIT3_N_OBJ 5
 #define KNAPS_UNIT3_CAPACITY 11
 #define KNAPS_UNIT3_WEIGHTS   {1,2,5,6,7}
 #define KNAPS_UNIT3_UTILITIES {1,6,18,22,28}
 #define KNAPS_UNIT3_RIGHT_ANSWER 40 // take items 3 and 4
+
+#define KNAPS_UNIT4_N_OBJ 2
+#define KNAPS_UNIT4_CAPACITY 1
+#define KNAPS_UNIT4_WEIGHTS   {1,1}
+#define KNAPS_UNIT4_UTILITIES {1,0}
+#define KNAPS_UNIT4_RIGHT_ANSWER 1 // take item 1
 
 int knapsack_unit()
 {
@@ -76,7 +82,19 @@ int knapsack_unit()
     size_t max_utility =
       knapsack_aux(KNAPS_UNIT3_CAPACITY, KNAPS_UNIT3_N_OBJ, weights, utilities);
     // check the result
-    ASSERT(max_utility == KNAPS_UNIT2_RIGHT_ANSWER, "knapsack result check 3");
+    ASSERT(max_utility == KNAPS_UNIT3_RIGHT_ANSWER, "knapsack result check 3");
+  }
+
+  // test 4
+  {
+    // instance sac a dos : on veut maximiser l'utilite
+    size_t weights[KNAPS_UNIT4_N_OBJ] = KNAPS_UNIT4_WEIGHTS;
+    size_t utilities[KNAPS_UNIT4_N_OBJ] = KNAPS_UNIT4_UTILITIES;
+    // solve the problem
+    size_t max_utility =
+      knapsack_aux(KNAPS_UNIT4_CAPACITY, KNAPS_UNIT4_N_OBJ, weights, utilities);
+    // check the result
+    ASSERT(max_utility == KNAPS_UNIT4_RIGHT_ANSWER, "knapsack result check 4");
   }
 
   // unit test result
@@ -172,21 +190,32 @@ size_t knapsack_aux(size_t capacity, size_t n_obj, size_t weights[],
     max_value.n_cols = capacity + 1;
   calloc_matrix(&max_value);
 
-  // fill the table to build the solution step by step
-  size_t obj, weight;
+  // first row requires special treatment : the maximum value obtained by taking
+  // only the first object is always the utility of the object
+  size_t max_w;
+  for(max_w = 0; max_w <= capacity; max_w++)
+    if(weights[0] <= max_w)
+      max_value.t[0][max_w] = utilities[0];
+
+  // fill the table to build the solution step by step, varying the set of
+  // objects to be used as well as the maximum capacity to be taken until
+  // arriving at the full capacity and all of the objects
+  size_t obj;
   for (obj = 1; obj < n_obj; obj++)
-    for (weight = 0; weight <= capacity; weight++)
+    for (max_w = 0; max_w <= capacity; max_w++)
     {
-      if (weight >= weights[obj])
+      // if this object fits under the sliding weight limit
+      if (weights[obj] <= max_w)
       {
-        // obj is part of the solution
-        size_t take = max_value.t[obj-1][weight];
-        // obj is not part of the solution
-        size_t leave = max_value.t[obj-1][weight - weights[obj]] + utilities[obj];
-        max_value.t[obj][weight] = max(take, leave);
+        // maximum utility if this object is NOT part of the solution
+        size_t leave = max_value.t[obj-1][max_w];
+        // maximum utility if this object IS part of the solution
+        size_t take = max_value.t[obj-1][max_w - weights[obj]] + utilities[obj];
+        // choose whether or not to take this object
+        max_value.t[obj][max_w] = max(leave, take);
       }
       else
-        max_value.t[obj][weight] = max_value.t[obj-1][weight];
+        max_value.t[obj][max_w] = max_value.t[obj-1][max_w];
     }
 
   // store the result (maximum utility) and free the matrix

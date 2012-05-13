@@ -77,6 +77,24 @@ void free_matrix(matrix_t* m)
   free(m->t);
 }
 
+/* PRINT TO STANDARD OUTPUT */
+
+void print_matrix(matrix_t* m)
+{
+  size_t row, col;
+  for(row = 0; row < m->n_rows; row++)
+  {
+    for(col = 0; col < m->n_cols; col++)
+      printf("%3d ", m->t[row][col]);
+    puts("");
+  }
+  puts("");
+
+}
+
+
+
+/* QUERY */
 
 // find the index/value of the minimum cell of this row
 valued_index_t min_col(matrix_t* m, size_t row)
