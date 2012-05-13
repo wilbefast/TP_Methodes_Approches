@@ -1,10 +1,12 @@
-for chaque arête ei issue de y do
-9:
-G′ := G − {ei }
-10 :
-BranchAndBound(y, borne inférieure, G′ )
+open Graph.Pack.Graph
 
-	 open Graph.Pack.Graph
+(* fonctions de comparaison *)
+
+let compare f a b = f a - f b
+
+let compareValeur = compare int
+
+let min l = List.hd (List.sort compareValeur l)
 
 	 (* relie x à ses deux voisins les plus proches en terme de coût*)
 	 let relier x g =
@@ -21,10 +23,17 @@ BranchAndBound(y, borne inférieure, G′ )
 
 	       let choixSup2 g = 
 
-(* algorithme de branch and bound en lui même *)
+(* fonction qui enlève une arete e d'un graphe et fait le branchement dessus à partir de x*)
 
-	       let rec branchBound g x borneInf solution = 
-	     remove_vertex g x
+		 let rec branche e g x borneInf solution = 
+		   remove_edge_e g e
+		     branchBound g x borneInf solution
+		     
+
+(* algorithme de branch and bound en lui même *)
+		     
+		 and  branchBound g x borneInf solution = 
+		   remove_vertex g x
 	 let arbre = spanningtree g in
 	 let cycle = relier x g in
 	 let val = valeurCycle cycle in
@@ -33,11 +42,12 @@ BranchAndBound(y, borne inférieure, G′ )
 	     solution = val
 	   else
 	     let y = choixSup2 g in
-
+	     let aretesSucc = succ_e g y in 
+	     let listeSolutions = map branche aretesSucc in
 	 else()
-	   
-	   return solution
-
+	   solution = min listeSolutions
+	     return solution
+	     
 
 
 
