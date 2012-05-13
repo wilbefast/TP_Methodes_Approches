@@ -49,4 +49,20 @@ int salesman(matrix_t* weights, size_t n_obj)
 {
   /// TODO
   return 0;
+/*
+  function algorithm T SP (G, n)
+for k := 2 to n do
+C({i, k}, k) := d1,k
+end for
+for s = 3 to n do
+for all S ⊆ {1, 2, . . . , n}||S|| = s do
+for all k ∈ S do
+{C(S, k) = minm=k,m∈S [C(S − {k}, m) + dm,k ]}
+opt := mink=1 [C({1, 2, 3, . . . , n}, k) + d1,k
+end for
+end for
+end for;
+return (opt)
+end
+*/
 }
