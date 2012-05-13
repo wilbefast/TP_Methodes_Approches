@@ -6,6 +6,7 @@
 # Compiled units
 projet/glpk/bin/
 **.o
+**.out
 
 # Affichage
 **.ps
