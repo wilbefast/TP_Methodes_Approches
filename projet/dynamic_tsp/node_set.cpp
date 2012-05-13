@@ -21,16 +21,20 @@ void build_node_metasets(nodemetaset_t node_metasets[], uint n_nodes)
 
 void print_nodes(nodeset_t const* nodeset)
 {
-  printf("\t{ ");
+  printf("{ ");
   for(nodeset_it i = nodeset->begin(); i != nodeset->end(); i++)
     printf("%d ", (*i));
-  printf("}\n");
+  printf("}");
 }
 
 void print_node_sets(nodemetaset_t const* node_metaset)
 {
   for(nodemetaset_it i = node_metaset->begin(); i != node_metaset->end(); i++)
+  {
+    printf("\t");
     print_nodes(&(*i));
+    printf("\n");
+  }
 }
 
 void print_node_metasets(nodemetaset_t node_metasets[], uint n_nodes)
@@ -41,6 +45,12 @@ void print_node_metasets(nodemetaset_t node_metasets[], uint n_nodes)
     printf("%d set(s) of size %d :\n", (int)node_metaset->size(), size+1);
     print_node_sets(node_metaset);
   }
+}
+
+void print_itinerary(itinerary_t const* it)
+{
+  print_nodes(&(it->first));
+  printf(" to %d", it->second);
 }
 
 /* PRIVATE FUNCTIONS -- DEFINITIONS */
@@ -59,13 +69,10 @@ void build_node_metasets_aux(nodemetaset_t node_metasets[], uint n_nodes,
   // bootstrap -- unitary sets must be built by hand
   else if(size == 1)
   {
-    // size 1 is initialised with a unitary set for each node identifier
-    for(uint node_i = 0; node_i < n_nodes; node_i++)
-    {
-      nodeset_t new_set;
-      new_set.insert(node_i);
-      node_metasets[index].insert(new_set);
-    }
+    // size 1 is initialised with a unitary set containing the starting node
+    nodeset_t new_set;
+    new_set.insert(0);
+    node_metasets[index].insert(new_set);
   }
 
   // recursion -- will out each size based on previous sizes

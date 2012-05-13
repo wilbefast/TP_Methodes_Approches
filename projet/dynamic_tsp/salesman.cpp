@@ -19,9 +19,9 @@ uint salesman(matrix_t* distances, uint n_nodes)
   costmap_t C;
 
   // this structure contains all the node-sets of each size
+  /// WARNING -- UNSAFE TO ALLOCATE ARRAYS IN THIS MANNER
   nodemetaset_t node_metasets[n_nodes];
   build_node_metasets(node_metasets, n_nodes);
-  print_node_metasets(node_metasets, n_nodes);
 
   // for shortest path from the start (0) any other node (1 .. n_nodes-1)
   // is always the birds' flight distance given by the distances matrix
@@ -45,7 +45,10 @@ uint salesman(matrix_t* distances, uint n_nodes)
     for(nodemetaset_it set_it = mset.begin(); set_it != mset.end(); set_it++)
     {
       nodeset_t set = (*set_it);
+
+      printf("STARTING FROM SET : ");
       print_nodes(&set);
+      puts("");
 
       // we already know the length of the optimal circuit within 'set' (S), now
       // we need to extend it by choosing a leaving node 'n' and a new end node
@@ -83,12 +86,16 @@ uint salesman(matrix_t* distances, uint n_nodes)
           itinerary_t to_n(set_minus_n, n),
                       to_e(set, e);
 
-          C[to_e] = C[to_n] + distances->t[n][e] + distances->t[e][0];
+          // the 'to_n' itinerary may not have been mapped yet, in which case
+          // we'll need to create it
+          if(set_minus_n.size() == 1)
+            C[to_n] = distances->t[*(set_minus_n.begin())][n];
 
-
-
-
-          printf("we'll add %d from %d\n", e, n);
+          bool exists = (C.find(to_e) == C.end());
+          uint new_distance = C[to_n] + distances->t[n][e] + distances->t[e][0];
+          C[to_e] = (exists) ? new_distance : min(C[to_e], new_distance);
+          print_itinerary(&to_e);
+          printf(" now costing %d\n", C[to_e]);
         }
       }
 
@@ -110,46 +117,3 @@ uint salesman(matrix_t* distances, uint n_nodes)
   // return result
   return result;
 }
-
-/*
-      for(nodeset_it node_it = set.begin(); node_it != set.end(); node_it++)
-        for(nodeset_it node_it = set.begin(); node_it != set.end(); node_it++)
-      {
-        //uint m =
-        // calculate the min cost to travel between all the nodes of the set,
-        // finishing at the end node
-        uint min_distance = UINT_MAX;
-      }
-*/
-
-/*uint salesman(matrix_t* distances, uint n_nodes)
-{
-  ShortestPaths paths;
-
-  // for shortest path from the start (0) any other node (1 .. n_nodes-1)
-  // is always the birds' flight distance given by the distances matrix
-  for (uint end_i = 1; end_i < n_nodes; end_i++)
-  {
-    NodeSet* set = new NodeSet(); /// REMEMBER TO FREE THIS
-      set->add(0);
-      set->add(end_i);
-    paths.setDistance(set, distances->t[0][end_i]);
-  }
-
-  // for each set size
-  for(uint set_size = 3; set_size < n_nodes; set_size++)
-  {
-    // build a set of all nodes sets of this size
-    NodeSetList* node_sets;
-    NodeSet::allSets(set_size); /// REMEMBER TO FREE THIS
-
-    // for each set of the given set size
-    for(NodeSetListIt i = node_sets->begin(); i != node_sets->end(); i++)
-    {
-      NodeSet* set = (*i);
-    }
-  }
-  // return the optimal distance
-  return 0; /// FIXME
-
-}*/

@@ -24,6 +24,7 @@ typedef costmap_t::iterator costmap_it;
 void print_nodes(nodeset_t const* nodeset);
 void print_node_sets(nodemetaset_t const* node_metaset);
 void print_node_metasets(nodemetaset_t node_metasets[], uint n_nodes);
+void print_itinerary(itinerary_t const* it);
 
 
 // build all the nodesets of each size
