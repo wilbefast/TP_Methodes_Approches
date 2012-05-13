@@ -18,11 +18,11 @@ int main()
 
   // test knapsack
   ASSERT(knapsack_unit() != EXIT_FAILURE, "knapsack unit test");
-  //knapsack_stress();
+  knapsack_stress();
 
   // test partition
   ASSERT(partition_unit() != EXIT_FAILURE, "partition unit test");
-  //partition_stress();
+  partition_stress();
 
   // test tsp
   ASSERT((salesman_unit()) != EXIT_FAILURE, "tsp unit test");

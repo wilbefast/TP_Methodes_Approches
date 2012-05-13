@@ -45,24 +45,23 @@ int salesman_unit()
 
 /* TRAVELLING SALESMAN PROBLEM SOLVER */
 
-int salesman(matrix_t* weights, size_t n_obj)
+int salesman(matrix_t* distances, size_t n_obj)
 {
   /// TODO
   return 0;
 /*
-  function algorithm T SP (G, n)
-for k := 2 to n do
-C({i, k}, k) := d1,k
-end for
-for s = 3 to n do
-for all S ⊆ {1, 2, . . . , n}||S|| = s do
-for all k ∈ S do
-{C(S, k) = minm=k,m∈S [C(S − {k}, m) + dm,k ]}
-opt := mink=1 [C({1, 2, 3, . . . , n}, k) + d1,k
-end for
-end for
-end for;
-return (opt)
-end
+  for (k = 1; k < n; k++)
+    C({i, k}, k) = distances[0, k];
+
+  for (s = 2; s < n; s++)
+    for(S ⊆ {1, 2, . . . , n}||S|| = s)
+      for(k ∈ S)
+      {
+        {C(S, k) = minm=k,m∈S [C(S − {k}, m) + dm,k ]}
+        result  = mink=1 [C({1, 2, 3, . . . , n}, k) + d1,k
+      }
+
+  // return the optimal distance
+  return result;
 */
 }
