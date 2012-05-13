@@ -10,17 +10,10 @@ typedef struct
 }
 partition_instance_t;
 
-// allocate, solve and free random instance
-size_t partition_rand(size_t n_obj, size_t max_value);
-
-// calls the above, returns the time taken to solve
-long time_partition_rand(size_t n_obj, size_t max_value, size_t n_tests);
-
-// tests
-int partition_unit();
-void partition_stress();
-
 // partition problem solver
 bool_t partition(partition_instance_t inst);
+
+// partition solver which takes the unrolled parameter list
+bool_t partition_aux(size_t n_obj, size_t values[]);
 
 #endif // PARTITION_H_INCLUDED
