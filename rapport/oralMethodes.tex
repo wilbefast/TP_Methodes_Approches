@@ -10,6 +10,7 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{epic, eepic}
+\usepackage{fancybox}
 \usepackage{array, multirow, tabularx}
 
 \usetheme{Warsaw}
@@ -27,117 +28,258 @@
 \begin{document}
 
 \begin{frame}
-\titlepage
+  \titlepage
 \end{frame}
 
 \section{Introduction}
 
 \begin{frame}
-\frametitle{Problème}
+  \frametitle{Problème}
+  \begin{itemize}
+  \item problèmes d'optimisation 
+    \begin{itemize}
+    \item[] $\nearrow$ problèmes faciles
+    \item[] $\searrow$ \fbox{problèmes NP-difficiles}
+    \end{itemize}
+  \item  $\Rightarrow$ méthodes exactes 
+    \begin{itemize}
+    \item[] $\nearrow$ programmation dynamique
+    \item[] $\searrow$ branch and bound
+    \end{itemize}
+
+    
+  \item  $\Rightarrow$ méthodes approchées
+    \begin{itemize}
+    \item[] $\longrightarrow$ algorithmes d'approximation
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Table of Contents}
-\begin{columns}
-\begin{column}[]{7cm}
-\tableofcontents
-\end{column}
-\begin{column}[]{2cm}
-%\includegraphics[height=3cm]{cantor.jpg}
-\end{column}
-\end{columns}
+  \frametitle{Table of Contents}
+  \begin{columns}
+    \begin{column}[]{5cm}
+      \tableofcontents
+    \end{column}
+    \begin{column}[]{5cm}
+      \begin{center}
+        \includegraphics[height=3.5cm]{commerce.png}
+      \end{center}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \section{Programmation dynamique}
 
 \begin{frame}
-\frametitle{Principe}
-\begin{alertblock}{Formules}
-\end{alertblock}
-
-\begin{block}{Programmation}
-langage C
-\end{block}
-
-\end{frame}
-
+  \frametitle{Outils}
+  \begin{columns}
+    \begin{column}[]{5cm}
+      \begin{center}
+        \includegraphics[height=3.5cm]{tools.jpeg}
+      \end{center}
+    \end{column}
+      \begin{column}[]{5cm}
+         \begin{block}{Programmation}
+        langage C
+      \end{block}
+      \begin{block}{Tests}
+        \begin{itemize}
+        \item tests unitaires
+        \item tests de temps d'exécution
+        \end{itemize}
+      \end{block}
+      \end{column}
+    \end{columns}
+  \end{frame}
 
 \begin{frame}
-\frametitle{Partition}
-\begin{block}{Jeux d'essai}
-
-\end{block}
+  \frametitle{Partition}
+  \begin{alertblock}{Formules}
+    \begin{equation}
+      \begin{cases}
+        tab[0] = 1; \\
+        si ( tab[j] == 1 ) {
+          tab[j + poids[i]] = 1;
+        } \\
+      \end{cases}
+    \end{equation}
+  \end{alertblock}
 \end{frame}
-
 
 \begin{frame}
-\frametitle{Sac à dos}
-\begin{block}{Jeux d'essai}
+  \frametitle{Partition}
+  \begin{columns}
+    \begin{column}[]{5cm}
+      \begin{center}
+        \includegraphics[height=3.5cm]{unitest.jpg}
+      \end{center}
+    \end{column}
+      \begin{column}[]{5cm}
+        \begin{block}{Tests unitaires}
+        \end{block}
+      \end{column}
+    \end{columns}
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Partition}
+    \begin{block}{Jeux d'essai}
+    \end{block}
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Partition : courbe}
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Sac à dos}
+    \begin{alertblock}{Formules}
+      \begin{equation}
+        \begin{cases}
+          tab[0][w] = 0 \\
+          tab[i][j] = max(tab[i-1] [j], (tab[i-1] [j-poids[i]] + utilite[i])); \\
+        \end{cases}
+      \end{equation}
+    \end{alertblock}
+  \end{frame}
 
-\end{block}
-\end{frame}
+\begin{frame}
+  \frametitle{Sac à dos}
+  \begin{columns}
+    \begin{column}[]{5cm}
+      \begin{center}
+        \includegraphics[height=3cm]{Knapsack.png}
+      \end{center}
+    \end{column}
+      \begin{column}[]{5cm}
+        \begin{block}{Tests unitaires}
+        \end{block}
+      \end{column}
+    \end{columns}
+  \end{frame}
+
+
+  \begin{frame}
+    \frametitle{Sac à dos}
+    \begin{block}{Jeux d'essai}
+
+    \end{block}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Sac à dos : courbe}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Voyageur de commerce}
+    \begin{alertblock}{Formules}
+      \begin{equation}
+        \begin{cases}
+          C[S][i] = poids[0][i] \text{si S ne contient que $0$} \\
+          C[S][i] = min_{k \in S - \{ 0 \}} \{ C[S- \{ k \}][k] + poids[k][i]  \}
+        \end{cases}
+      \end{equation}
+    \end{alertblock}
+  \end{frame}
+
+\begin{frame}
+  \frametitle{Voyageur de commerce}
+  \begin{columns}
+    \begin{column}[]{5cm}
+      \begin{center}
+        \includegraphics[height=4cm]{salesman2.jpg}
+      \end{center}
+    \end{column}
+      \begin{column}[]{5cm}
+        \begin{block}{Tests unitaires}
+        \end{block}
+      \end{column}
+    \end{columns}
+  \end{frame}
 
 \begin{frame}
 \frametitle{Voyageur de commerce}
 \begin{block}{Jeux d'essai}
-
-\end{block}
-\end{frame}
-
-\section{Branch and Bound}
-
-\begin{frame}
-\frametitle{Outils}
-\begin{block}{Langage}
-\begin{itemize}
-\item GLPK
-\item langage C/C++
-\item bibliothèque
-\end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Solution ininitale}
-\begin{itemize}
-\item chaîne de poids le plus faible~;
-\item voisinage 2--opt~;
-\item voisinage 3--opt.
-\end{itemize}
+\frametitle{Voyageur de commerce : courbe}
+\end{frame}
+
+\section{Branch and Bound TSP}
+
+\begin{frame}
+  \frametitle{Branch and Bound TSP}
+  \begin{block}{Outils}
+    \begin{itemize}
+    \item GLPK
+    \item langage C/C++
+    \end{itemize}
+  \end{block}
+  \begin{block}{Structures de données}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Solution initiale}
+  \begin{itemize}
+  \item chaîne de poids le plus faible~;
+  \item voisinage 2--opt~;
+  \item voisinage 3--opt.
+  \end{itemize}
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Comparaisons}
+  \frametitle{Comparaisons}
 \end{frame}
 
 \begin{frame}
-\frametitle{Algorithme $\frac{3}{2}$}
+  \frametitle{Complexité théorique}
 \end{frame}
 
 \begin{frame}
-\frametitle{Complexité théorique}
+  \frametitle{Jeux d'essais}
 \end{frame}
 
 \begin{frame}
-\frametitle{Jeux d'essais}
+  \frametitle{Temps d'exécution}
+\end{frame}
+
+\section{Algorithme $\frac{3}{2}$ TSP}
+
+\begin{frame}
+\frametitle{$\frac{3}{2}$ approximation TSP}
+\begin{block}{Outils}
+  \begin{itemize}
+  \item langage C
+  \item bibliothèque Boost Graph
+  \item gprof
+  \end{itemize}
+\end{block}
+\begin{block}{Structures de données}
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Temps d'exécution}
+  \frametitle{Complexité théorique}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Jeux d'essais}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Temps d'exécution}
+\end{frame}
 
 \section{Comparaisons}
 
-
 \begin{frame}
-\frametitle{Jeux d'essais selon la solution initiale}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Temps d'exécution selon la solution initiale}
+  \frametitle{Comparaisons TSP}
+  
 \end{frame}
 
 \section{Conclusion}
@@ -147,9 +289,9 @@ langage C
 
 
 \begin{frame}
-\begin{center}
-Merci pour votre attention.
-\end{center}
+  \begin{center}
+    Merci pour votre attention.
+  \end{center}
 \end{frame}
 
 \end{document}

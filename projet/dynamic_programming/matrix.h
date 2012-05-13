@@ -31,8 +31,12 @@ typedef struct
 matrix_t;
 
 // allocate and free
+void calloc_matrix(matrix_t* m);
 void malloc_matrix(matrix_t* m);
 void free_matrix(matrix_t* m);
+
+// print to standard output
+void print_matrix(matrix_t* m);
 
 // query
 valued_index_t min_col(matrix_t* m, size_t row);
