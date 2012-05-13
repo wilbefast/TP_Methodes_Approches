@@ -43,11 +43,39 @@ $c(1)=1$. Procédons par récurrence.
 
 \paragraph{Question 3}
 
-$m_{1,k} = m_{1,k-1}+m_{k-1,k}$
+Afin d'appliquer les principes de la programmation dynamique pour ce
+problème (trouver $m_{1,k}$ le coût minimum du produit $M_{1k}$ ainsi
+que le parenthésage correspondant), nous décomposons le produit en
+deux sous-produits (que l'on peut calculer par récurrence) dont nous
+sommons les coûts et auquel nous rajoutons le coût de la
+mutliplication des deux matrices ainsi engendrées.
 
-TODO
+\begin{equation}
+\begin{cases}
+m_{i,j} = \min \{(m_{i,p}+m_{p+1,j}) + (i \times p+1 \times j+1) \} \\
+i \leq p \leq j \\
+\end{cases}
+\end{equation}
+
+On obtient le parenthésage correspondant à chaque bloc en retenant les
+$p$ (une parenthèse à la fin de chaque $p$ et au début de chaque $p+1$).
 
 \paragraph{Question 4}
+
+On a $M_{15} = M_1.M_2.\dots M_5$. \\
+
+On propose donc le tableau suivant pour calculer $m_{1,5}$~:
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline  $i$ $\diagdown$ $k$ & $1$  & $2$ & $3$ & $4$ & $5$ \\
+\hline $1$ & $1$ & $0$ & $0$ & $0$ & $0$ \\
+\hline $2$ & $0$ & $1$ & $0$ & $0$ & $0$ \\
+\hline $3$ & $0$ & $0$ & $1$ & $0$ & $0$ \\
+\hline $4$ & $0$ & $0$ & $0$ & $1$ & $0$ \\
+\hline $5$ & $0$ & $0$ & $0$ & $0$ & $1$ \\
+\hline
+\end{tabular}
+\end{center}
 
 TODO
 
