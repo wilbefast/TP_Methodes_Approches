@@ -1,0 +1,720 @@
+\documentclass[a4paper, 12pt]{article}
+%\usepackage[utf8]{inputenc} 
+\usepackage[frenchb]{babel}
+\usepackage{fullpage}
+\usepackage[T1]{fontenc} 
+\usepackage{graphicx}  
+\usepackage[final]{pdfpages}
+\usepackage{amsmath, amssymb,amsthm}
+\usepackage{algorithm,algorithmic}
+\usepackage{listingsutf8}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{fancybox}
+%\usepackage{slashbox}
+\usepackage{makecell}
+\usepackage{array, multirow, tabularx}
+\usepackage{xcolor}
+\setlength{\parskip}{\bigskipamount}
+
+\newtheorem{mydef}{Définition}
+\newtheorem{thm}{Théorème}
+\newtheorem{lem}{Lemme}
+\newtheorem{cor}{Corollaire}
+\newtheorem{prop}{Propriété}
+
+\title{Rapport de Méthodes approchées.}
+\author{Dyce William, Loukil Amal, Ouazzani-chahdi Sabrina : \\ M1 IMAGINA--MOCA}
+\date{semestre 2 : 2011-2012}
+
+\begin{document} 
+
+\maketitle
+
+\begin{abstract}
+  Le présent document consiste en un mémoire au sujet
+  d'exercices à la fois théoriques et pratiques sur diverses
+  problèmatiques liées à l'étude de méthodes approchées pour la
+  résolution de problèmes NP-difficiles. 
+\end{abstract}
+\vspace{2cm}
+\textit{Travelling salesman's problem :}
+\begin{figure}[h!]
+\centering
+\includegraphics[height = 9cm]{commerce.png}
+\end{figure}
+
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\listoffigures
+
+\listoftables
+\pagebreak
+
+\section{Généralités et notations}
+
+Le rapport que nous vous présentons ici reprend notre travail effectué
+dans le cadre du projet du cours de méthodes approchées. Celui-ci se
+compose d'une partie théorique nous laquelle nous avons résolu divers
+exercices traitant de programmation linéaire, d'approximations de
+problèmes NP-difficiles, mais aussi de méthodes exactes comme la
+programmation dynamique ou les méthodes de branchement (branch and
+bound et branch and cut), ainsi que d'une partie pratique. Dans cette
+dernière, nous programmons les formules de programmation dynamique
+pour trois problèmes classiques (partition, sac à dos, voyageur de
+commerce), puis nous nous intéressons plus en détail au cas du
+voyageur de commerce avec la programmation de l'algorithme de branch
+en bound (après application et comparaison de diverses heuristiques
+pour trouver une solution initiale).
+
+
+On notera en général $PL$ un programme linéaire, et $PLNE$ un
+programme linéaire en nombres entiers. 
+
+
+Nous désignerons également par $TSP$ le problème du voyageur de
+commerce.
+
+
+Rappelons enfin les quelques définitions clés suivantes~:
+\begin{mydef}
+Les méthodes de branch and bound sont les méthodes dites de séparation
+et évaluation.
+\end{mydef}
+
+\begin{mydef}
+Les méthodes de branch and cut sont les méthodes dites des coupes de
+Gomory ou d'algorithmes de coupe.
+\end{mydef}
+
+\begin{mydef}
+Un problème NP-Complet est un problème de décision pour la résolution duquel on ne
+connait pas d'algorithme polynomial. Tous les problèmes de la classe
+NP peuvent se rammener à un problème NP-complet via une réduction polynomiale.
+\end{mydef}
+
+\begin{mydef}
+Un problème NP-Difficile est un problème d'optimisation qui est plus
+difficile qu'un problème NP-Complet.
+\end{mydef}
+
+\pagebreak
+
+\section{Partie théorique}
+
+\subsection{Programmation linéaire en nombres entiers}
+
+\subsubsection*{Exercice 1}
+\input{ex1.tex}
+
+\subsubsection*{Exercice 2}
+\input{ex2.tex}
+
+\subsubsection*{Exercice 3}
+\input{ex3.tex}
+
+\subsection{Problèmes appartenant à la classe APX}
+
+\subsubsection*{Exercice 4}
+\input{ex4.tex}
+
+\subsection{Constructions de PTAS}
+
+\subsubsection*{Exercice 5}
+\input{ex5.tex}
+
+\subsubsection*{Exercice 6}
+\input{ex6.tex}
+
+\subsection{Utilisation de méthodes exactes}
+
+\subsubsection*{Exercice 7}
+\input{ex7.tex}
+
+\subsubsection*{Exercice 8}
+\input{ex8.tex}
+
+\subsection{Méthode Primal-Dual}
+
+\subsubsection*{Exercice 9}
+\input{ex9.tex}
+
+\subsection{Borne de non-approximation}
+
+\subsubsection*{Exercice 10}
+\input{ex10.tex}
+
+\subsubsection*{Exercice 11}
+\input{ex11.tex}
+
+\subsubsection*{Exercice 12}
+\input{ex12.tex}
+
+\pagebreak
+
+\section{Partie pratique}
+
+\subsection{Programmation dynamique}
+
+Nous effectuerons ici les simulations du problème de la partition, du sac
+à dos et du voyageur de commerce selon une implémentation
+d'algorithmes basés sur de la programmation dynamique. Les programmes
+seront écrits en langage C.
+
+La programmation dynamique permet de trouver la solution optimale d'un
+problème en combinant les solutions optimales de sous-problèmes de ce
+problème.
+
+\subsubsection{Sac à dos}
+
+Nous avons commencé par nous intéresser au problème du sac à dos avant
+partition car celui-ci est le plus général.
+
+\paragraph{Modélisation}
+
+Le problème du sac à dos se modélise en programmation linéaire de la
+manière suivante~:
+
+\begin{equation}
+\begin{cases}
+Max~z=\sum_{i=1}^nc_ix_i \\
+\sum_{i=1}^na_ix_i \leq b \\
+x_i \in\{0, 1\}, i=1\dots n\\
+\end{cases}
+\end{equation}
+
+%Ainsi, nous prenons en paramètre~:
+%\begin{itemize}
+%\item le nombre $n$ d'objets sur lesquels nous
+%désirons travailler, 
+%\item le poids $b$ du sac que nous ne pouvons pas
+%dépasser, 
+%\item une variable binaire $x$, 
+%\item un ensemble $C$ d'utilités à associer à chaque objet,
+%\item un ensemble $A$ de poids à associer à chaque objet.
+%\end{itemize}
+
+\paragraph{Formules de programmation dynamique}
+
+Les formules de programmation dynamique pour le problème du sac à dos
+sont les suivantes~:
+\begin{equation}
+\begin{cases}
+tab[0][w] = 0 \\
+tab[i][j] = max(tab[i-1] [j], (tab[i-1] [j-poids[i]] + utilite[i])); \\
+\end{cases}
+\end{equation}
+
+\paragraph{Implémentation en C}
+
+Nous avons donc implémenté l'algorithme suivant (avec la fonction très
+simple \textit{min} de calcul de minimum entre deux valeurs que nous
+ne faisons pas figurer ici).
+
+\begin{lstlisting}
+
+int sacADos(int W, int* poids, int* utilite, int nbObjets){ 
+//W represente la capacite max du sac
+
+// tableau central de la programmation dynamique
+int tab[nbObjets][W+1]; 
+int w;
+
+//initialisation de la table
+for (w = 0; w < W + 1; w++){
+  tab[0][w] = 0;
+    }
+
+//remplissage de la table selon les formules de la prog dyn
+ int i, j;
+ for (i = 1; i < nbObjets ; i++){
+  for (j = 0; j < W + 1 ; j++) {
+    if (j >= poids[i]) {
+      tab[i][j] = max(tab[i-1] [j], 
+(tab[i-1] [j-poids[i]] + utilite[i]));
+    }
+      else{
+      tab[i][j] = tab[i-1] [j];
+      }
+    }
+  }
+//la valeur qui nous interesse
+ printf(" poids : \%d \n", W);
+ printf("meilleure solution (utilite) :
+\%d \n", tab[nbObjets -1] [W]);
+ return (tab[nbObjets -1] [W]);
+}
+
+\end{lstlisting}
+
+\paragraph{Complexité théorique}
+
+La complexité en temps de notre algorithme est en $O(nW)$. Il en va de
+même pour la complexité mémoire.
+
+\paragraph{Tests unitaires}
+
+Nous avons commencé par faire des tests unitaires selon diverses
+instances afin de tester la validité de chaque fonction du code.
+
+Voici ci-dessous un exemple de test parmi ceux qu'on a menés à ce sujet.
+
+\begin{lstlisting}
+#define KNAPS_UNIT1_N_OBJ 7
+#define KNAPS_UNIT1_CAPACITY 2
+#define KNAPS_UNIT1_WEIGHTS   {3,5,1,5,7,2,6}
+#define KNAPS_UNIT1_UTILITIES {2,5,3,3,6,2,4}
+#define KNAPS_UNIT1_RIGHT_ANSWER 3
+\end{lstlisting}
+
+Nous créons ainsi des instances du sac à dos, en variant à chaque fois le nombre d'objets, la capacité du sac, les poids et les utilités, en leur associant la réponse attendue.
+
+À l'exécution, si le résultat retourné ne correspond pas à la valeur attendue, alors le test nous affiche << failure>>, sinon il nous renvoie << success>>.
+
+Exemple~:
+\begin{lstlisting}
+knapsack result check 1: success
+\end{lstlisting}
+
+\paragraph{Jeux de tests et temps d'exécution}
+
+Nous présentons ici des jeux de tests pour le problème sac à dos en variant à chaque fois le nombre d'objets et en mesurant le temps d'exécution moyen sur 100 tests et pour une capacité de 5000 .
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Nombre d'objets & temps d'exécution moyen en ms\\
+\hline
+100 & 8\\
+\hline
+150 & 12\\
+\hline
+200 & 16\\
+\hline
+300 & 24\\
+\hline
+500 & 40\\
+\hline
+800 & 65\\
+\hline
+1000 & 82\\
+\hline
+1200 & 101\\
+\hline
+2000 & 165\\
+\hline
+3000 & 246\\
+\hline
+ 4000 & 329\\
+\hline
+  5000 & 410\\
+\hline
+\end{tabular}
+\caption {Variation du temps d'exécution en fonction du nombre d'objets}
+\end{table}\\
+La variation du temps d'exécution en fonction du nombre d'objets est tracé par la courbe ci-dessous~:
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \begin{axis}[title=Jeux de tests pour Sac à dos, xlabel= nombre d'objets, ylabel= temps d'exécution]
+      \addplot
+        table[col sep=comma]{sac.csv};
+        \addplot
+        table[col sep=comma]{equ2.csv};
+        \legend{exécution de sac à dos, comparaison}
+    \end{axis}
+\end{tikzpicture}
+\caption{Temps d'exécution de sac à dos.}
+\end{figure}
+
+Nous présentons ici des jeux de tests pour le problème sac à dos en variant à chaque fois la capacité du sac et en mesurant le temps d'exécution moyen sur 100 tests et pour 100 objets.
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Capacité & temps d'exécution moyen en ms\\
+\hline
+500 & 0\\
+\hline
+1000 & 1\\
+\hline
+2000 & 3\\
+\hline
+2500 & 3\\
+\hline
+3000 & 4\\
+\hline
+4000 & 6\\
+\hline
+5000 & 8\\
+\hline
+10000 & 16\\
+\hline
+\end{tabular}
+\caption {Variation du temps d'exécution en fonction du capacité du sac}
+\end{table}\\
+La variation du temps d'exécution en fonction du capacité du sac est tracé par la courbe ci-dessous~:
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \begin{axis}[title=Jeux de tests pour Sac à dos, xlabel= capacité, ylabel= temps d'exécution]
+      \addplot
+        table[col sep=comma]{sac1.csv};
+        \addplot
+        table[col sep=comma]{equ2.csv};
+        \legend{exécution de sac à dos, comparaison}
+    \end{axis}
+\end{tikzpicture}
+\caption{Temps d'exécution de sac à dos.}
+\end{figure}
+
+\subsubsection{Partition}
+
+\paragraph{Modélisation}
+
+Le problème de la partition se modélise de la manière suivante~:
+\begin{equation}
+\sum_{a \in A'} p(a)= \sum_{a \in A
+    \backslash A'}p(a)
+\end{equation}
+
+\paragraph{Formules de programmation dynamique}
+
+On se basera sur la récurrence suivante~:
+
+\begin{equation}
+\begin{cases}
+tab[0] = 1; \\
+si ( tab[j] == 1 ) {
+       tab[j + poids[i]] = 1;
+     } \\
+\end{cases}
+\end{equation}
+
+\paragraph{Implémentation en C}
+
+Nous présentons donc l'algorithme suivant, qui est une sorte de
+restriction (cas particulier) de l'algorithme proposé pour la
+résolution du problème du sac à dos~:
+
+\begin{lstlisting}
+int partition(int* poids, int nbObjets){ 
+
+
+//calcul de la somme totale des poids
+ int i, j;
+int N = 0;
+for(i = 0; i < nbObjets; i++ ) {N += poids[i];}
+
+int tab[N]; 
+
+//initialisation de la table de booleens
+
+ tab[0] = 1;
+ for(i = 1; i <= N; i ++ )  {tab[i] = 0;}
+
+
+//remplissage de la table selon les formules de la prog dyn
+
+ for(i = 0; i < nbObjets; i++ ){
+   for(j = N - poids[i]; j >= 0; j-- ){
+     if( tab[j] == 1 ) {
+       tab[j + poids[i]] = 1;
+     }
+   }
+ }
+
+//la reponse qui nous interesse
+ if(tab[N / 2] == 1){ 
+   printf("vrai avec %d \n", N/2);
+   }
+ else{puts("faux");}
+
+ return tab[N / 2];
+}
+
+\end{lstlisting}
+
+\paragraph{Complexité théorique}
+
+Soit $N$ la somme des poids.
+La complexité en temps de notre algorithme est $O(nN)$.
+La complexité mémoire est $O(N).$
+\paragraph{Tests unitaires}
+
+Nous avons commencé par faire des tests unitaires selon diverses
+instances afin de tester la validité de chaque fonction du code.
+
+Voici ci-dessous un exemple de test parmi ceux qu'on a menés à ce sujet.
+\begin{lstlisting}
+#define PART_UNIT3_N_OBJ 3
+#define PART_UNIT3_WEIGHTS {1,2,7}
+#define PART_UNIT3_RIGHT_ANSWER FALSE
+\end{lstlisting}
+
+Nous créons ainsi des instances du problème partition, en variant à chaque fois le nombre d'objets, en leur associant la réponse attendue.
+
+À l'exécution, si le résultat retourné ne correspond pas à la valeur attendue, alors le test nous affiche << failure>>, sinon il nous renvoie << success>>.
+
+Exemple~:
+\begin{lstlisting}
+partition result check 1: success
+\end{lstlisting}
+
+\paragraph{Jeux de tests et temps d'exécution}
+
+Nous présentons ici des jeux de tests pour le problème partition en variant à chaque fois le nombre d'objets et en mesurant le temps d'exécution moyen sur 100 tests.
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Nombre d'objets & temps d'exécution moyen en ms\\
+\hline
+150 & 1\\
+\hline
+500 & 14\\
+\hline
+650 & 24\\
+\hline
+800 & 32\\
+\hline
+950 & 43\\
+\hline
+1000 & 51\\
+\hline
+2000 & 185\\
+\hline
+3000 & 565\\
+\hline
+5000 & 1536\\
+\hline
+\end{tabular}
+\caption {Variation du temps d'exécution en fonction du nombre d'objets}
+\end{table}\\
+La variation du temps d'exécution en fonction du nombre d'objets est tracé par la courbe ci-dessous~:
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \begin{axis}[title=Jeux de tests pour partition, xlabel= nombre d'objets, ylabel= temps d'exécution]
+      \addplot
+        table[col sep=comma]{partition.csv};
+        \addplot
+        table[col sep=comma]{equ2.csv};
+        \legend{exécution de partition, comparaison}
+    \end{axis}
+\end{tikzpicture}
+\caption{Temps d'exécution de partition.}
+\end{figure}
+
+
+\subsubsection{Voyageur de commerce}
+
+\paragraph{Modélisation}
+
+Le problème du voyageur de commerce peut se modéliser de la manière
+suivante~:
+
+
+on se donne un graphe complet $K_n=(X,E)$ et on note $c_{ij}$ le poids
+de l'arête $\{i,j\}$.
+\begin{equation}
+\begin{cases}
+min \sum_{\{i, j\} \in E} c_{ij}.x_{ij} \\
+\sum_{i=0}^n \sum_{j=0}^n x_{ij} = 1 \\
+\forall (S, \bar{S}) \sum_{i \in S, j \in \bar{S}} x_{ij} \geq 1 \\
+x_{ij} \in \{0, 1\} \\
+\end{cases}
+\end{equation}
+
+\paragraph{Formules de programmation dynamique}
+
+On note $C(S,i)$ la longueur d'une plus courte chaîne du sommet $0$ au
+sommet $i$ qui passe une et une seule fois par tout sommet de $S$ et
+qui n'utilise pas de sommet non dans $S$ autre que $i$. On a ainsi les
+formules suivantes pour le problème du voyageur de commerce~:
+
+\begin{equation}
+\begin{cases}
+C[S][i] = poids[0][i] \text{si S ne contient que $0$} \\
+C[S][i] = min_{k \in S - \{ 0 \}} \{ C[S- \{ k \}][k] + poids[k][i]  \}
+\end{cases}
+\end{equation}
+
+Le principe appliqué à un chemin/cycle (il y a autant de chemins que de
+sommets moins un) peut être résumé sur le schéma présenté ci-dessous.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[height=5cm]{tspDyn.eps}
+\end{center}
+\caption{Exemple de calcul d'un chemin pour le tsp en programmation dynamique.}
+\end{figure}
+
+\paragraph{Principe de l'algorithme}
+
+Nous proposons l'algorithme suivant pour une programmation dynamique
+du TSP.
+
+\begin{algorithm}[!ht]
+\caption{Programmation dynamique pour le TSP}
+\label{Dyntsp}
+\begin{algorithmic}[1]
+\REQUIRE une matrice de poids, un ensemble de $n$ sommets
+\FOR{chaque sous-ensemble $S$ commençant par $0$}
+\IF{$|S| = 2$}
+\FOR{$i$ de $0$ à $n-1$}
+\STATE C[S][i] := poids[0][i]
+\ENDFOR
+\ELSE
+\FOR{$i$ de $0$ à $n-1$}
+\FOR{tous les $k$ $\notin$ $S - \{ 0 \}$}
+\STATE C[S][i] := $\min$ $\{$ C[$S - \{ k \} $][k] + poids[k][i] $\}$
+\ENDFOR
+\ENDFOR
+\ENDIF
+\ENDFOR
+\STATE retourner $\min$ $\{$ C[S][i] + poids[i][0] $\}$ avec $|S| = $
+(nombre de sommets - 1)
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Complexité théorique}
+
+La complexité théorique d'un tel algorithme est de $O(n^2.2^n)$.
+
+\paragraph{Jeux de tests et temps d'exécution}
+
+TODO
+
+
+\pagebreak
+
+\subsection{Branch and bound}
+
+Nous nous intéresserons au sein de cette section à la programmation de
+la méthode de branch and bound pour résoudre le problème du voyageur
+de commerce (tsp).
+
+\subsubsection{Détermination de la solution initiale}
+
+ Nous nous intéresserons à trois heuristiques en particulier.
+\begin{itemize}
+\item Chaîne de poids le plus faible et ajout d'une arête pour le
+  cycle
+\item Voisinage 2--opt
+\item Voisinage 3--opt
+\end{itemize}
+
+\subsubsection{Principe de l'algorithme}
+
+\paragraph{Algorithme}
+
+Nous proposons d'implémenter l'algorithme récursif présenté ci-dessous.
+
+\begin{algorithm}[!ht]
+\caption{Branch and Bound pour le TSP}
+\label{BBtsp}
+\begin{algorithmic}[1]
+\REQUIRE un sommet racine, une borne inférieure, un graphe $G$
+\STATE faire ACPM $G - \{x \}$
+\STATE relier $x$ à ses deux voisins les plus proches en terme de coût
+\IF{valeur du cycle > borne inférieure}
+\IF{tous les sommets sont de degré $2$}
+\STATE mettre à jour le solution courante
+\ELSE
+\STATE choisir un sommet $y$ de degré $\geq$ 2
+\FOR{chaque arête $e_i$ issue de $y$}
+\STATE $G' := G - \{ e_i \}$
+\STATE BranchAndBound($y$, borne inférieure, $G'$)
+\ENDFOR
+\ENDIF
+\ENDIF
+\STATE retourner la plus petite des solutions acceptables
+\end{algorithmic}
+\end{algorithm}
+
+La borne inférieure est une solution initiale obtenue grâce à une heuristique.
+
+\paragraph{Complexité théorique}
+
+\subsubsection{Implémentation}
+
+\paragraph{Langage de programmation et bibliothèques}
+
+Nous utiliserons le langage C ainsi que la bibliothèque Boost::Graph.
+
+\paragraph{Structures de données utilisées}
+
+\paragraph{Principales fonctions}
+
+\subsubsection{Tests}
+
+\paragraph{Outils}
+
+Nous utiliserons ici l'utilitaire console Unix time pour mesurer le
+temps de calcul de nos programmes. Gprof sera également utilisé pour
+une analyse un peu plus fine du temps de calcul (outil de profiling).
+
+\paragraph{Tests de validité de notre programme}
+
+\paragraph{Tests de temps d'exécution}
+
+
+\subsection{Programmation de l'algorithme $\frac{3}{2}$}
+
+\subsubsection{Principe de l'algorithme}
+
+\paragraph{Algorithme}
+
+L'algorithme $\frac{3}{2}$ que nous proposons est le suivant~:
+
+\begin{algorithm}[!ht]
+\caption{Approximation $\frac{3}{2}$ pour le TSP}
+\label{3-2tsp}
+\begin{algorithmic}[1]
+\REQUIRE un graphe $G$
+\STATE faire ACPM $T$ $G$ de coût $w$
+\STATE $W := $ sommets de degré impair de $T$
+\STATE chercher un couplage $M$ de $G$ poids min $m$ saturant tous les
+sommets de $W$
+\STATE $G' := $ le graphe construit à partir des arêtes de $M$ et de
+$T$
+\STATE Soit P un parcours eulérien de longueur $p$, on a $p:= w + m$
+\STATE retourner un cycle de longueur $c \leq p$
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Complexité théorique}
+
+\subsubsection{Implémentation}
+
+\paragraph{Langage de programmation et bibliothèques}
+
+\paragraph{Structures de données utilisées}
+
+\paragraph{Principales fonctions}
+
+\subsubsection{Tests}
+
+\paragraph{Outils}
+
+Nous utiliserons ici l'utilitaire console Unix time pour mesurer le
+temps de calcul de nos programmes. Gprof sera également utilisé pour
+une analyse un peu plus fine du temps de calcul (outil de profiling).
+
+\paragraph{Tests de validité de notre programme}
+
+\paragraph{Tests de temps d'exécution}
+
+\section{Comparaison des différentes implémentations du TSP}
+
+
+\section{Conclusion}
+
+\end{document}
