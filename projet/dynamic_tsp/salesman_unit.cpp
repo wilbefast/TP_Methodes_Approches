@@ -1,8 +1,7 @@
 #include <stdlib.h>
 
-#include "salesman.h"
-
-/* TSP UNIT TEST */
+#include "salesman_unit.hpp"
+#include "salesman.hpp"
 
 #include "assert.h"
 
@@ -16,6 +15,8 @@
                             }
 #define TSP_UNIT1_RIGHT_ANSWER 5
 
+using namespace std;
+
 int salesman_unit()
 {
   // test 1
@@ -27,7 +28,7 @@ int salesman_unit()
 
     // intialise distances
     {
-      size_t temp[TSP_UNIT1_N_OBJ][TSP_UNIT1_N_OBJ]
+      uint temp[TSP_UNIT1_N_OBJ][TSP_UNIT1_N_OBJ]
                   = TSP_UNIT1_DISTANCES, row, col;
       for(row = 0; row < TSP_UNIT1_N_OBJ; row++)
         for(col = 0; col < TSP_UNIT1_N_OBJ; col++)
@@ -35,34 +36,10 @@ int salesman_unit()
     }
 
     // launch the TSP solver
-    size_t result = salesman(&distances, TSP_UNIT1_N_OBJ);
+    uint result = salesman(&distances, TSP_UNIT1_N_OBJ);
     ASSERT(result == TSP_UNIT1_RIGHT_ANSWER, "tsp result check 1");
   }
 
   // success
   return EXIT_SUCCESS;
-}
-
-/* TRAVELLING SALESMAN PROBLEM SOLVER */
-
-int salesman(matrix_t* weights, size_t n_obj)
-{
-  /// TODO
-  return 0;
-/*
-  function algorithm T SP (G, n)
-for k := 2 to n do
-C({i, k}, k) := d1,k
-end for
-for s = 3 to n do
-for all S ⊆ {1, 2, . . . , n}||S|| = s do
-for all k ∈ S do
-{C(S, k) = minm=k,m∈S [C(S − {k}, m) + dm,k ]}
-opt := mink=1 [C({1, 2, 3, . . . , n}, k) + d1,k
-end for
-end for
-end for;
-return (opt)
-end
-*/
 }

@@ -2,9 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "knapsack.h"
-#include "partition.h"
-#include "salesman.h"
+#include "matrix.h"
+
+#include "knapsack_unit.h"
+#include "knapsack_stress.h"
+
+#include "partition_unit.h"
+#include "partition_stress.h"
 
 #include "assert.h"
 
@@ -18,15 +22,11 @@ int main()
 
   // test knapsack
   ASSERT(knapsack_unit() != EXIT_FAILURE, "knapsack unit test");
-  //knapsack_stress();
+  knapsack_stress();
 
   // test partition
   ASSERT(partition_unit() != EXIT_FAILURE, "partition unit test");
-  //partition_stress();
-
-  // test tsp
-  ASSERT((salesman_unit()) != EXIT_FAILURE, "tsp unit test");
-  //tsp_stress();
+  partition_stress();
 
   return EXIT_SUCCESS;
 }

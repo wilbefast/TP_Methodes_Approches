@@ -10,17 +10,11 @@ typedef struct
 }
 knapsack_instance_t;
 
-// allocate, solve and free random instance
-size_t knapsack_rand(size_t capacity, size_t n_obj);
-
-// calls the above, returns the time taken to solve
-long time_knapsack_rand(size_t capacity, size_t n_obj, size_t n_tests);
-
-// tests
-int knapsack_unit();
-void knapsack_stress();
-
 // knapsack problem solver
 size_t knapsack(knapsack_instance_t inst);
+
+// knapsack solver which takes the unrolled parameter list
+size_t knapsack_aux(size_t capacity, size_t n_obj, size_t weights[],
+                  size_t utilities[]);
 
 #endif // KNAPSACK_H_INCLUDED

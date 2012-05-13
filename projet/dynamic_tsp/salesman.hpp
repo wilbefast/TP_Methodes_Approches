@@ -2,9 +2,7 @@
 #define SALESMAN_H_INCLUDED
 
 #include "matrix.h"
-#include "types.h"
 
-int salesman_unit();
-int salesman(matrix_t* weights, size_t n_obj);
+uint salesman(matrix_t* distances, uint n_nodes);
 
 #endif // SALESMAN_H_INCLUDED
