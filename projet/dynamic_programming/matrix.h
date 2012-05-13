@@ -31,6 +31,7 @@ typedef struct
 matrix_t;
 
 // allocate and free
+void calloc_matrix(matrix_t* m);
 void malloc_matrix(matrix_t* m);
 void free_matrix(matrix_t* m);
 

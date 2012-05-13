@@ -2,6 +2,10 @@
 
 #include "matrix.h"
 
+/* PRIVATE FUNCTION */
+
+void save_matrix_pointers(matrix_t* m);
+
 /* UNIT TEST */
 
 #include "assert.h"
@@ -45,6 +49,22 @@ void malloc_matrix(matrix_t* m)
   m->t = (int**)malloc(sizeof (int*) * m->n_rows);
   m->t[0] = (int*)malloc(sizeof (int) * m->n_rows * m->n_cols);
 
+  // link up architecture
+  save_matrix_pointers(m);
+}
+
+void calloc_matrix(matrix_t* m)
+{
+  // allocate memory and set to zero
+  m->t = calloc(m->n_rows, sizeof (int*));
+  m->t[0] = calloc(m->n_rows * m->n_cols, sizeof (int));
+
+  // link up architecture
+  save_matrix_pointers(m);
+}
+
+void save_matrix_pointers(matrix_t* m)
+{
   // save row-pointers
   size_t i;
   for(i = 1; i < m->n_rows; i++)

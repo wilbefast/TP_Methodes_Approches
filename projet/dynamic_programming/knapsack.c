@@ -132,32 +132,33 @@ void destroy_knapsack_i(knapsack_instance_t* inst)
 size_t knapsack_aux(size_t capacity, size_t n_obj, size_t weights[],
                     size_t utilities[])
 {
-  // tableau central de la programmation dynamique
-  matrix_t m;
-    m.n_rows = n_obj;
-    m.n_cols = capacity + 1;
-  malloc_matrix(&m);
-
-  // initialisation de la table
-  size_t col;
-  for (col = 0; col < capacity + 1; col++)
-    m.t[0][col] = 0;
+  // Let max_value.t[i,j] is the maximum value we can achieve from objects 1..i
+  // while taking a maximum weight of j.
+  matrix_t max_value;
+    max_value.n_rows = n_obj;
+    max_value.n_cols = capacity + 1;
+  calloc_matrix(&max_value);
 
   // remplissage de la table selon les formules de la prog dyn
-  size_t row;
-  for (row = 1; row < n_obj; row++)
-    for (col = 0; col < capacity + 1; col++)
+  size_t obj, weight;
+  for (obj = 1; obj < n_obj; obj++)
+    for (weight = 0; weight <= capacity; weight++)
     {
-      if (col >= weights[row])
-        m.t[row][col] =
-          max(m.t[row-1][col], m.t[row-1][col-weights[row]] + utilities[row]);
+      if (weight >= weights[obj])
+      {
+        // obj is part of the solution
+        size_t take = max_value.t[obj-1][weight];
+        // obj is not part of the solution
+        size_t leave = max_value.t[obj-1][weight - weights[obj]] + utilities[obj];
+        max_value.t[obj][weight] = max(take, leave);
+      }
       else
-        m.t[row][col] = m.t[row-1] [col];
+        max_value.t[obj][weight] = max_value.t[obj-1][weight];
     }
 
-  // store the result and free the matrix
-  size_t result = m.t[n_obj -1][capacity];
-  free_matrix(&m);
+  // store the result (maximum utility) and free the matrix
+  size_t result = max_value.t[n_obj -1][capacity];
+  free_matrix(&max_value);
 
   // la valeur qui nous interesse
   return result;
