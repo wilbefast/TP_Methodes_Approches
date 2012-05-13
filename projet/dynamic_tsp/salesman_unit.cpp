@@ -1,12 +1,5 @@
-#include <stdlib.h>
-
-#include "salesman.h"
-
-/* PRIVATE FUNCTIONS */
-
-size_t shortest_path(node_set_t* nodes, size_t end_i);
-
-/* TSP UNIT TEST */
+#include "salesman_unit.hpp"
+#include "salesman.hpp"
 
 #include "assert.h"
 
@@ -20,6 +13,8 @@ size_t shortest_path(node_set_t* nodes, size_t end_i);
                             }
 #define TSP_UNIT1_RIGHT_ANSWER 5
 
+using namespace std;
+
 int salesman_unit()
 {
   // test 1
@@ -31,7 +26,7 @@ int salesman_unit()
 
     // intialise distances
     {
-      size_t temp[TSP_UNIT1_N_OBJ][TSP_UNIT1_N_OBJ]
+      uint temp[TSP_UNIT1_N_OBJ][TSP_UNIT1_N_OBJ]
                   = TSP_UNIT1_DISTANCES, row, col;
       for(row = 0; row < TSP_UNIT1_N_OBJ; row++)
         for(col = 0; col < TSP_UNIT1_N_OBJ; col++)
@@ -39,34 +34,10 @@ int salesman_unit()
     }
 
     // launch the TSP solver
-    size_t result = salesman(&distances, TSP_UNIT1_N_OBJ);
+    uint result = salesman(&distances, TSP_UNIT1_N_OBJ);
     ASSERT(result == TSP_UNIT1_RIGHT_ANSWER, "tsp result check 1");
   }
 
   // success
   return EXIT_SUCCESS;
-}
-
-/* TRAVELLING SALESMAN PROBLEM SOLVER */
-
-int salesman(matrix_t* distances, size_t n_obj)
-{
-  /// TODO
-  return 0;
-/*
-  size_t end_i;
-  for (end_i = 1; end_i < n_obj; end_i++)
-    C({i, k}, k) = distances[0, k];
-
-  for (s = 2; s < n; s++)
-    for(S ⊆ {1, 2, . . . , n}||S|| = s)
-      for(k ∈ S)
-      {
-        {C(S, k) = minm=k,m∈S [C(S − {k}, m) + dm,k ]}
-        result  = mink=1 [C({1, 2, 3, . . . , n}, k) + d1,k
-      }
-
-  // return the optimal distance
-  return result;
-*/
 }
