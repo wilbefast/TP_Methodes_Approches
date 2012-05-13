@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "salesman_unit.hpp"
 #include "salesman.hpp"
 
