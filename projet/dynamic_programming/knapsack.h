@@ -14,7 +14,7 @@ knapsack_instance_t;
 size_t knapsack_rand(size_t capacity, size_t n_obj);
 
 // calls the above, returns the time taken to solve
-double time_knapsack_rand(size_t capacity, size_t n_obj, size_t n_tests);
+long time_knapsack_rand(size_t capacity, size_t n_obj, size_t n_tests);
 
 // tests
 int knapsack_unit();

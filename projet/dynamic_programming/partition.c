@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
+#include <sys/time.h>
 
 #include "math.h"
 #include "partition.h"
@@ -9,7 +9,8 @@
 /* PRIVATE FUNCTIONS */
 
 // create and destruction of partition problem instances
-void create_partition_i(partition_instance_t* inst, size_t _n_obj);
+void create_partition_i(partition_instance_t* inst, size_t _n_obj,
+                        size_t max_value);
 void destroy_partition_i(partition_instance_t* inst);
 
 // partition solver which takes the unrolled parameter list
@@ -75,13 +76,15 @@ int partition_unit()
 
 #define PART_STRESS_N_OBJ 500
 #define PART_STRESS_N_TESTS 100
+#define PART_STRESS_MAX_VALUE 50
 
 void partition_stress()
 {
-  printf("partition stress test:\n\t%d objects\n\t%d tests\n",
-        PART_STRESS_N_OBJ, PART_STRESS_N_TESTS);
-  double t = time_partition_rand(PART_STRESS_N_OBJ, PART_STRESS_N_TESTS);
-  printf("\taverage solving time = %es\n", t);
+  printf("partition stress test:\n\t%d objects\n\tmax value = %d\n\t%d tests\n",
+        PART_STRESS_N_OBJ, PART_STRESS_MAX_VALUE, PART_STRESS_N_TESTS);
+  long t = time_partition_rand(PART_STRESS_N_OBJ, PART_STRESS_MAX_VALUE,
+                                PART_STRESS_N_TESTS);
+  printf("\taverage solving time = %ldms\n", t);
 }
 
 
@@ -89,11 +92,11 @@ void partition_stress()
 /* RANDOM GENERATOR */
 
 
-size_t partition_rand(size_t n_obj)
+size_t partition_rand(size_t n_obj, size_t max_value)
 {
   // create a random partition problem instance
   partition_instance_t inst;
-  create_partition_i(&inst, n_obj);
+  create_partition_i(&inst, n_obj, max_value);
 
   // solve and destroy instance
   size_t result = partition(inst);
@@ -103,22 +106,28 @@ size_t partition_rand(size_t n_obj)
   return result;
 }
 
-double time_partition_rand(size_t n_obj, size_t n_tests)
+long time_partition_rand(size_t n_obj, size_t max_value, size_t n_tests)
 {
   // time before tests began
-  long unsigned int start = time(NULL);
+  struct timeval start;
+  gettimeofday(&start, NULL);
 
   // launch the required number of tests on random instances
   size_t test;
   for(test = 0; test < n_tests; test++)
-    partition_rand(n_obj);
+    partition_rand(n_obj, max_value);
 
   // return the difference in time between before and after
-  long unsigned int end = time(NULL);
-  return (end-start)/(double)n_tests;
+  struct timeval end;
+  gettimeofday(&end, NULL);
+  long time_s  = end.tv_sec  - start.tv_sec;
+  long time_ms = end.tv_usec - start.tv_usec;
+  long time_total = ((time_s) * 1000 + time_ms/1000.0) + 0.5;
+  return time_total/n_tests;
 }
 
-void create_partition_i(partition_instance_t* inst, size_t _n_obj)
+void create_partition_i(partition_instance_t* inst, size_t _n_obj,
+                      size_t max_value)
 {
   // initialise parameters
   inst->n_obj = _n_obj;
@@ -127,7 +136,7 @@ void create_partition_i(partition_instance_t* inst, size_t _n_obj)
   // randomise values and utilities
   size_t obj;
   for(obj = 0; obj < _n_obj; obj++)
-    inst->values[obj] = rand();
+    inst->values[obj] = rand() % max_value;
 }
 
 void destroy_partition_i(partition_instance_t* inst)
@@ -151,6 +160,13 @@ bool_t partition_aux(size_t n_obj, size_t values[])
 
   // initialisation du tableau de booleens
   bool_t* can_sum = calloc(total_weight+1, sizeof(bool_t));
+  if(!can_sum)
+  {
+    printf("total weight is %d : can't allocate array that big!\n",
+          total_weight+1);
+    return FALSE;
+  }
+
   can_sum[0] = TRUE;
 
   // remplissage de la table selon les formules de la programmation dynamique

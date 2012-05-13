@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
+#include <sys/time.h>
 
 #include "knapsack.h"
 #include "math.h"
@@ -59,11 +59,11 @@ int knapsack_unit()
 
 void knapsack_stress()
 {
-  printf("knapsack stress test:\n\tcapacity of %d\n\t%d objects\n\t%d tests\n",
+  printf("knapsack stress test:\n\tcapacity = %d\n\t%d objects\n\t%d tests\n",
         KNAPS_STRESS_CAPACITY, KNAPS_STRESS_N_OBJ, KNAPS_STRESS_N_TESTS);
-  double t = time_knapsack_rand(KNAPS_STRESS_CAPACITY, KNAPS_STRESS_N_OBJ,
+  long t = time_knapsack_rand(KNAPS_STRESS_CAPACITY, KNAPS_STRESS_N_OBJ,
                                 KNAPS_STRESS_N_TESTS);
-  printf("\taverage solving time = %es\n", t);
+  printf("\taverage solving time = %ldms\n", t);
 }
 
 
@@ -83,10 +83,11 @@ size_t knapsack_rand(size_t capacity, size_t n_obj)
   return result;
 }
 
-double time_knapsack_rand(size_t capacity, size_t n_obj, size_t n_tests)
+long time_knapsack_rand(size_t capacity, size_t n_obj, size_t n_tests)
 {
   // time before tests began
-  long unsigned int start = time(NULL);
+  struct timeval start;
+  gettimeofday(&start, NULL);
 
   // launch the required number of tests on random instances
   size_t test;
@@ -94,8 +95,12 @@ double time_knapsack_rand(size_t capacity, size_t n_obj, size_t n_tests)
     knapsack_rand(capacity, n_obj);
 
   // return the difference in time between before and after
-  long unsigned int end = time(NULL);
-  return (end-start)/(double)n_tests;
+  struct timeval end;
+  gettimeofday(&end, NULL);
+  long time_s  = end.tv_sec  - start.tv_sec;
+  long time_ms = end.tv_usec - start.tv_usec;
+  long time_total = ((time_s) * 1000 + time_ms/1000.0) + 0.5;
+  return time_total/n_tests;
 }
 
 void create_knapsack_i(knapsack_instance_t* inst, size_t _capacity,
