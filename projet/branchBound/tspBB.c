@@ -9,6 +9,37 @@ Branch and Bound
 
  **************/
 
+size_t branchBound(int sommet, int borneInf, Graph g){
+
+  //ACPM G − {x}
+  remove_vertex(sommet, g);
+  
+
+  // relier x à ses deux voisins les plus proches en terme de coût
+
+  //if valeur du cycle > borne inférieure then
+
+  //if tous les sommets sont de degré 2 then
+
+  //mettre à jour le solution courante
+
+  //else
+
+  //choisir un sommet y de degré ≥ 2
+
+  //for chaque arête ei issue de y do
+
+  //gbis := G − {ei }
+  remove_edge(e, g);
+
+  //BranchAndBound(y, borneInf, g )
+
+  //retourner la plus petite des solutions acceptables
+
+
+
+}
+
 
 int main()
 {
