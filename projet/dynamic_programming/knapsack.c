@@ -23,14 +23,23 @@ size_t knapsack_aux(size_t capacity, size_t n_obj, size_t weights[],
 
 #include "assert.h"
 
-//#define KNAPS_MAX_UTILITY 100
-
 #define KNAPS_UNIT1_N_OBJ 7
 #define KNAPS_UNIT1_CAPACITY 2
-#define KNAPS_UNIT1_WEIGHTS {3,5,1,5,7,2,6}
+#define KNAPS_UNIT1_WEIGHTS   {3,5,1,5,7,2,6}
 #define KNAPS_UNIT1_UTILITIES {2,5,3,3,6,2,4}
-#define KNAPS_UNIT1_RIGHT_ANSWER 3 // take item number 2, with utility 3
+#define KNAPS_UNIT1_RIGHT_ANSWER 3 // take item 3
 
+#define KNAPS_UNIT2_N_OBJ 10
+#define KNAPS_UNIT2_CAPACITY 5
+#define KNAPS_UNIT2_WEIGHTS   {1,2,3,4,5,1,2,3,4,5}
+#define KNAPS_UNIT2_UTILITIES {4,3,1,3,6,2,2,4,3,7}
+#define KNAPS_UNIT2_RIGHT_ANSWER 9 // take items 1, 2 and 7
+
+#define KNAPS_UNIT3_N_OBJ 5
+#define KNAPS_UNIT3_CAPACITY 11
+#define KNAPS_UNIT3_WEIGHTS   {1,2,5,6,7}
+#define KNAPS_UNIT3_UTILITIES {1,6,18,22,28}
+#define KNAPS_UNIT3_RIGHT_ANSWER 40 // take items 3 and 4
 
 int knapsack_unit()
 {
@@ -44,6 +53,30 @@ int knapsack_unit()
       knapsack_aux(KNAPS_UNIT1_CAPACITY, KNAPS_UNIT1_N_OBJ, weights, utilities);
     // check the result
     ASSERT(max_utility == KNAPS_UNIT1_RIGHT_ANSWER, "knapsack result check 1");
+  }
+
+  // test 2
+  {
+    // instance sac a dos : on veut maximiser l'utilite
+    size_t weights[KNAPS_UNIT2_N_OBJ] = KNAPS_UNIT2_WEIGHTS;
+    size_t utilities[KNAPS_UNIT2_N_OBJ] = KNAPS_UNIT2_UTILITIES;
+    // solve the problem
+    size_t max_utility =
+      knapsack_aux(KNAPS_UNIT2_CAPACITY, KNAPS_UNIT2_N_OBJ, weights, utilities);
+    // check the result
+    ASSERT(max_utility == KNAPS_UNIT2_RIGHT_ANSWER, "knapsack result check 2");
+  }
+
+  // test 3
+  {
+    // instance sac a dos : on veut maximiser l'utilite
+    size_t weights[KNAPS_UNIT3_N_OBJ] = KNAPS_UNIT3_WEIGHTS;
+    size_t utilities[KNAPS_UNIT3_N_OBJ] = KNAPS_UNIT3_UTILITIES;
+    // solve the problem
+    size_t max_utility =
+      knapsack_aux(KNAPS_UNIT3_CAPACITY, KNAPS_UNIT3_N_OBJ, weights, utilities);
+    // check the result
+    ASSERT(max_utility == KNAPS_UNIT2_RIGHT_ANSWER, "knapsack result check 3");
   }
 
   // unit test result
@@ -132,14 +165,14 @@ void destroy_knapsack_i(knapsack_instance_t* inst)
 size_t knapsack_aux(size_t capacity, size_t n_obj, size_t weights[],
                     size_t utilities[])
 {
-  // Let max_value.t[i,j] is the maximum value we can achieve from objects 1..i
+  // max_value.t[i,j] is the maximum value we can achieve with objects 0 to to i
   // while taking a maximum weight of j.
   matrix_t max_value;
     max_value.n_rows = n_obj;
     max_value.n_cols = capacity + 1;
   calloc_matrix(&max_value);
 
-  // remplissage de la table selon les formules de la prog dyn
+  // fill the table to build the solution step by step
   size_t obj, weight;
   for (obj = 1; obj < n_obj; obj++)
     for (weight = 0; weight <= capacity; weight++)
@@ -160,7 +193,7 @@ size_t knapsack_aux(size_t capacity, size_t n_obj, size_t weights[],
   size_t result = max_value.t[n_obj -1][capacity];
   free_matrix(&max_value);
 
-  // la valeur qui nous interesse
+  // return the result
   return result;
 }
 
