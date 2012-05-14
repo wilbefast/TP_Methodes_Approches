@@ -160,6 +160,25 @@ difficile qu'un problème NP-Complet.
 
 \section{Partie pratique}
 
+\subsection{Introduction au problème d'optimisation}
+
+\begin{itemize}
+  \item problèmes d'optimisation 
+    \begin{itemize}
+    \item[] $\nearrow$ problèmes faciles
+    \item[] $\searrow$ \fbox{problèmes NP-difficiles}
+    \end{itemize}
+  \item  $\Rightarrow$ méthodes exactes 
+    \begin{itemize}
+    \item[] $\nearrow$ programmation dynamique
+    \item[] $\searrow$ branch and bound
+    \end{itemize}
+  \item  $\Rightarrow$ méthodes approchées
+    \begin{itemize}
+    \item[] $\longrightarrow$ algorithmes d'approximation
+    \end{itemize}
+\end{itemize}
+    
 \subsection{Programmation dynamique}
 
 Nous effectuerons ici les simulations du problème de la partition, du sac
@@ -170,6 +189,10 @@ seront écrits en langage C.
 La programmation dynamique permet de trouver la solution optimale d'un
 problème en combinant les solutions optimales de sous-problèmes de ce
 problème.
+
+\subsubsection{Structures de données communes aux diffénts programmes}
+
+TODO
 
 \subsubsection{Sac à dos}
 
@@ -189,18 +212,9 @@ x_i \in\{0, 1\}, i=1\dots n\\
 \end{cases}
 \end{equation}
 
-%Ainsi, nous prenons en paramètre~:
-%\begin{itemize}
-%\item le nombre $n$ d'objets sur lesquels nous
-%désirons travailler, 
-%\item le poids $b$ du sac que nous ne pouvons pas
-%dépasser, 
-%\item une variable binaire $x$, 
-%\item un ensemble $C$ d'utilités à associer à chaque objet,
-%\item un ensemble $A$ de poids à associer à chaque objet.
-%\end{itemize}
-
 \paragraph{Formules de programmation dynamique}
+
+TODO : à reprendre
 
 Les formules de programmation dynamique pour le problème du sac à dos
 sont les suivantes~:
@@ -213,45 +227,11 @@ tab[i][j] = max(tab[i-1] [j], (tab[i-1] [j-poids[i]] + utilite[i])); \\
 
 \paragraph{Implémentation en C}
 
-Nous avons donc implémenté l'algorithme suivant (avec la fonction très
-simple \textit{min} de calcul de minimum entre deux valeurs que nous
-ne faisons pas figurer ici).
+Nous avons donc implémenté l'algorithme suivant. \\
 
-\begin{lstlisting}
+TODO
 
-int sacADos(int W, int* poids, int* utilite, int nbObjets){ 
-//W represente la capacite max du sac
-
-// tableau central de la programmation dynamique
-int tab[nbObjets][W+1]; 
-int w;
-
-//initialisation de la table
-for (w = 0; w < W + 1; w++){
-  tab[0][w] = 0;
-    }
-
-//remplissage de la table selon les formules de la prog dyn
- int i, j;
- for (i = 1; i < nbObjets ; i++){
-  for (j = 0; j < W + 1 ; j++) {
-    if (j >= poids[i]) {
-      tab[i][j] = max(tab[i-1] [j], 
-(tab[i-1] [j-poids[i]] + utilite[i]));
-    }
-      else{
-      tab[i][j] = tab[i-1] [j];
-      }
-    }
-  }
-//la valeur qui nous interesse
- printf(" poids : \%d \n", W);
- printf("meilleure solution (utilite) :
-\%d \n", tab[nbObjets -1] [W]);
- return (tab[nbObjets -1] [W]);
-}
-
-\end{lstlisting}
+  
 
 \paragraph{Complexité théorique}
 
@@ -370,6 +350,8 @@ La variation du temps d'exécution en fonction du capacité du sac est donnée p
 \caption{Temps d'exécution de sac à dos.}
 \end{figure}
 
+\paragraph{Conclusion sur la complexité}
+
 \subsubsection{Partition}
 
 \paragraph{Modélisation}
@@ -381,6 +363,8 @@ Le problème de la partition se modélise de la manière suivante~:
 \end{equation}
 
 \paragraph{Formules de programmation dynamique}
+
+TODO : à reprendre \\
 
 On se basera sur la récurrence suivante~:
 
@@ -397,45 +381,9 @@ si ( tab[j] == 1 ) {
 
 Nous présentons donc l'algorithme suivant, qui est une sorte de
 restriction (cas particulier) de l'algorithme proposé pour la
-résolution du problème du sac à dos~:
+résolution du problème du sac à dos~: \\
 
-\begin{lstlisting}
-int partition(int* poids, int nbObjets){ 
-
-
-//calcul de la somme totale des poids
- int i, j;
-int N = 0;
-for(i = 0; i < nbObjets; i++ ) {N += poids[i];}
-
-int tab[N]; 
-
-//initialisation de la table de booleens
-
- tab[0] = 1;
- for(i = 1; i <= N; i ++ )  {tab[i] = 0;}
-
-
-//remplissage de la table selon les formules de la prog dyn
-
- for(i = 0; i < nbObjets; i++ ){
-   for(j = N - poids[i]; j >= 0; j-- ){
-     if( tab[j] == 1 ) {
-       tab[j + poids[i]] = 1;
-     }
-   }
- }
-
-//la reponse qui nous interesse
- if(tab[N / 2] == 1){ 
-   printf("vrai avec %d \n", N/2);
-   }
- else{puts("faux");}
-
- return tab[N / 2];
-}
-
-\end{lstlisting}
+TODO
 
 \paragraph{Complexité théorique}
 
@@ -506,6 +454,8 @@ La variation du temps d'exécution en fonction du nombre d'objets est donnée pa
 \end{tikzpicture}
 \caption{Temps d'exécution de partition.}
 \end{figure}
+
+\paragraph{Conclusion sur la complexité}
 
 \subsubsection{Voyageur de commerce}
 
@@ -645,6 +595,8 @@ Sommets & temps d'exécution moyen en ms\\
 \caption{Temps d'exécution du voyageur de commerce.}
 \end{figure}
 
+\paragraph{Conclusion sur la complexité}
+
 \pagebreak
 
 \subsection{Branch and bound}
@@ -755,9 +707,6 @@ Nous n'avons pas eu le temps d'implémenter cet algorithme. Néanmoins,
 nous aurions probablement utilisé le langage C/C++ avec la
 bibliothèque boost::graph pour cela. De plus, nous aurions mesuré les
 temps d'exécution de nos fonctions à l'aide de l'outil de profiling gprof.
-
-\section{Comparaison des différentes implémentations du TSP}
-
 
 \section{Conclusion}
 
