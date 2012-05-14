@@ -21,7 +21,7 @@ size_t branchBound(int sommet, int borneInf, Graph g){
 
   //if tous les sommets sont de degré 2 then
 
-  //mettre à jour le solution courante
+  //mettre à jour la solution courante
 
   //else
 

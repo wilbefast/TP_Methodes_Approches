@@ -99,8 +99,8 @@
   \begin{alertblock}{Formules}
     \begin{equation}
       \begin{cases}
-        tab[0][i] = 1; \\ si ( tab[j][i] == 1 )\text{~alors~} tab[j +
-          i] = 1; \\
+        tab[0] = \top ; \\
+	tab[j + poids[i]] = \top \text{ ssi } tab[j] ; \\
       \end{cases}
     \end{equation}
   \end{alertblock}
@@ -119,21 +119,16 @@
       \end{center}
     \end{column}
       \begin{column}[]{6cm}
-        \begin{block}{Instance test unitaire}
-$\sharp$ define PART\_UNIT3\_N\_OBJ 3 \\
-$\sharp$ define PART\_UNIT3\_WEIGHTS {1,2,7} \\
-$\sharp$ define PART\_UNIT3\_RIGHT\_ANSWER FALSE \\
-
-        \end{block}
-        \begin{block}{Résultat test unitaire}
-          partition result check 1: success
+        \begin{block}{Test unitaire}
+	3 objets : \\
+	poids : \{1, 2, 7\} \\
+	réponse : $\perp$
         \end{block}
       \end{column}
     \end{columns}
-  \end{frame}
-  
+\end{frame}
   \begin{frame}
-    \frametitle{Partition : jeux d'essais}
+  \frametitle{Partition : jeux d'essais}
 
 \begin{table}[h!]
 \centering
@@ -186,7 +181,12 @@ Nombre d'objets & temps d'exécution moyen en ms\\
     \begin{alertblock}{Formules}
       \begin{equation}
         \begin{cases}
-          tab[0][w] = 0 \\
+          tab[0][w] = 
+          \begin{cases} 
+            \text{0 si } w < poids[0] \\
+            utilite[0] \text{ sinon} \\
+          \end{cases} \\
+
           tab[i][j] = max(tab[i-1] [j], (tab[i-1] [j-poids[i]] + utilite[i])); \\
         \end{cases}
       \end{equation}
@@ -202,12 +202,12 @@ Nombre d'objets & temps d'exécution moyen en ms\\
       \end{center}
     \end{column}
       \begin{column}[]{7cm}
-        \begin{block}{Tests unitaires}
-$\sharp$ define KNAPS\_UNIT1\_N\_OBJ 7 \\
-$\sharp$ define KNAPS\_UNIT1\_CAPACITY 2 \\
-$\sharp$ define KNAPS\_UNIT1\_WEIGHTS   {3,5,1,5,7,2,6} \\
-$\sharp$ define KNAPS\_UNIT1\_UTILITIES {2,5,3,3,6,2,4} \\
-$\sharp$ define KNAPS\_UNIT1\_RIGHT\_ANSWER 3 \\
+        \begin{block}{Test unitaire}
+		7 objets : \\
+		capacité : 2\\
+		poids : \{3, 5, 1, 5, 7, 2, 6\} \\
+		utilités : \{2, 5, 3, 3, 6, 2, 4\} \\
+		réponse : 3 \\
         \end{block}
       \end{column}
     \end{columns}
@@ -315,9 +315,12 @@ Capacité & temps d'exécution moyen en ms\\
     \begin{alertblock}{Formules}
       \begin{equation}
         \begin{cases}
-          C[S][i] = poids[0][i] \text{si S ne contient que $0$} \\
+          C[\{0\}][i] = poids[0][i] \\
           C[S][i] = min_{k \in S - \{ 0 \}} \{ C[S- \{ k \}][k] + poids[k][i]  \}
-        \end{cases}
+        \end{cases} 
+      \end{equation}
+      \begin{equation}
+      	opt = min_{i}C[\{0, 1, \dots, n\} - \{ i\}, i] + poids[i][0]
       \end{equation}
     \end{alertblock}
   \end{frame}
@@ -331,10 +334,14 @@ Capacité & temps d'exécution moyen en ms\\
       \end{center}
     \end{column}
       \begin{column}[]{6cm}
-        \begin{block}{Tests unitaires}
-$\sharp$ define TSP\_STRESS\_MAX\_DISTANCE 1000 \\
-$\sharp$ define TSP\_STRESS\_N\_NODES 15  \\
-$\sharp$ define TSP\_STRESS\_N\_TESTS 5 \\
+        \begin{block}{Test unitaire}
+	5 villes : \\
+	distances 1 : \{0, 1, 2, 1, 0\} \\
+	distances 2 : \{1, 0, 3, 5, 0\} \\
+	distances 3 : \{2, 3, 0, 2, 1\} \\
+	distances 4 : \{1, 5, 2, 0, 4\} \\
+	distances 5 : \{0, 0, 1, 4, 0\} \\
+	réponse : 5
         \end{block}
       \end{column}
     \end{columns}
@@ -388,7 +395,7 @@ Sommets & temps d'exécution moyen en ms\\
 \begin{frame}
   \frametitle{Branch and Bound TSP}
   \begin{block}{Outils}
-Caml
+Ocaml
   \end{block}
 \end{frame}
 
@@ -421,35 +428,16 @@ Caml
   \end{itemize}
 \end{frame}
 
-
-\begin{frame}
-  \frametitle{Comparaisons}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Complexité théorique}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Jeux d'essais}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Temps d'exécution}
-\end{frame}
-
 \section{Algorithme $\frac{3}{2}$ TSP}
 
 \begin{frame}
 \frametitle{$\frac{3}{2}$ approximation TSP}
 \begin{block}{Outils}
   \begin{itemize}
-  \item langage C
+  \item langage C/C++
   \item bibliothèque Boost Graph
   \item gprof
   \end{itemize}
-\end{block}
-\begin{block}{Structures de données}
 \end{block}
 \end{frame}
 
@@ -467,28 +455,13 @@ $T$
 \end{enumerate}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Complexité théorique}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Jeux d'essais}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Temps d'exécution}
-\end{frame}
-
-\section{Comparaisons}
-
-\begin{frame}
-  \frametitle{Comparaisons TSP}
-  
-\end{frame}
-
 \section{Conclusion}
 \begin{frame}
-
+\begin{itemize}
+\item programmation dynamique
+\item structure de données
+\item algorithmes de TSP
+\end{itemize}
 \end{frame}
 
 

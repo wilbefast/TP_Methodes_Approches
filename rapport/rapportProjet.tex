@@ -258,12 +258,117 @@ for (w = 0; w < W + 1; w++){
 La complexité en temps de notre algorithme est en $O(nW)$. Il en va de
 même pour la complexité mémoire.
 
-\paragraph{Jeux de tests et temps d'exécution}
+\paragraph{Tests unitaires}
 
 Nous avons commencé par faire des tests unitaires selon diverses
 instances afin de tester la validité de chaque fonction du code.
 
-TODO
+Voici ci-dessous un exemple de test parmi ceux qu'on a menés à ce sujet.
+
+\begin{lstlisting}
+#define KNAPS_UNIT1_N_OBJ 7
+#define KNAPS_UNIT1_CAPACITY 2
+#define KNAPS_UNIT1_WEIGHTS   {3,5,1,5,7,2,6}
+#define KNAPS_UNIT1_UTILITIES {2,5,3,3,6,2,4}
+#define KNAPS_UNIT1_RIGHT_ANSWER 3
+\end{lstlisting}
+
+Nous créons ainsi des instances du sac à dos, en variant à chaque fois le nombre d'objets, la capacité du sac, les poids et les utilités, en leur associant la réponse attendue.
+
+À l'exécution, si le résultat retourné ne correspond pas à la valeur attendue, alors le test nous affiche << failure>>, sinon il nous renvoie << success>>.
+
+Exemple~:
+\begin{lstlisting}
+knapsack result check 1: success
+\end{lstlisting}
+
+\paragraph{Jeux de tests et temps d'exécution}
+
+Nous présentons ici des jeux de tests pour le problème sac à dos en variant à chaque fois le nombre d'objets et en mesurant le temps d'exécution moyen sur 100 tests et pour une capacité de 5000 .
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Nombre d'objets & temps d'exécution moyen en ms\\
+\hline
+100 & 8\\
+\hline
+150 & 12\\
+\hline
+200 & 16\\
+\hline
+300 & 24\\
+\hline
+500 & 40\\
+\hline
+800 & 65\\
+\hline
+1000 & 82\\
+\hline
+1200 & 101\\
+\hline
+2000 & 165\\
+\hline
+3000 & 246\\
+\hline
+ 4000 & 329\\
+\hline
+  5000 & 410\\
+\hline
+\end{tabular}
+\caption {Variation du temps d'exécution en fonction du nombre d'objets}
+\end{table}\\
+La variation du temps d'exécution en fonction du nombre d'objets est donnée par la courbe ci-dessous~:
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \begin{axis}[title=Jeux de tests pour Sac à dos, xlabel= nombre d'objets, ylabel= temps d'exécution]
+      \addplot
+        table[col sep=comma]{sac.csv};
+        \legend{exécution de sac à dos}
+    \end{axis}
+\end{tikzpicture}
+\caption{Temps d'exécution de sac à dos.}
+\end{figure}
+
+Nous présentons ici des jeux de tests pour le problème sac à dos en variant à chaque fois la capacité du sac et en mesurant le temps d'exécution moyen sur 100 tests et pour 100 objets.
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Capacité & temps d'exécution moyen en ms\\
+\hline
+500 & 0\\
+\hline
+1000 & 1\\
+\hline
+2000 & 3\\
+\hline
+2500 & 3\\
+\hline
+3000 & 4\\
+\hline
+4000 & 6\\
+\hline
+5000 & 8\\
+\hline
+10000 & 16\\
+\hline
+\end{tabular}
+\caption {Variation du temps d'exécution en fonction du capacité du sac}
+\end{table}\\
+La variation du temps d'exécution en fonction du capacité du sac est donnée par la courbe ci-dessous~:
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \begin{axis}[title=Jeux de tests pour Sac à dos, xlabel= capacité, ylabel= temps d'exécution]
+      \addplot
+        table[col sep=comma]{sac1.csv};
+        \legend{exécution de sac à dos}
+    \end{axis}
+\end{tikzpicture}
+\caption{Temps d'exécution de sac à dos.}
+\end{figure}
 
 \subsubsection{Partition}
 
@@ -338,9 +443,69 @@ Soit $N$ la somme des poids.
 La complexité en temps de notre algorithme est $O(nN)$.
 La complexité mémoire est $O(N).$
 
+\paragraph{Tests unitaires}
+
+Nous avons commencé par faire des tests unitaires selon diverses
+instances afin de tester la validité de chaque fonction du code.
+
+Voici ci-dessous un exemple de test parmi ceux qu'on a menés à ce sujet.
+\begin{lstlisting}
+#define PART_UNIT3_N_OBJ 3
+#define PART_UNIT3_WEIGHTS {1,2,7}
+#define PART_UNIT3_RIGHT_ANSWER FALSE
+\end{lstlisting}
+
+Nous créons ainsi des instances du problème partition, en variant à chaque fois le nombre d'objets, en leur associant la réponse attendue.
+
+À l'exécution, si le résultat retourné ne correspond pas à la valeur attendue, alors le test nous affiche << failure>>, sinon il nous renvoie << success>>.
+
+Exemple~:
+\begin{lstlisting}
+partition result check 1: success
+\end{lstlisting}
+
 \paragraph{Jeux de tests et temps d'exécution}
 
-TODO
+Nous présentons ici des jeux de tests pour le problème partition en variant à chaque fois le nombre d'objets et en mesurant le temps d'exécution moyen sur 100 tests.
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Nombre d'objets & temps d'exécution moyen en ms\\
+\hline
+150 & 1\\
+\hline
+500 & 14\\
+\hline
+650 & 24\\
+\hline
+800 & 32\\
+\hline
+950 & 43\\
+\hline
+1000 & 51\\
+\hline
+2000 & 185\\
+\hline
+3000 & 565\\
+\hline
+5000 & 1536\\
+\hline
+\end{tabular}
+\caption {Variation du temps d'exécution en fonction du nombre d'objets}
+\end{table}\\
+La variation du temps d'exécution en fonction du nombre d'objets est donnée par la courbe ci-dessous~:
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \begin{axis}[title=Jeux de tests pour partition, xlabel= nombre d'objets, ylabel= temps d'exécution]
+      \addplot
+        table[col sep=comma]{partition.csv};
+        \legend{exécution de partition}
+    \end{axis}
+\end{tikzpicture}
+\caption{Temps d'exécution de partition.}
+\end{figure}
 
 \subsubsection{Voyageur de commerce}
 

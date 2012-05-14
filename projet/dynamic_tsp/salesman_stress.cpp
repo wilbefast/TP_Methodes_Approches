@@ -14,7 +14,7 @@ void destroy_salesman_i(salesman_instance_t* inst);
 /* STRESS TESTS */
 
 #define TSP_STRESS_MAX_DISTANCE 1000
-#define TSP_STRESS_N_NODES 11 // with 11 takes about 1 second o_O
+#define TSP_STRESS_N_NODES 15 // with 11 takes about 1 second o_O
 #define TSP_STRESS_N_TESTS 5
 
 void salesman_stress()
