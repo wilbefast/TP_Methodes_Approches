@@ -12,14 +12,14 @@ using namespace std;
 uint salesman(matrix_t* distances, uint n_nodes)
 {
   // the optimal round-trip distance
-  uint result = 0;
+  uint result = UINT_MAX;
 
   // this structure maps a node-set/end-node pair to the shortest cost for
   // starting at 0, traversing the set ending at the specified destination
   costmap_t C;
 
   // this structure contains all the node-sets of each size
-  /// WARNING -- UNSAFE TO ALLOCATE ARRAYS IN THIS MANNER
+  /// WARNING -- IT IS VERY UNSAFE TO ALLOCATE ARRAYS IN THIS MANNER
   nodemetaset_t node_metasets[n_nodes];
   build_node_metasets(node_metasets, n_nodes);
 
@@ -36,7 +36,7 @@ uint salesman(matrix_t* distances, uint n_nodes)
   }
 
   // for sets of more than one node, things become a little more complicated
-  for(uint set_size = 1; set_size < n_nodes; set_size++)
+  for(uint set_size = 1; set_size < n_nodes-1; set_size++)
   {
     // get the set of all nodes-sets of the current size
     nodemetaset_t& mset = node_metasets[set_size];
@@ -46,10 +46,6 @@ uint salesman(matrix_t* distances, uint n_nodes)
     {
       nodeset_t set = (*set_it);
 
-      printf("STARTING FROM SET : ");
-      print_nodes(&set);
-      puts("");
-
       // we already know the length of the optimal circuit within 'set' (S), now
       // we need to extend it by choosing a leaving node 'n' and a new end node
       // 'e' and then back to the start node 's' to complete a larger circuit.
@@ -58,7 +54,9 @@ uint salesman(matrix_t* distances, uint n_nodes)
       //  |  S  |         :
       //  |     n---------e
       //   \___/
-
+      //
+      // for our purposes though we'll not consider the distance from 'e' to 's'
+      // as this would prevent us from building on the result later.
 
       // first we choose 'n' from amongst the starting set
       for(nodeset_it n_it = set.begin(); n_it != set.end(); n_it++)
@@ -91,15 +89,20 @@ uint salesman(matrix_t* distances, uint n_nodes)
           if(set_minus_n.size() == 1)
             C[to_n] = distances->t[*(set_minus_n.begin())][n];
 
+          // dump results to memory : we'll continue building on it later
           bool exists = (C.find(to_e) == C.end());
-          uint new_distance = C[to_n] + distances->t[n][e] + distances->t[e][0];
+          uint new_distance = C[to_n] + distances->t[n][e];
           C[to_e] = (exists) ? new_distance : min(C[to_e], new_distance);
-          print_itinerary(&to_e);
-          printf(" now costing %d\n", C[to_e]);
+
+          // unless of course this is the final iteration, in which case we can
+          // begin to figure out what the result is based on all our hard work.
+          // This is as simple as connecting the path back to the start node.
+          if(set_size == n_nodes-2)
+            result = min(result, C[to_e] + distances->t[e][0]);
         }
       }
-
     }
+
   }
 
   // free the cost-map's contents
