@@ -40,9 +40,7 @@ let rec somme = List.fold_left (+) 0
 
 (* vérifie si tous les sommets sont de degré 2 : ne marche pas *)
 
-	     let tousDegre2 g = 
-	       let listeBool = map_vertex sup2 g in ;;
-	     not (exists (fun x -> true) listeBool);;
+	     let tousDegre2 g = not (exists sup2 g);;
 
 (* renvoi un sommet de degré > 2 s'il existe *)
 
@@ -51,21 +49,15 @@ let rec somme = List.fold_left (+) 0
 (* choisi un sommet de degré > 2 *)
 
 	     let choixSup2 g = List.hd (map_vertex sommetSup2 g);;
-
-(* fonction qui enlève une arete e d'un graphe et fait le branchement dessus à partir de x *)
-
-	       let rec branche e g x borneInf solution = 
-		 remove_edge_e g e;;
-	       branchBound g x borneInf solution;;
 	       
 
 (* algorithme de branch and bound en lui même *)
 		     
-		 and  branchBound g x borneInf solution = 
-		 let ginit = copy g in;;
-	       remove_vertex g x;;
+	       let rec branchBound g x borneInf solution = 
+	       let g' = copy g in
+	       remove_vertex g x
 	       let arbre = spanningtree g in;; 
-	       let cycle = relier x ginit g in ;;
+	       let cycle = relier x g' g in ;;
 	       let val = valeurCycle cycle in;;
 	       if val > borneInf then 
 		 if tousDegre2 cycle then
@@ -78,7 +70,22 @@ let rec somme = List.fold_left (+) 0
 		 solution = min listeSolutions
 		   
 	     
+(* fonction qui enlève une arete e d'un graphe et fait le branchement dessus à partir de x *)
+
+	       and branche e g x borneInf solution = 
+		 remove_edge_e g e;;
+	       branchBound g x borneInf solution;;
 
 
+(*
+ * Les tests !
+ *)
 
-	   
+let g = Rand.graph ~v:10 ~e:20 ()
+let () = show g
+let beforeBB = Sys.time ()
+let_ = branchBound g 3 1 1
+let afterBB = Sys.time ()
+let _ =
+    Printf.printf   "BranchBound : %f\n"
+                    (afterBB -. beforeBB)
