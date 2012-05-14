@@ -3,7 +3,7 @@
 
 #include "types.h" // for size_t
 
-// knapsack instance type
+// knapsack problem instance type
 typedef struct
 {
   size_t capacity, n_obj, *weights, *utilities;

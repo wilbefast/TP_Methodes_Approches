@@ -4,6 +4,7 @@
 
 #include "salesman.hpp"
 #include "salesman_unit.hpp"
+#include "salesman_stress.hpp"
 
 #include "assert.h"
 
@@ -13,8 +14,8 @@ int main()
   srand(time(NULL));
 
   // test tsp
-  ASSERT((salesman_unit()) != EXIT_FAILURE, "tsp unit test");
-  //tsp_stress();
+  //ASSERT((salesman_unit()) != EXIT_FAILURE, "tsp unit test");
+  salesman_stress();
 
   return EXIT_SUCCESS;
 }

@@ -9,7 +9,12 @@ using namespace std;
 
 /* TRAVELLING SALESMAN PROBLEM SOLVER */
 
-uint salesman(matrix_t* distances, uint n_nodes)
+uint salesman(salesman_instance_t* i)
+{
+  return salesman_aux(i->distances, i->n_nodes);
+}
+
+uint salesman_aux(matrix_t* distances, uint n_nodes)
 {
   // the optimal round-trip distance
   uint result = UINT_MAX;

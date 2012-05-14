@@ -29,6 +29,7 @@ using namespace std;
 int salesman_unit()
 {
   // test 1
+
   {
     // allocate distance matrix
     matrix_t distances;
@@ -45,7 +46,7 @@ int salesman_unit()
     }
 
     // launch the TSP solver
-    uint result = salesman(&distances, TSP_UNIT1_N_OBJ);
+    uint result = salesman_aux(&distances, TSP_UNIT1_N_OBJ);
     ASSERT(result == TSP_UNIT1_RIGHT_ANSWER, "tsp result check 1");
   }
 
@@ -66,7 +67,7 @@ int salesman_unit()
     }
 
     // launch the TSP solver
-    uint result = salesman(&distances, TSP_UNIT2_N_OBJ);
+    uint result = salesman_aux(&distances, TSP_UNIT2_N_OBJ);
     ASSERT(result == TSP_UNIT2_RIGHT_ANSWER, "tsp result check 2");
   }
 
