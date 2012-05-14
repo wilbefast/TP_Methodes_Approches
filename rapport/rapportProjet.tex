@@ -582,10 +582,68 @@ du TSP.
 
 La complexité théorique d'un tel algorithme est de $O(n^2.2^n)$.
 
+\paragraph{Tests unitaires}
+
+Comme déjà décrit auparavant, nous avons également mené différents
+tests unitaires sur diverses instances du TSP. 
+
+
+Exemple~:
+
+\begin{lstlisting}
+#define TSP_UNIT2_N_OBJ 5
+#define TSP_UNIT2_DISTANCES {               \
+                              {0,1,2,1,0},  \
+                              {1,0,3,5,0},  \
+                              {2,3,0,2,1},  \
+                              {1,5,2,0,4},  \
+                              {0,0,1,4,0}   \
+                            }
+#define TSP_UNIT2_RIGHT_ANSWER 5
+\end{lstlisting}
+
 \paragraph{Jeux de tests et temps d'exécution}
+Nous mesurons ici une moyenne du temps d'exécution sur 5 tests en
+faisant varier le nombre de sommets à parcourir. Nous obtenons les
+résultats présentés ci-dessous.
 
-TODO
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Sommets & temps d'exécution moyen en ms\\
+\hline
+2 & 0\\
+\hline
+5 & 2\\
+\hline
+7 & 15\\
+\hline
+9 & 137\\
+\hline
+11 & 1151\\
+\hline
+13 & 8575\\
+\hline
+15 & 58109\\
+\hline
+\end{tabular}
+\caption {Variation du temps d'exécution en fonction du capacité du sac}
+\end{table}
 
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \begin{axis}[title=Jeux de tests pour le TSP, xlabel= nombre de
+        villes parcourues, ylabel= temps d'exécution]
+      \addplot
+        table[col sep=comma]{tspdyn.csv};
+        \legend{exécution de sac à dos}
+    \end{axis}
+\end{tikzpicture}
+\caption{Temps d'exécution du voyageur de commerce.}
+\end{figure}
 
 \pagebreak
 
@@ -637,28 +695,31 @@ La borne inférieure est une solution initiale obtenue grâce à une heuristique
 
 \paragraph{Complexité théorique}
 
+TODO
+
 \subsubsection{Implémentation}
 
-\paragraph{Langage de programmation et bibliothèques}
-
-Nous utiliserons le langage C ainsi que la bibliothèque Boost::Graph.
-
-\paragraph{Structures de données utilisées}
-
-\paragraph{Principales fonctions}
-
-\subsubsection{Tests}
-
-\paragraph{Outils}
-
-Nous utiliserons ici l'utilitaire console Unix time pour mesurer le
-temps de calcul de nos programmes. Gprof sera également utilisé pour
-une analyse un peu plus fine du temps de calcul (outil de profiling).
-
-\paragraph{Tests de validité de notre programme}
-
-\paragraph{Tests de temps d'exécution}
-
+Nous n'avons pas pu mener de tests sur le branch and bound pour le tsp
+suite à des erreurs de compilation non réglées à ce jour. Cependant,
+nous avons tenté de proposer une implémentation de l'algorithme décrit plus haut
+en Ocaml (à l'aide de la bibliothèque Graph Pack), dont voici un extrait~:
+\begin{lstlisting}
+let rec branchBound g x borneInf solution = 
+	       let g' = copy g in
+	       remove_vertex g x
+	       let arbre = spanningtree g in
+	       let cycle = relier x g' g in 
+	       let val = valeurCycle cycle in
+	       if val > borneInf then 
+		 if tousDegre2 cycle then
+		   solution = val
+		 else
+		   let y = choixSup2 g in
+		   let aretesSucc = succ_e g y in 
+		   let listeSolutions = map branche aretesSucc in
+	       else()
+		 solution = min listeSolutions
+\end{lstlisting}
 
 \subsection{Programmation de l'algorithme $\frac{3}{2}$}
 
@@ -686,25 +747,14 @@ $T$
 
 \paragraph{Complexité théorique}
 
+TODO
+
 \subsubsection{Implémentation}
 
-\paragraph{Langage de programmation et bibliothèques}
-
-\paragraph{Structures de données utilisées}
-
-\paragraph{Principales fonctions}
-
-\subsubsection{Tests}
-
-\paragraph{Outils}
-
-Nous utiliserons ici l'utilitaire console Unix time pour mesurer le
-temps de calcul de nos programmes. Gprof sera également utilisé pour
-une analyse un peu plus fine du temps de calcul (outil de profiling).
-
-\paragraph{Tests de validité de notre programme}
-
-\paragraph{Tests de temps d'exécution}
+Nous n'avons pas eu le temps d'implémenter cet algorithme. Néanmoins,
+nous aurions probablement utilisé le langage C/C++ avec la
+bibliothèque boost::graph pour cela. De plus, nous aurions mesuré les
+temps d'exécution de nos fonctions à l'aide de l'outil de profiling gprof.
 
 \section{Comparaison des différentes implémentations du TSP}
 
