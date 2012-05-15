@@ -1,14 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/time.h>
-
-#include "math.h"
-#include "partition.h"
-
-/* PARTITION PROBLEM SOLVER */
-
-bool_t partition_aux(size_t n_obj, size_t values[])
+bool_t partition(size_t n_obj, size_t values[])
 {
   // calculate the total of all the values
   size_t obj, total = 0;
@@ -49,9 +39,4 @@ bool_t partition_aux(size_t n_obj, size_t values[])
 
   // la reponse qui nous interesse
   return result;
-}
-
-bool_t partition(partition_instance_t inst)
-{
-  return partition_aux(inst.n_obj, inst.values);
 }

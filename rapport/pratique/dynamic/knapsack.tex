@@ -72,9 +72,11 @@ optimale[i][p] =
 \end{equation}
 
 %-------------------------------------------------------------------------------
-% COMPLEXITÉ
+% ALGORITHME
 %-------------------------------------------------------------------------------
 \subsection{Algorithme}
+
+Nous pouvions finalement proposer l'algorithme suivant~:
 
 \begin{algorithm}[!ht]
 \caption{DP Knapsack}
@@ -101,7 +103,7 @@ optimale[i][p] =
 \end{algorithmic}
 \end{algorithm}
 
-Étant donnée qu'il itère sur les poids et les objets, la complexité temporelle de l'algorithme \ref{dp_knapsack} est de $O(nW)$. Il en va de même pour sa complexité mnémonique.
+Étant donnée que l'algorithme \ref{dp_knapsack} itère sur les poids et les objets, la complexité temporelle de est de $O(nW)$. Il en va de même pour sa complexité mnémonique.
 
 %-------------------------------------------------------------------------------
 % IMPLEMENTATION
@@ -124,7 +126,7 @@ Pour vérifier que notre implémentation respecte bien la complexité théorique
 \item la capacité, avec un nombre d'objets fixé à $100$.
 \end{itemize}
 
-Les valeur ci-dessus sont des temps moyennes d'exécution pour $100$ tests. Le poids et l'utilité de chaque objet sont générés aléatoirement mais, mais les poids sont bornés par la capacité (aucun élément n'est jamais plus grand que le sac entier) :
+Les valeurs rapportés dans les figures \ref{knapsack_test_objects} et \ref{knapsack_test_capacity} sont des temps moyennes d'exécution pour $100$ tests. Le poids et l'utilité de chaque objet sont générés aléatoirement mais, mais les poids sont bornés par la capacité (aucun élément n'est jamais plus grand que le sac entier) :
 
 \begin{figure}[ht]
 % LEFT-HAND SIDE
@@ -137,6 +139,8 @@ Les valeur ci-dessus sont des temps moyennes d'exécution pour $100$ tests. Le p
         %\legend{exécution de sac à dos}
     \end{axis}
 \end{tikzpicture}
+\caption{Temps d'exécution de Sac à Dos avec nombre d'objets variable.}
+\label{knapsack_test_objects}
 \end{minipage}
 % RIGHT-HAND SIDE
 \hspace{0.5cm}
@@ -149,6 +153,8 @@ Les valeur ci-dessus sont des temps moyennes d'exécution pour $100$ tests. Le p
         %\legend{exécution de Sac à Dos}
     \end{axis}
 \end{tikzpicture}
+\caption{Temps d'exécution de Sac à Dos avec capacité variable.}
+\label{knapsack_test_capacity}
 \end{minipage}
 \end{figure}
 

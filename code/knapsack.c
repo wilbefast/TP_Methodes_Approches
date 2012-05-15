@@ -1,4 +1,4 @@
-size_t knapsack_aux(size_t capacity, size_t n_obj, size_t weights[],
+size_t knapsack(size_t capacity, size_t n_obj, size_t weights[],
                     size_t utilities[])
 {
   // max_value.t[i,j] is the maximum value we can achieve with objects 0 to to i
