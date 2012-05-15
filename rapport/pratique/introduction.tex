@@ -18,7 +18,7 @@ résolution de problèmes NP-difficiles :
 	\end{itemize}
 \end{itemize}
 
-Certains seront implé
+Nous implémenterons aussi certains algorithmes afin de mesurer empiriquement leurs performances, et de comparer ce résultat à la complexité théorique.
 
 \subsection{Programmation dynamique}
 La programmation dynamique permet de trouver la solution optimale d'un
@@ -27,19 +27,18 @@ problème. Ces résultats intermédiaires sont sauvegardés, souvent sous
 forme matricielle, ce qui permet d'éviter de répéter des calculs inutilement.
 Cependant nous sacrifiions beaucoup de mémoire pour gagner en temps de calcule.
 
-Nous effectuerons ici les simulations du problème de la Partition, du Sac
-à Dos et du Voyageur de Commerce selon une implémentation
-d'algorithmes basés sur ce paradigme. Les programmes
-seront écrits en C et en C++.
-
 \subsection{Branch and Bound}
 Un algorithme dite de Branch and Bound, ou Séparation et Évaluation en Français, se définit à partir de trois sous-stratégies :
+
 \begin{itemize}
 \item stratégie de branchement,
-\item stratégie d'exploration,
-\item stratégie d'évaluation.
+\item stratégie d'évaluation,
+\item stratégie d'exploration.
 \end{itemize}
-La séparation nous permet de diviser l'ensemble 
+
+À chaque itération la séparation nous permet de diviser l'espace des solutions possibles en plusieurs sous ensembles, ou branches, l'évaluation permet d'éliminer certains de ceux-ci et l'exploration définit comment explorer ceux qui restent. Notons que nous devions partir d'une solution initiale, souvent obtenu en utilisant un méta-heuristique, pour définir une première borne qui servira pour l'élimination de branches. 
+
+Contrairement à la programmation dynamique nous pouvions avoir une solution très rapidement ou très lentement selon l'instance. 
 
 \subsection{Algorithmes d'approximation}
 Les algorithmes d'approximation permettant d'apporter en temps polynomiale une
@@ -47,4 +46,4 @@ solution non-optimal à un problème NP-difficile.
 
 Nous étudierons ici un exemple d'algorithme approché pour le problème du 
 Voyageur de Commerce qui renvoie des tours pas plus qu'une fois et demi plus
-couteux que le tour optimal. Nous parlons donc de $frac{3}{2}$ approximation.
+couteux que le tour optimal. Nous parlons donc de \og $\frac{3}{2}$ approximation \fg{}.
