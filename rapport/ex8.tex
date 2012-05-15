@@ -1,16 +1,16 @@
 \paragraph{Question 1}
 
 \begin{itemize}
-\item Pour le premier produit, on doit effectuer $P_{k-1}.P_k.P_{k+1}
+\item Pour le premier produit, nous devons effectuer $P_{k-1}.P_k.P_{k+1}
   + P_{k-2}.P_{k-1}.P_{k+1} + \dots + P_2.P_3.P_{k+1} +
   P_1.P_2.P_{k+1}$ opérations. Donc $O(k^4)$.
-\item Pour le parenthésage symétrique, on doit effectuer $P_1.P_2.P_3
+\item Pour le parenthésage symétrique, nous devons effectuer $P_1.P_2.P_3
   + P_1.P_3.P_4 + P_1.P_4.P_5 + \dots + P_1.P_{k-1}.P_{k} +
   P_1.P_k+P_{k+1}$ opérations. Donc $O(k^3)$.
 \end{itemize}
 
-On remarque que le \textit{coefficient} le plus au bout de la matrice
-la plus imbriquée (càd $p_{k+1}$ pour le premier produit, et $P_1$
+Nous remarquons que le \textit{coefficient} le plus au bout de la matrice
+la plus imbriquée (c'est à dire $p_{k+1}$ pour le premier produit, et $P_1$
 pour le second) est \textit{reporté} à chaque \textit{séquence} de
 calcul, et que l'on peut donc factoriser le calcul global par ce
 terme. Par conséquent, selon la valeur du terme ainsi répété en
@@ -99,4 +99,3 @@ m_{12} = m_{11} + m_{22} + p_1 \times p_2 \times p_3  \Rightarrow p = 1\\
 \end{equation}
 
 Ce qui nous permet ainsi d'obtenir le parenthésage optimal suivant~: $((((M_1M_2)M_3)M_4)M_5)$.
-
