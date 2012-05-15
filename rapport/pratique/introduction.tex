@@ -1,16 +1,50 @@
+Ici nous passerons en revue un ensemble de techniques exactes et approchés pour 
+résolution de problèmes NP-difficiles :
+
 \begin{itemize}
   \item problèmes d'optimisation 
-    \begin{itemize}
+  \begin{itemize}
     \item[] $\nearrow$ problèmes faciles
     \item[] $\searrow$ \fbox{problèmes NP-difficiles}
-    \end{itemize}
-  \item  $\Rightarrow$ méthodes exactes 
-    \begin{itemize}
-    \item[] $\nearrow$ programmation dynamique
-    \item[] $\searrow$ branch and bound
-    \end{itemize}
-  \item  $\Rightarrow$ méthodes approchées
-    \begin{itemize}
-    \item[] $\longrightarrow$ algorithmes d'approximation
-    \end{itemize}
+  \end{itemize}
+	\item méthodes exactes 
+	\begin{itemize}
+		\item[] $\nearrow$ programmation dynamique
+		\item[] $\searrow$ branch and bound
+	\end{itemize}
+	\item méthodes approchées
+	\begin{itemize}
+		\item[] $\longrightarrow$ algorithmes d'approximation
+	\end{itemize}
 \end{itemize}
+
+Certains seront implé
+
+\subsection{Programmation dynamique}
+La programmation dynamique permet de trouver la solution optimale d'un
+problème en combinant les solutions optimales de sous-problèmes de ce
+problème. Ces résultats intermédiaires sont sauvegardés, souvent sous
+forme matricielle, ce qui permet d'éviter de répéter des calculs inutilement.
+Cependant nous sacrifiions beaucoup de mémoire pour gagner en temps de calcule.
+
+Nous effectuerons ici les simulations du problème de la Partition, du Sac
+à Dos et du Voyageur de Commerce selon une implémentation
+d'algorithmes basés sur ce paradigme. Les programmes
+seront écrits en C et en C++.
+
+\subsection{Branch and Bound}
+Un algorithme dite de Branch and Bound, ou Séparation et Évaluation en Français, se définit à partir de trois sous-stratégies :
+\begin{itemize}
+\item stratégie de branchement,
+\item stratégie d'exploration,
+\item stratégie d'évaluation.
+\end{itemize}
+La séparation nous permet de diviser l'ensemble 
+
+\subsection{Algorithmes d'approximation}
+Les algorithmes d'approximation permettant d'apporter en temps polynomiale une
+solution non-optimal à un problème NP-difficile. 
+
+Nous étudierons ici un exemple d'algorithme approché pour le problème du 
+Voyageur de Commerce qui renvoie des tours pas plus qu'une fois et demi plus
+couteux que le tour optimal. Nous parlons donc de $frac{3}{2}$ approximation.

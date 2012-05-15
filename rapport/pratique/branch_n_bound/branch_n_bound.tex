@@ -1,10 +1,10 @@
 Nous nous intéresserons au sein de cette section à la programmation de
-la méthode de branch and bound pour résoudre le problème du voyageur
-de commerce (tsp).
+la méthode de Branch and Bound pour résoudre le problème du Voyageur
+de Commerce (TSP).
 
 \subsection{Détermination de la solution initiale}
 
- Nous nous intéresserons à trois heuristiques en particulier.
+Nous nous intéresserons à trois heuristiques en particulier.
 \begin{itemize}
 \item Chaîne de poids le plus faible et ajout d'une arête pour le
   cycle
@@ -27,7 +27,7 @@ Nous proposons d'implémenter l'algorithme récursif présenté ci-dessous.
 \STATE relier $x$ à ses deux voisins les plus proches en terme de coût
 \IF{valeur du cycle > borne inférieure}
 \IF{tous les sommets sont de degré $2$}
-\STATE mettre à jour le solution courante
+\STATE mettre à jour la solution courante
 \ELSE
 \STATE choisir un sommet $y$ de degré $\geq$ 2
 \FOR{chaque arête $e_i$ issue de $y$}
