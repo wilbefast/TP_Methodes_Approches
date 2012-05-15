@@ -1,0 +1,32 @@
+\subsubsection{Principe de l'algorithme}
+
+\paragraph{Algorithme}
+
+L'algorithme $\frac{3}{2}$ que nous proposons est le suivant~:
+
+\begin{algorithm}[!ht]
+\caption{Approximation $\frac{3}{2}$ pour le TSP}
+\label{3-2tsp}
+\begin{algorithmic}[1]
+\REQUIRE un graphe $G$
+\STATE faire ACPM $T$ $G$ de coût $w$
+\STATE $W := $ sommets de degré impair de $T$
+\STATE chercher un couplage $M$ de $G$ poids min $m$ saturant tous les
+sommets de $W$
+\STATE $G' := $ le graphe construit à partir des arêtes de $M$ et de
+$T$
+\STATE Soit P un parcours eulérien de longueur $p$, on a $p:= w + m$
+\STATE retourner un cycle de longueur $c \leq p$
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Complexité théorique}
+
+TODO
+
+\subsubsection{Implémentation}
+
+Nous n'avons pas eu le temps d'implémenter cet algorithme. Néanmoins,
+nous aurions probablement utilisé le langage C/C++ avec la
+bibliothèque boost::graph pour cela. De plus, nous aurions mesuré les
+temps d'exécution de nos fonctions à l'aide de l'outil de profiling gprof.

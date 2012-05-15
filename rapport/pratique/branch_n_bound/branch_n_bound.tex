@@ -1,0 +1,72 @@
+Nous nous intéresserons au sein de cette section à la programmation de
+la méthode de branch and bound pour résoudre le problème du voyageur
+de commerce (tsp).
+
+\subsubsection{Détermination de la solution initiale}
+
+ Nous nous intéresserons à trois heuristiques en particulier.
+\begin{itemize}
+\item Chaîne de poids le plus faible et ajout d'une arête pour le
+  cycle
+\item Voisinage 2--opt
+\item Voisinage 3--opt
+\end{itemize}
+
+\subsubsection{Principe de l'algorithme}
+
+\paragraph{Algorithme}
+
+Nous proposons d'implémenter l'algorithme récursif présenté ci-dessous.
+
+\begin{algorithm}[!ht]
+\caption{Branch and Bound pour le TSP}
+\label{BBtsp}
+\begin{algorithmic}[1]
+\REQUIRE un sommet racine, une borne inférieure, un graphe $G$
+\STATE faire ACPM $G - \{x \}$
+\STATE relier $x$ à ses deux voisins les plus proches en terme de coût
+\IF{valeur du cycle > borne inférieure}
+\IF{tous les sommets sont de degré $2$}
+\STATE mettre à jour le solution courante
+\ELSE
+\STATE choisir un sommet $y$ de degré $\geq$ 2
+\FOR{chaque arête $e_i$ issue de $y$}
+\STATE $G' := G - \{ e_i \}$
+\STATE BranchAndBound($y$, borne inférieure, $G'$)
+\ENDFOR
+\ENDIF
+\ENDIF
+\STATE retourner la plus petite des solutions acceptables
+\end{algorithmic}
+\end{algorithm}
+
+La borne inférieure est une solution initiale obtenue grâce à une heuristique.
+
+\paragraph{Complexité théorique}
+
+TODO
+
+\subsubsection{Implémentation}
+
+Nous n'avons pas pu mener de tests sur le branch and bound pour le tsp
+suite à des erreurs de compilation non réglées à ce jour. Cependant,
+nous avons tenté de proposer une implémentation de l'algorithme décrit plus haut
+en Ocaml (à l'aide de la bibliothèque Graph Pack), dont voici un extrait~:
+\begin{lstlisting}
+let rec branchBound g x borneInf solution = 
+	       let g' = copy g in
+	       remove_vertex g x
+	       let arbre = spanningtree g in
+	       let cycle = relier x g' g in 
+	       let val = valeurCycle cycle in
+	       if val > borneInf then 
+		 if tousDegre2 cycle then
+		   solution = val
+		 else
+		   let y = choixSup2 g in
+		   let aretesSucc = succ_e g y in 
+		   let listeSolutions = map branche aretesSucc in
+	       else()
+		 solution = min listeSolutions
+\end{lstlisting}
+
