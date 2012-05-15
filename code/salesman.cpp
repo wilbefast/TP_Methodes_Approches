@@ -37,7 +37,6 @@ uint salesman(matrix_t* distances, uint n_nodes)
       // we already know the length of the optimal circuit within 'set' (S), now
       // we need to extend it by choosing a leaving node 'n' and a new end node
       // 'e' and then back to the start node 's' to complete a larger circuit.
-			// (ASCII schema may not be readible in your editor ;) )
       //    ___
       //   /   s----------.
       //  |  S  |         :
@@ -97,3 +96,4 @@ uint salesman(matrix_t* distances, uint n_nodes)
   // return result
   return result;
 }
+

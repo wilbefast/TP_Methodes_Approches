@@ -76,7 +76,7 @@ Nous devions allouer un tableau de taille $\frac{N}{2}$, donc la complexité mé
 %-------------------------------------------------------------------------------
 % IMPLEMENTATION
 %-------------------------------------------------------------------------------
-\subsection{Implémentation en C}
+\subsection{Implémentation en \texttt{C}}
 \label{implementation_c}
 Il est important de noter l'allocation dynamique ligne 17 qui peut très facilement échouer avec des valeur choisies aléatoirement. La fonction \texttt{rand()} du C rend un entier entre $0$ et $2^{32}$, donc avec $5000$ objets nous pouvions potentiellement allouer un tableau de $10^{13}$ booléens, soit 78 téraoctets de RAM.
 

@@ -1,7 +1,7 @@
 %-------------------------------------------------------------------------------
 % MODELISATION
 %-------------------------------------------------------------------------------
-\subsubsection{Modélisation}
+\subsection{Modélisation}
 
 Le problème du voyageur de commerce peut se modéliser de la manière
 suivante~:
@@ -21,7 +21,7 @@ x_{ij} \in \{0, 1\} \\
 %-------------------------------------------------------------------------------
 % FORMULAS
 %-------------------------------------------------------------------------------
-\subsubsection{Formules de programmation dynamique}
+\subsection{Formules de programmation dynamique}
 
 On note $C(S,i)$ la longueur d'une plus courte chaîne du sommet $0$ au
 sommet $i$ qui passe une et une seule fois par tout sommet de $S$ et
@@ -48,7 +48,7 @@ sommets moins un) peut être résumé sur le schéma présenté ci-dessous.
 %-------------------------------------------------------------------------------
 % ALOGORITHM
 %-------------------------------------------------------------------------------
-\subsubsection{Principe de l'algorithme}
+\subsection{Algorithme}
 
 Nous proposons l'algorithme suivant pour une programmation dynamique
 du TSP.
@@ -76,22 +76,23 @@ du TSP.
 \end{algorithmic}
 \end{algorithm}
 
+La complexité théorique d'un tel algorithme est de $O(n^2.2^n)$.
+
 %-------------------------------------------------------------------------------
 % IMPLEMENTATION
 %-------------------------------------------------------------------------------
-\subsubsection{Implémentation en C++}
+\subsection{Implémentation en \texttt{C++}}
 
-%-------------------------------------------------------------------------------
-% COMPLEXITÉ
-%-------------------------------------------------------------------------------
-\subsubsection{Complexité}
+Nous avions choisi le \texttt{C++} à fin de bénéficier des structures \texttt{std::map}, texttt{std::pair} et surtout \texttt{std::set} de la STL\footnote{STL : standard library.}. 
 
-La complexité théorique d'un tel algorithme est de $O(n^2.2^n)$.
+\vspace{0.5cm}
+
+\lstinputlisting[language=C++,morekeywords={}]{../code/salesman.cpp} 
 
 %-------------------------------------------------------------------------------
 % TESTS
 %-------------------------------------------------------------------------------
-\subsubsection{Jeux de tests}
+\subsection{Tests et conclusion}
 Nous mesurons ici une moyenne du temps d'exécution sur 5 tests en
 faisant varier le nombre de sommets à parcourir. Nous obtenons les
 résultats présentés ci-dessous.
