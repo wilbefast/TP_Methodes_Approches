@@ -39,9 +39,10 @@ Nous cherchions à connaitre optimale[n][P]. Nous verrons par la suite qu'il est
 % FORMULAS
 %-------------------------------------------------------------------------------
 \subsection{Formule de récurrence}
-Nous construirons donc un tableau de résultats intermédiaires ligne par ligne et colonne par colonne. La première ligne du tableau est rempli à la main : évidement l'utilité maximum atteignable qu'avec l'objet $0$ est son utilité à lui, sous réserve que le poids que nous nous permettons est en dessus de $poids[0]$ :
+Nous construirons un tableau de résultats intermédiaires ligne par ligne et colonne par colonne. La première ligne du tableau est rempli à la main : évidement l'utilité maximum atteignable qu'avec l'objet $0$ est son utilité à lui, sous réserve que le poids que nous nous permettons est en dessus de $poids[0]$. Ainsi nous arrivons à l'équation \ref{knapsack_rec}.
 
 \begin{equation}
+\label{knapsack_rec}
 optimale[0][p] =
 	\begin{cases}
 		0 \text{ si } p < poids[0];	\\
@@ -49,21 +50,25 @@ optimale[0][p] =
 	\end{cases} \\
 \end{equation}
 
-Si nous ne prenons pas l'objet $i$ alors nous n'augmentons pas l'utilité maximum par rapport au maximum atteignable avec l'ensemble des objets $0 \dots i-1$. Nous nous définissons donc l'utilité maximale en laissant l'objet $i$ :
+Si nous ne prenons pas l'objet $i$ alors nous n'augmentons pas l'utilité maximum par rapport au maximum atteignable avec l'ensemble des objets $0 \dots i-1$. Nous définissons alors l'utilité maximale en laissant l'objet $i$ avec l'équation \ref{laisser}.
 
 \begin{equation}
+\label{laisser}
 laisser(i, p) = optimale[i-1][p];
 \end{equation}
 
-Si par contre l'objet $i$ est prise il faut s'assurer qu'il y ait de la place pour lui, donc nous ajoutons son utilité à l'utilité maximum atteignable avec les objets $0 \dots i-1$ et un poids inférieure ou égale à $p-poids[i]$. Ainsi l'utilité maximale si nous prenons l'objet $i$ est la suivante :
+
+Si par contre l'objet $i$ est prise il faut s'assurer qu'il y ait de la place pour lui, donc nous ajoutons son utilité à l'utilité maximum atteignable avec les objets $0 \dots i-1$ et un poids inférieure ou égale à $p-poids[i]$. Ainsi l'utilité maximale si nous prenons l'objet $i$ est décrit par l'équation \ref{prendre}.
 
 \begin{equation}
+\label{prendre}
 prendre(i, p) = optimale.t[i-1][p - poids[i]] + utilit\acute{e}[obj];
 \end{equation}
 
-Nous pouvions finalement remplir notre tableau de manière récursive, pour $i \neq 0$ :
+Nous pouvions finalement remplir notre tableau de manière récursive, pour $i \neq 0$, en utilisant l'équation \ref{prendre_ou_laisser}.
 
 \begin{equation}
+\label{prendre_ou_laisser}
 optimale[i][p] =
 	\begin{cases}
 		laisser(i, p) \text{ si } p < poids[i];	\\
@@ -71,12 +76,13 @@ optimale[i][p] =
 	\end{cases}
 \end{equation}
 
+
 %-------------------------------------------------------------------------------
 % ALGORITHME
 %-------------------------------------------------------------------------------
 \subsection{Algorithme}
 
-Nous pouvions finalement proposer l'algorithme suivant~:
+Nous pouvions finalement proposer l'algorithme \ref{dp_knapsack}.
 
 \begin{algorithm}[!ht]
 \caption{DP Knapsack}
@@ -103,7 +109,7 @@ Nous pouvions finalement proposer l'algorithme suivant~:
 \end{algorithmic}
 \end{algorithm}
 
-Étant donnée que l'algorithme \ref{dp_knapsack} itère sur les poids et les objets, la complexité temporelle de est de $O(nW)$. Il en va de même pour sa complexité mnémonique.
+Étant donnée que cet algorithme itère sur les poids et les objets, la complexité temporelle de est de $O(nW)$. Il en va de même pour sa complexité mnémonique.
 
 %-------------------------------------------------------------------------------
 % IMPLEMENTATION
@@ -126,7 +132,7 @@ Pour vérifier que notre implémentation respecte bien la complexité théorique
 \item la capacité, avec un nombre d'objets fixé à $100$.
 \end{itemize}
 
-Les valeurs rapportés dans les figures \ref{knapsack_test_objects} et \ref{knapsack_test_capacity} sont des temps moyennes d'exécution pour $100$ tests. Le poids et l'utilité de chaque objet sont générés aléatoirement mais, mais les poids sont bornés par la capacité (aucun élément n'est jamais plus grand que le sac entier) :
+Les valeurs rapportés dans les figures \ref{knapsack_test_objects} et \ref{knapsack_test_capacity} sont des temps moyennes d'exécution pour $100$ tests. Le poids et l'utilité de chaque objet sont générés aléatoirement mais, mais les poids sont bornés par la capacité (aucun élément n'est jamais plus grand que le sac entier).
 
 \begin{figure}[ht]
 % LEFT-HAND SIDE
@@ -158,4 +164,4 @@ Les valeurs rapportés dans les figures \ref{knapsack_test_objects} et \ref{knap
 \end{minipage}
 \end{figure}
 
-Notre implémentation est donc linéaire en le nombre d'objets et la capacité maximum, ce qui correspond bien à la complexité théorique.
+Notre implémentation est clairement linéaire en le nombre d'objets et la capacité maximum, ce qui correspond bien à la complexité théorique.

@@ -1,29 +1,41 @@
 %-------------------------------------------------------------------------------
-% MODELISATION
+% DEFINITIONS
 %-------------------------------------------------------------------------------
-\subsection{Modélisation}
+\subsection{Définition du problème}
 
-Le problème de la partition se modélise de la manière suivante~:
+Le problème de Partition est un problème de décision~: nous voulions savoir si ou non il est possible étant donnée un ensemble $A$ de valeurs de diviser $A$ en deux de telle manière à ce que la somme des valeurs de part et d'autre soit la même. La formule \ref{partition_equation} est une modélisation mathématique du problème.
+
 \begin{equation}
-\sum_{a \in A'} p(a)= \sum_{a \in A
-    \backslash A'}p(a)
+\sum_{a \in (A' \subset A) } = \sum_{b \in (A \backslash A')}
+\label{partition_equation}
 \end{equation}
 
 %-------------------------------------------------------------------------------
-% FORMULAS
+% REDUCTION POLYNOMIALE
 %-------------------------------------------------------------------------------
-\subsection{Formules de programmation dynamique}
+\subsection{Réduction polynomiale}
 
-TODO : à reprendre \\
+Il est possible de résoudre Partition en utilisant un algorithme conçu pour résoudre Sac à Dos. Il suffit de passer de l'instance de Partition à une instance de Sac à Dos de capacité maximum $\frac{|A|}{2}$ en associant à chaque valeur $v$ un objet d'utilité $1$ et de poids $v$.
 
-On se basera sur la récurrence suivante~:
+L'algorithme du Sac à Dos rempli totalement le sac si et seulement si l'instance original peut être divisé en deux. Nous utiliserons cependant un algorithm spécialisé d'une part parce que les réductions polynomiales restent polynomiales (donc autant prendre un algorithme polynomiale de basse) et d'autre du fait que nous n'y avions pas pensés à l'époque.  
+
+%-------------------------------------------------------------------------------
+% TECHNIQUE
+%-------------------------------------------------------------------------------
+\subsection{Technique de résolution}
+
+Soit $N$ la somme des valeurs de $A$. Ce que nous voulions savoir est si ou non nous pouvons séparer $A$ en deux sous-ensemble de valeur totale $\frac{N}{2}$. 
+
+L'astuce est d'utiliser un tableau de booléens \emph{somme} dont les indices correspondent à des sommes allant de $0$ à $N$. $somme[s] = \top$ si et seulement si nous sommes capables ajouter des valeurs de $A$ ensemble de tel manière à atteindre la valeur totale $s$. 
+
+Nous nous intéressons finalement au contenu de la case $N/2$ de notre tableau, $somme[N/2]$, mais de base nous ne connaissons que la valeur de $somme[0]$ (toujours vrai). L'équation \ref{partition_rec} nous permet d'étendre par récurrence notre raisonnement de de la somme nulle (qui est toujours une possibilité) jusqu'à la moitié de la somme totale des valeurs.
 
 \begin{equation}
+\label{partition_rec}
+somme[s] = 
 \begin{cases}
-tab[0] = 1; \\
-si ( tab[j] == 1 ) {
-       tab[j + poids[i]] = 1;
-     } \\
+\top \text{ si } s = 0; \\
+somme[s] \rightarrow \forall a \in \text{ A } somme[s + a] = \top \text{ sinon} ;
 \end{cases}
 \end{equation}
 
@@ -31,6 +43,8 @@ si ( tab[j] == 1 ) {
 % ALGORITHME
 %-------------------------------------------------------------------------------
 \subsection{Algorithme}
+L'algorithme \ref{dp_partition} applique l'équation \ref{partition_rec} pour résoudre Partition.
+
 
 \begin{algorithm}[!ht]
 \caption{DP Partition}
@@ -56,7 +70,7 @@ si ( tab[j] == 1 ) {
 \end{algorithmic}
 \end{algorithm}
 
-Soit $N$ la somme des valeurs : nous devions allouer un tableau de taille $\frac{N}{2}$, donc la complexité mémoire de l'algorithme est de $O(N).$ Il faut parcourir ce tableau en entier pour chaqu'un des n valeurs, donc la complexité en temps de calcul est $O(nN)$. 
+Nous devions allouer un tableau de taille $\frac{N}{2}$, donc la complexité mémoire de l'algorithme est de $O(N).$ Il faut parcourir ce tableau en entier pour chaqu'un des n valeurs, donc la complexité en temps de calcul est $O(nN)$. 
 
 
 %-------------------------------------------------------------------------------
@@ -77,7 +91,7 @@ Malheureusement notre machine de tests n'avant que 4 gigaoctets de RAM à dispos
 %-------------------------------------------------------------------------------
 \subsection{Tests et conclusion}
 
-Pour les raisons explicités dans la section \ref{implementation_c} nous avions du borner les valeurs générés aléatoirement~: $50$ fut choisie comme valeur maximum. Encore une fois les valeur données sont des moyennes pour $100$ testes :
+Pour les raisons explicités dans la section \ref{implementation_c} nous avions du borner les valeurs générés aléatoirement~: $50$ fut choisie comme valeur maximum. Encore une fois les valeur rapportés dans les figures \ref{partition_courbe} et \ref{partition_table} sont des moyennes pour $100$ testes.
 
 \begin{figure}[ht]
 % LEFT-HAND SIDE
@@ -91,6 +105,7 @@ Pour les raisons explicités dans la section \ref{implementation_c} nous avions 
     \end{axis}
 \end{tikzpicture}
 \caption {Courbe des temps d'exécution pour Partition}
+\label{partition_courbe}
 \end{minipage}
 % RIGHT-HAND SIDE
 \hspace{0.5cm}
@@ -120,6 +135,7 @@ Nombre d'objets & t moyenne en ms\\
 \hline
 \end{tabular}
 \caption {Tableau des temps d'exécution pour Partition}
+\label{partition_table}
 \end{minipage}
 \end{figure}
 
