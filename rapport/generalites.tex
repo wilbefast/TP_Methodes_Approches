@@ -1,0 +1,41 @@
+Le rapport que nous vous présentons ici reprend notre travail effectué
+dans le cadre du projet du cours de méthodes approchées. Celui-ci se
+compose d'une partie théorique nous laquelle nous avons résolu divers
+exercices traitant de programmation linéaire, d'approximations de
+problèmes NP-difficiles, mais aussi de méthodes exactes comme la
+programmation dynamique ou les méthodes de branchement (Branch and
+Bound et Branch and Cut), ainsi que d'une partie pratique. Dans cette
+dernière, nous programmons les formules de programmation dynamique
+pour trois problèmes classiques (Partition, Sac à Dos, Voyageur de
+Commerce), puis nous nous intéressons plus en détail au cas du
+Voyageur de Commerce avec la programmation de l'algorithme de Branch
+en Bound (après application et comparaison de diverses heuristiques
+pour trouver une solution initiale).
+
+On notera en général $PL$ un programme linéaire, et $PLNE$ un
+programme linéaire en nombres entiers. 
+
+Nous désignerons également par $TSP$ le problème du voyageur de
+commerce.
+
+Rappelons enfin les quelques définitions clés suivantes~:
+\begin{mydef}
+Les méthodes de branch and bound sont les méthodes dites de séparation
+et évaluation.
+\end{mydef}
+
+\begin{mydef}
+Les méthodes de branch and cut sont les méthodes dites des coupes de
+Gomory ou d'algorithmes de coupe.
+\end{mydef}
+
+\begin{mydef}
+Un problème NP-Complet est un problème de décision pour la résolution duquel on ne
+connait pas d'algorithme polynomial. Tous les problèmes de la classe
+NP peuvent se rammener à un problème NP-complet via une réduction polynomiale.
+\end{mydef}
+
+\begin{mydef}
+Un problème NP-Difficile est un problème d'optimisation qui est plus
+difficile qu'un problème NP-Complet.
+\end{mydef}

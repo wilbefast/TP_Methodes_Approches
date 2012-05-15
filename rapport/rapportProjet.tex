@@ -1,3 +1,6 @@
+%------------------------------------------------------------------
+% DEFINITIONS, INCLUDES, ETC
+%------------------------------------------------------------------
 \documentclass[a4paper, 12pt]{article}
 %\usepackage[utf8]{inputenc} 
 \usepackage[frenchb]{babel}
@@ -18,94 +21,59 @@
 \usepackage{xcolor}
 \setlength{\parskip}{\bigskipamount}
 
+%------------------------------------------------------------------
+% DOCUMENT-SPECIFIC DEFINITIONS
+%------------------------------------------------------------------
 \newtheorem{mydef}{Définition}
 \newtheorem{thm}{Théorème}
 \newtheorem{lem}{Lemme}
 \newtheorem{cor}{Corollaire}
 \newtheorem{prop}{Propriété}
 
+%------------------------------------------------------------------
+% TITLE DEFINITIONS
+%------------------------------------------------------------------
 \title{Rapport de Méthodes approchées.}
 \author{Dyce William, Loukil Amal, Ouazzani-chahdi Sabrina : \\ M1 IMAGINA--MOCA}
 \date{semestre 2 : 2011-2012}
 
+%------------------------------------------------------------------
+% TITLE
+%------------------------------------------------------------------
 \begin{document} 
 
 \maketitle
 
-\begin{abstract}
-  Le présent document consiste en un mémoire au sujet
-  d'exercices à la fois théoriques et pratiques sur diverses
-  problèmatiques liées à l'étude de méthodes approchées pour la
-  résolution de problèmes NP-difficiles. 
-\end{abstract}
-\vspace{2cm}
-\textit{Travelling Salesman Problem :}
-\begin{figure}[h!]
-\centering
-\includegraphics[height = 9cm]{../images/commerce.png}
-\end{figure}
-
+%------------------------------------------------------------------
+% ABSTRACT
+%------------------------------------------------------------------
+\input{abstract.tex}
 
 \pagebreak
 
+%------------------------------------------------------------------
+% CONTENTS, FIGURES, TABLES
+%------------------------------------------------------------------
 \tableofcontents
 
 \pagebreak
 
 \listoffigures
-
 \listoftables
+
 \pagebreak
 
+%------------------------------------------------------------------
+% GENERALITIES, DEFINITIONS
+%------------------------------------------------------------------
 \section{Généralités et notations}
-
-Le rapport que nous vous présentons ici reprend notre travail effectué
-dans le cadre du projet du cours de méthodes approchées. Celui-ci se
-compose d'une partie théorique nous laquelle nous avons résolu divers
-exercices traitant de programmation linéaire, d'approximations de
-problèmes NP-difficiles, mais aussi de méthodes exactes comme la
-programmation dynamique ou les méthodes de branchement (branch and
-bound et branch and cut), ainsi que d'une partie pratique. Dans cette
-dernière, nous programmons les formules de programmation dynamique
-pour trois problèmes classiques (partition, sac à dos, voyageur de
-commerce), puis nous nous intéressons plus en détail au cas du
-voyageur de commerce avec la programmation de l'algorithme de branch
-en bound (après application et comparaison de diverses heuristiques
-pour trouver une solution initiale).
-
-
-On notera en général $PL$ un programme linéaire, et $PLNE$ un
-programme linéaire en nombres entiers. 
-
-
-Nous désignerons également par $TSP$ le problème du voyageur de
-commerce.
-
-
-Rappelons enfin les quelques définitions clés suivantes~:
-\begin{mydef}
-Les méthodes de branch and bound sont les méthodes dites de séparation
-et évaluation.
-\end{mydef}
-
-\begin{mydef}
-Les méthodes de branch and cut sont les méthodes dites des coupes de
-Gomory ou d'algorithmes de coupe.
-\end{mydef}
-
-\begin{mydef}
-Un problème NP-Complet est un problème de décision pour la résolution duquel on ne
-connait pas d'algorithme polynomial. Tous les problèmes de la classe
-NP peuvent se rammener à un problème NP-complet via une réduction polynomiale.
-\end{mydef}
-
-\begin{mydef}
-Un problème NP-Difficile est un problème d'optimisation qui est plus
-difficile qu'un problème NP-Complet.
-\end{mydef}
+\input{generalites.tex}
 
 \pagebreak
 
+%------------------------------------------------------------------
+% THEORETICAL EXERCICES
+%------------------------------------------------------------------
 \section{Partie théorique}
 
 \subsection{Programmation linéaire en nombres entiers}
@@ -158,6 +126,9 @@ difficile qu'un problème NP-Complet.
 
 \pagebreak
 
+%------------------------------------------------------------------
+% PROGRAMMING
+%------------------------------------------------------------------
 \section{Partie pratique}
 
 \subsection{Introduction au problème d'optimisation}
