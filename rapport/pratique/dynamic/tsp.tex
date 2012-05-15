@@ -1,4 +1,7 @@
-\paragraph{Modélisation}
+%-------------------------------------------------------------------------------
+% MODELISATION
+%-------------------------------------------------------------------------------
+\subsubsection{Modélisation}
 
 Le problème du voyageur de commerce peut se modéliser de la manière
 suivante~:
@@ -15,7 +18,10 @@ x_{ij} \in \{0, 1\} \\
 \end{cases}
 \end{equation}
 
-\paragraph{Formules de programmation dynamique}
+%-------------------------------------------------------------------------------
+% FORMULAS
+%-------------------------------------------------------------------------------
+\subsubsection{Formules de programmation dynamique}
 
 On note $C(S,i)$ la longueur d'une plus courte chaîne du sommet $0$ au
 sommet $i$ qui passe une et une seule fois par tout sommet de $S$ et
@@ -39,7 +45,10 @@ sommets moins un) peut être résumé sur le schéma présenté ci-dessous.
 \caption{Exemple de calcul d'un chemin pour le tsp en programmation dynamique.}
 \end{figure}
 
-\paragraph{Principe de l'algorithme}
+%-------------------------------------------------------------------------------
+% ALOGORITHM
+%-------------------------------------------------------------------------------
+\subsubsection{Principe de l'algorithme}
 
 Nous proposons l'algorithme suivant pour une programmation dynamique
 du TSP.
@@ -67,11 +76,22 @@ du TSP.
 \end{algorithmic}
 \end{algorithm}
 
-\paragraph{Complexité théorique}
+%-------------------------------------------------------------------------------
+% IMPLEMENTATION
+%-------------------------------------------------------------------------------
+\subsubsection{Implémentation en C++}
+
+%-------------------------------------------------------------------------------
+% COMPLEXITÉ
+%-------------------------------------------------------------------------------
+\subsubsection{Complexité}
 
 La complexité théorique d'un tel algorithme est de $O(n^2.2^n)$.
 
-\paragraph{Jeux de tests et temps d'exécution}
+%-------------------------------------------------------------------------------
+% TESTS
+%-------------------------------------------------------------------------------
+\subsubsection{Jeux de tests}
 Nous mesurons ici une moyenne du temps d'exécution sur 5 tests en
 faisant varier le nombre de sommets à parcourir. Nous obtenons les
 résultats présentés ci-dessous.

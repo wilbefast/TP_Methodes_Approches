@@ -1,4 +1,7 @@
-\paragraph{Modélisation}
+%-------------------------------------------------------------------------------
+% MODELISATION
+%-------------------------------------------------------------------------------
+\subsubsection{Modélisation}
 
 Le problème de la partition se modélise de la manière suivante~:
 \begin{equation}
@@ -6,7 +9,10 @@ Le problème de la partition se modélise de la manière suivante~:
     \backslash A'}p(a)
 \end{equation}
 
-\paragraph{Formules de programmation dynamique}
+%-------------------------------------------------------------------------------
+% FORMULAS
+%-------------------------------------------------------------------------------
+\subsubsection{Formules de programmation dynamique}
 
 TODO : à reprendre \\
 
@@ -21,7 +27,10 @@ si ( tab[j] == 1 ) {
 \end{cases}
 \end{equation}
 
-\paragraph{Implémentation en C}
+%-------------------------------------------------------------------------------
+% IMPLEMENTATION
+%-------------------------------------------------------------------------------
+\subsubsection{Implémentation en C}
 
 Nous présentons donc l'algorithme suivant, qui est une sorte de
 restriction (cas particulier) de l'algorithme proposé pour la
@@ -29,13 +38,19 @@ résolution du problème du sac à dos~: \\
 
 TODO
 
-\paragraph{Complexité théorique}
+%-------------------------------------------------------------------------------
+% COMPLEXITÉ
+%-------------------------------------------------------------------------------
+\subsubsection{Complexité}
 
 Soit $N$ la somme des poids.
 La complexité en temps de notre algorithme est $O(nN)$.
 La complexité mémoire est $O(N).$
 
-\paragraph{Jeux de tests et temps d'exécution}
+%-------------------------------------------------------------------------------
+% TESTS
+%-------------------------------------------------------------------------------
+\subsubsection{Jeux de tests}
 
 Nous présentons ici des jeux de tests pour le problème partition en variant à chaque fois le nombre d'objets et en mesurant le temps d'exécution moyen sur 100 tests.
 \begin{table}[h!]
