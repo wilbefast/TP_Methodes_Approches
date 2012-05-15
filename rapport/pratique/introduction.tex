@@ -26,7 +26,7 @@ problème en combinant les solutions optimales de sous-problèmes de ce
 problème. Ces résultats intermédiaires sont sauvegardés, souvent sous
 forme matricielle, ce qui permet d'éviter de répéter des calculs inutilement.
 
-Prenons par exemple le calcul du $n^{ième}$ nombre de la suite de Fibonacci :
+Prenons par exemple le calcul du $n^{i\grave{e}me}$ nombre de la suite de Fibonacci :
 
 \begin{equation}
 fibonacci(n) = 
@@ -54,8 +54,4 @@ Contrairement à la programmation dynamique nous pouvions avoir une solution tr�
 
 \subsection{Algorithmes d'approximation}
 Les algorithmes d'approximation permettant d'apporter en temps polynomiale une
-solution non-optimal à un problème NP-difficile. Parfois nous pouvions définir une borne d'approximation qui garantie que la solution par rapport à l'optimale (classe APX\footnote{APX : approximable. }) ou même paramétrer l'algorithme pour avoir une solution plus ou moins bonne selon le temps de calcul (classe PTAS\footnote{(F)PTAS : (fully) polynomial-time approximation scheme}).  
-
-Nous étudierons ici un exemple d'algorithme approché pour le problème du 
-Voyageur de Commerce qui renvoie des tour pas plus qu'une fois et demi plus
-couteux que le tour optimal. Nous parlons donc de \og $\frac{3}{2}$ approximation \fg{}.
+solution non-optimal à un problème NP-difficile. Parfois nous pouvions définir une borne d'approximation qui garantie que la solution par rapport à l'optimale (classe APX\footnote{APX : approximable. }) ou même paramétrer l'algorithme pour avoir une solution plus ou moins bonne selon le temps de calcul (classes PTAS et FPTAS\footnote{ PTAS et FPTAS : (fully) polynomial-time approximation scheme}).  

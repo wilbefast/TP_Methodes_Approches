@@ -1,7 +1,7 @@
 %-------------------------------------------------------------------------------
 % DEFINITIONS
 %-------------------------------------------------------------------------------
-\subsubsection{Définitions}
+\subsection{Définition du problème}
 
 Le problème de Sac à Dos, ou \og Knapsack \fg{} en Anglais, s'annonce de la manière suivante : nous avons un ensemble d'objets aillant chaqu'un un poids (resp. volume) et une valeur d'utilité. Nous devions choisir parmi ces objets un sous-ensemble donc le poids (resp. volume) totale ne dépasse pas un certain seuil (la capacité de notre sac), mais de tel manière que l'utilité totale soit maximisé.
 
@@ -19,9 +19,9 @@ x_i \in\{0, 1\}, i=1\dots n\\
 Le problème de Sac à Dos apparait souvent dans le réel : il existe un grand nombre d'applications économiques (ex: choix d'investissements) et industrielles (ex: découpage de minerai).
 
 %-------------------------------------------------------------------------------
-% FORMULAS
+% NOTATIONS
 %-------------------------------------------------------------------------------
-\subsubsection{Formule de récurrence}
+\subsection{Notations}
 
 Par la suite nous utiliserons les notations suivantes :
 
@@ -35,6 +35,10 @@ Par la suite nous utiliserons les notations suivantes :
 
 Nous cherchions à connaitre optimale[n][P]. Nous verrons par la suite qu'il est possible de calculer cette valeur à partir de optimale[n-1][P] et optimale[n-1][P-poids[i]], e cetera de manière récursive.
 
+%-------------------------------------------------------------------------------
+% FORMULAS
+%-------------------------------------------------------------------------------
+\subsection{Formule de récurrence}
 Nous construirons donc un tableau de résultats intermédiaires ligne par ligne et colonne par colonne. La première ligne du tableau est rempli à la main : évidement l'utilité maximum atteignable qu'avec l'objet $0$ est son utilité à lui, sous réserve que le poids que nous nous permettons est en dessus de $poids[0]$ :
 
 \begin{equation}
@@ -68,110 +72,84 @@ optimale[i][p] =
 \end{equation}
 
 %-------------------------------------------------------------------------------
+% COMPLEXITÉ
+%-------------------------------------------------------------------------------
+\subsection{Algorithme}
+
+\begin{algorithm}[!ht]
+\caption{DP Knapsack}
+\label{dp_knapsack}
+\begin{algorithmic}[1]
+\REQUIRE maximum capacity $W$, number of objects $n$, $weights[n]$, $utilities[n]$  
+\FOR{$w$ from 1 to $W$}
+	\IF{weights[0] $\leq$ w }
+		\STATE $optimal[0][w] := utilities[0]$
+	\ENDIF
+\ENDFOR
+\FOR{$w$ from 1 to $n$}
+	\FOR{$w$ from 1 to $W$}
+		\STATE leave := optimal[i-1][w]
+		\STATE take := optimal[i-1][w-weights[i]] + utilities[i]
+		\IF{weights[i] $\leq$ w }
+			\STATE $optimal[i][w] := max(leave, take)$
+		\ELSE
+			\STATE $optimal[i][w] := leave$
+		\ENDIF
+	\ENDFOR
+\ENDFOR
+\RETURN optimal[n][W]
+\end{algorithmic}
+\end{algorithm}
+
+Étant donnée qu'il itère sur les poids et les objets, la complexité temporelle de l'algorithme \ref{dp_knapsack} est de $O(nW)$. Il en va de même pour sa complexité mnémonique.
+
+%-------------------------------------------------------------------------------
 % IMPLEMENTATION
 %-------------------------------------------------------------------------------
 \subsubsection{Implémentation en C}
+Une fois énoncé l'algorithme est simple à implémenter. Nous pourtant par contre une structure matrice \texttt{matrix\_t} fait maison : 
 
 \lstinputlisting[language=C,morekeywords={}]{../code/knapsack.c} 
 
 
 %-------------------------------------------------------------------------------
-% COMPLEXITÉ
-%-------------------------------------------------------------------------------
-\subsubsection{Complexité}
-
-La complexité en temps de notre algorithme est en $O(nW)$. Il en va de
-même pour la complexité mémoire.
-
-%-------------------------------------------------------------------------------
 % TESTS
 %-------------------------------------------------------------------------------
-\subsubsection{Jeux de tests}
+\subsection{Tests et conclusion}
 
-Nous présentons ici des jeux de tests pour le problème sac à dos en variant à chaque fois le nombre d'objets et en mesurant le temps d'exécution moyen sur 100 tests et pour une capacité de 5000 .
-\begin{table}[h!]
+Pour vérifier que notre implémentation respecte bien la complexité théorique de $O(nW)$ nous avions lancés une batterie des tests en faisant varier : 
+
+\begin{itemize}
+\item le nombre d'objets, avec la capacité fixé à $5000$,
+\item la capacité, avec un nombre d'objets fixé à $100$.
+\end{itemize}
+
+Les valeur ci-dessus sont des temps moyennes d'exécution pour $100$ tests. Le poids et l'utilité de chaque objet sont générés aléatoirement mais, mais les poids sont bornés par la capacité (aucun élément n'est jamais plus grand que le sac entier) :
+
+\begin{figure}[ht]
+% LEFT-HAND SIDE
+\begin{minipage}[b]{0.5\linewidth}
 \centering
-\begin{tabular}{|c|c|}
-\hline
-Nombre d'objets & temps d'exécution moyen en ms\\
-\hline
-100 & 8\\
-\hline
-150 & 12\\
-\hline
-200 & 16\\
-\hline
-300 & 24\\
-\hline
-500 & 40\\
-\hline
-800 & 65\\
-\hline
-1000 & 82\\
-\hline
-1200 & 101\\
-\hline
-2000 & 165\\
-\hline
-3000 & 246\\
-\hline
- 4000 & 329\\
-\hline
-  5000 & 410\\
-\hline
-\end{tabular}
-\caption {Variation du temps d'exécution en fonction du nombre d'objets}
-\end{table}\\
-La variation du temps d'exécution en fonction du nombre d'objets est donnée par la courbe ci-dessous~:
-\begin{figure}[h!]
-\centering
-\begin{tikzpicture}[scale=1.2]
-    \begin{axis}[title=Jeux de tests pour Sac à dos, xlabel= nombre d'objets, ylabel= temps d'exécution]
+\begin{tikzpicture}[scale=0.9]
+    \begin{axis}[title=Variation du nombre d'objets, xlabel= nombre d'objets, ylabel= temps d'exécution]
       \addplot
         table[col sep=comma]{../charts/sac.csv};
-        \legend{exécution de sac à dos}
+        %\legend{exécution de sac à dos}
     \end{axis}
 \end{tikzpicture}
-\caption{Temps d'exécution de sac à dos.}
-\end{figure}
-
-Nous présentons ici des jeux de tests pour le problème sac à dos en variant à chaque fois la capacité du sac et en mesurant le temps d'exécution moyen sur 100 tests et pour 100 objets.
-\begin{table}[h!]
+\end{minipage}
+% RIGHT-HAND SIDE
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
 \centering
-\begin{tabular}{|c|c|}
-\hline
-Capacité & temps d'exécution moyen en ms\\
-\hline
-500 & 0\\
-\hline
-1000 & 1\\
-\hline
-2000 & 3\\
-\hline
-2500 & 3\\
-\hline
-3000 & 4\\
-\hline
-4000 & 6\\
-\hline
-5000 & 8\\
-\hline
-10000 & 16\\
-\hline
-\end{tabular}
-\caption {Variation du temps d'exécution en fonction du capacité du sac}
-\end{table}\\
-La variation du temps d'exécution en fonction du capacité du sac est donnée par la courbe ci-dessous~:
-\begin{figure}[h!]
-\centering
-\begin{tikzpicture}[scale=1.2]
-    \begin{axis}[title=Jeux de tests pour Sac à dos, xlabel= capacité, ylabel= temps d'exécution]
+\begin{tikzpicture}[scale=0.9]
+    \begin{axis}[title=Variation de la capacité, xlabel= capacité, ylabel= temps d'exécution]
       \addplot
         table[col sep=comma]{../charts/sac1.csv};
-        \legend{exécution de sac à dos}
+        %\legend{exécution de Sac à Dos}
     \end{axis}
 \end{tikzpicture}
-\caption{Temps d'exécution de sac à dos.}
+\end{minipage}
 \end{figure}
 
-\subsubsection{Conclusion sur la complexité}
+Notre implémentation est donc linéaire en le nombre d'objets et la capacité maximum, ce qui correspond bien à la complexité théorique.
