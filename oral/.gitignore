@@ -1,0 +1,10 @@
+*.pdf
+*.toc
+*.aux
+*.log
+*.lof
+*.lot
+*.nav
+*.sln
+*.snm
+*.*~
