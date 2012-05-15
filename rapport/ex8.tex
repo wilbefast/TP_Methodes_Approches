@@ -52,13 +52,13 @@ mutliplication des deux matrices ainsi engendrées.
 
 \begin{equation}
 \begin{cases}
-m_{i,j} = \min \{(m_{i,p}+m_{p+1,j}) + (i \times p+1 \times j+1) \} \\
+m_{i,j} = \min \{(m_{i,p}+m_{p+1,j}) + (p_i \times p_{p+1} \times p_{j+1}) \} \\
 i \leq p \leq j \\
 \end{cases}
 \end{equation}
 
 On obtient le parenthésage correspondant à chaque bloc en retenant les
-$p$ (une parenthèse à la fin de chaque $p$ et au début de chaque $p+1$).
+$p$ (une parenthèse à la fin de chaque $p$).
 
 \paragraph{Question 4}
 
@@ -68,19 +68,35 @@ On propose donc le tableau suivant pour calculer $m_{1,5}$~:
 \begin{center}
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline  $i$ $\diagdown$ $k$ & $1$  & $2$ & $3$ & $4$ & $5$ \\
-\hline $1$ & $1$ & $8$ & $21$ & $42$ & $73$ \\
-\hline $2$ & $8$ & $1$ & $0$ & $0$ & $0$ \\
-\hline $3$ & $21$ & $0$ & $1$ & $0$ & $0$ \\
-\hline $4$ & $42$ & $0$ & $0$ & $1$ & $0$ \\
-\hline $5$ & $73$ & $0$ & $0$ & $0$ & $1$ \\
+\hline $1$ & $1$ & $12$ & $63$ & $104$ & $506$ \\
+\hline $2$ & $12$ & $1$ & $102$ & $183$ & $984$ \\
+\hline $3$ & $63$ & $102$ & $1$ & $202$ & $0$ \\
+\hline $4$ & $104$ & $183$ & $202$ & $1$ & $0$ \\
+\hline $5$ & $506$ & $984$ & $0$ & $0$ & $1$ \\
 \hline
 \end{tabular}
 \end{center}
 
-Exemple de calcul~: $m_{12} := (m{11} + m{22}) + (1 \times 2 \times 3)
-= 8$.
+Exemple de calcul~: $m_{12} := (m{11} + m{22}) + (p_1 \times
+p_2 \times p_3) = 12$.
 
+(Les cases à $0$ sont les valeurs de $m_{ij}$ que nous n'avons pas eu
+besoin de calculer.)
 
-!!!!!! Attention, j'ai rempli la prmeière ligne comme ça, mais c'est
-       pas forcément le minimum. À mon avis, faut tt bien recalculer.
+On a donc $m_{15} = 506$.
+
+Voici le détail des différents $p$ retenus (les minima pris à chaque
+fois)~:
+\begin{equation}
+\begin{cases}
+m_{15} = m_{14} + m_{55} + p_1 \times p_5 \times p_6  \Rightarrow p =
+4\\
+m_{14} = m_{13} + m_{44} + p_1 \times p_4 \times p_5  \Rightarrow p = 3\\
+m_{13} = m_{12} + m_{33} + p_1 \times p_3 \times p_4  \Rightarrow p =
+2\\
+m_{12} = m_{11} + m_{22} + p_1 \times p_2 \times p_3  \Rightarrow p = 1\\
+\end{cases}
+\end{equation}
+
+Ce qui nous permet ainsi d'obtenir le parenthésage optimal suivant~: $((((M_1M_2)M_3)M_4)M_5)$.
 
