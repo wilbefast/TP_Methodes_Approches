@@ -9,13 +9,13 @@ bleue et sous la courbe rouge).
 \begin{tikzpicture}[scale=1.2]
     \begin{axis}[title=PL, xlabel=x1, ylabel=x2]
       \addplot
-        table[col sep=comma]{equ1.csv};
+        table[col sep=comma]{../charts/equ1.csv};
         \addplot
-        table[col sep=comma]{equ2.csv};
+        table[col sep=comma]{../charts/equ2.csv};
         \addplot
-        table[col sep=comma]{abs.csv};
+        table[col sep=comma]{../charts/abs.csv};
         \addplot
-        table[col sep=comma]{ord.csv};
+        table[col sep=comma]{../charts/ord.csv};
         \legend{contrainte1, contrainte2}
     \end{axis}
 \end{tikzpicture}
