@@ -25,15 +25,27 @@ La programmation dynamique permet de trouver la solution optimale d'un
 problème en combinant les solutions optimales de sous-problèmes de ce
 problème. Ces résultats intermédiaires sont sauvegardés, souvent sous
 forme matricielle, ce qui permet d'éviter de répéter des calculs inutilement.
-Cependant nous sacrifiions beaucoup de mémoire pour gagner en temps de calcule.
+
+Prenons par exemple le calcul du $n^{ième}$ nombre de la suite de Fibonacci :
+
+\begin{equation}
+fibonacci(n) = 
+\begin{cases}
+1 \text{ si } n \leq 1; \\
+fibonacci(n-2) + fibonacci(n-1) \text{ sinon};\\
+\end{cases}
+\end{equation}
+
+Programmer une simple récursion nous fera calculer plusieurs fois les mêmes résultats intermédiaires, donc il serait mieux de les stocker dans un tableau pour éviter. Évidement  nous sacrifiions en mémoire ce que nous gagnons en temps de calcule.
+
 
 \subsection{Branch and Bound}
 Un algorithme dite de Branch and Bound, ou Séparation et Évaluation en Français, se définit à partir de trois sous-stratégies :
 
 \begin{itemize}
-\item stratégie de branchement,
-\item stratégie d'évaluation,
-\item stratégie d'exploration.
+\item stratégie de \textbf{branchement},
+\item stratégie d'\textbf{évaluation},
+\item stratégie d'\textbf{exploration}.
 \end{itemize}
 
 À chaque itération la séparation nous permet de diviser l'espace des solutions possibles en plusieurs sous ensembles, ou branches, l'évaluation permet d'éliminer certains de ceux-ci et l'exploration définit comment explorer ceux qui restent. Notons que nous devions partir d'une solution initiale, souvent obtenu en utilisant un méta-heuristique, pour définir une première borne qui servira pour l'élimination de branches. 
@@ -42,8 +54,8 @@ Contrairement à la programmation dynamique nous pouvions avoir une solution tr�
 
 \subsection{Algorithmes d'approximation}
 Les algorithmes d'approximation permettant d'apporter en temps polynomiale une
-solution non-optimal à un problème NP-difficile. 
+solution non-optimal à un problème NP-difficile. Parfois nous pouvions définir une borne d'approximation qui garantie que la solution par rapport à l'optimale (classe APX\footnote{APX : approximable. }) ou même paramétrer l'algorithme pour avoir une solution plus ou moins bonne selon le temps de calcul (classe PTAS\footnote{(F)PTAS : (fully) polynomial-time approximation scheme}).  
 
 Nous étudierons ici un exemple d'algorithme approché pour le problème du 
-Voyageur de Commerce qui renvoie des tours pas plus qu'une fois et demi plus
+Voyageur de Commerce qui renvoie des tour pas plus qu'une fois et demi plus
 couteux que le tour optimal. Nous parlons donc de \og $\frac{3}{2}$ approximation \fg{}.

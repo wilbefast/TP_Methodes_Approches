@@ -31,6 +31,28 @@
 \newtheorem{prop}{Propriété}
 
 %------------------------------------------------------------------
+% FOR PRINTING SOURCES
+%------------------------------------------------------------------
+\definecolor{keyword}{rgb}{0.55,0,0} 
+\definecolor{type}{rgb}{0,0.55,0} 
+\definecolor{comment}{rgb}{0.5,0.5,0.5} 
+
+\lstset
+{
+	basicstyle=\scriptsize\sffamily,
+	numbers=left,
+	numberstyle=\scriptsize\color{comment},
+	keywordstyle=\color{keyword}\bfseries,
+	commentstyle=\color{comment},
+	breaklines=true,
+	fontadjust=true,
+	columns=fullflexible,
+	morekeywords=true
+}
+\lstset{emph={ varchar , integer , bigint , date , smallint , real , OLD , NEW , plpgsql , ROWTYPE},
+emphstyle=\color{type}}
+
+%------------------------------------------------------------------
 % TITLE DEFINITIONS
 %------------------------------------------------------------------
 \title{Rapport de Méthodes approchées.}

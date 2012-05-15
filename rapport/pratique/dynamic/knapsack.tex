@@ -1,13 +1,12 @@
-Nous avons commencé par nous intéresser au problème du sac à dos avant
-partition car celui-ci est le plus général.
-
 %-------------------------------------------------------------------------------
-% MODELISATION
+% DEFINITIONS
 %-------------------------------------------------------------------------------
-\subsubsection{Modélisation}
+\subsubsection{Définitions}
 
-Le problème du sac à dos se modélise en programmation linéaire de la
-manière suivante~:
+Le problème de Sac à Dos, ou \og Knapsack \fg{} en Anglais, s'annonce de la manière suivante : nous avons un ensemble d'objets aillant chaqu'un un poids (resp. volume) et une valeur d'utilité. Nous devions choisir parmi ces objets un sous-ensemble donc le poids (resp. volume) totale ne dépasse pas un certain seuil (la capacité de notre sac), mais de tel manière que l'utilité totale soit maximisé.
+
+Ce problème se modélise en programmation linéaire de la
+manière suivante, où b la capacité du sac, $c_i$ l'utilité et $a_i$ de l'objet i, et $x_i = 1$ si l'objet i est prise et $0$ sinon ~:
 
 \begin{equation}
 \begin{cases}
@@ -17,20 +16,55 @@ x_i \in\{0, 1\}, i=1\dots n\\
 \end{cases}
 \end{equation}
 
+Le problème de Sac à Dos apparait souvent dans le réel : il existe un grand nombre d'applications économiques (ex: choix d'investissements) et industrielles (ex: découpage de minerai).
+
 %-------------------------------------------------------------------------------
 % FORMULAS
 %-------------------------------------------------------------------------------
-\subsubsection{Formules de programmation dynamique}
+\subsubsection{Formule de récurrence}
 
-TODO : à reprendre
+Par la suite nous utiliserons les notations suivantes :
 
-Les formules de programmation dynamique pour le problème du sac à dos
-sont les suivantes~:
+\begin{itemize}
+\item \textbf{P} : la capacité maximum de notre sac,
+\item \textbf{n} : le nombre d'objet,
+\item \textbf{poids[i]} : le poids de la $i^{i+1\grave{e}me}$ objet,
+\item \textbf{utilité[i]} : l'utilité de la $i^{i+1\grave{e}me}$ objet,
+\item \textbf{optimale[i][p]} : l'utilité maximum atteignable en utilisant les $i$ premières objets et en respectant un poids totale de $p$.
+\end{itemize} 
+
+Nous cherchions à connaitre optimale[n][P]. Nous verrons par la suite qu'il est possible de calculer cette valeur à partir de optimale[n-1][P] et optimale[n-1][P-poids[i]], e cetera de manière récursive.
+
+Nous construirons donc un tableau de résultats intermédiaires ligne par ligne et colonne par colonne. La première ligne du tableau est rempli à la main : évidement l'utilité maximum atteignable qu'avec l'objet $0$ est son utilité à lui, sous réserve que le poids que nous nous permettons est en dessus de $poids[0]$ :
+
 \begin{equation}
-\begin{cases}
-tab[0][w] = 0 \\
-tab[i][j] = max(tab[i-1] [j], (tab[i-1] [j-poids[i]] + utilite[i])); \\
-\end{cases}
+optimale[0][p] =
+	\begin{cases}
+		0 \text{ si } p < poids[0];	\\
+		utilit\acute{e}[i] \text{ sinon};
+	\end{cases} \\
+\end{equation}
+
+Si nous ne prenons pas l'objet $i$ alors nous n'augmentons pas l'utilité maximum par rapport au maximum atteignable avec l'ensemble des objets $0 \dots i-1$. Nous nous définissons donc l'utilité maximale en laissant l'objet $i$ :
+
+\begin{equation}
+laisser(i, p) = optimale[i-1][p];
+\end{equation}
+
+Si par contre l'objet $i$ est prise il faut s'assurer qu'il y ait de la place pour lui, donc nous ajoutons son utilité à l'utilité maximum atteignable avec les objets $0 \dots i-1$ et un poids inférieure ou égale à $p-poids[i]$. Ainsi l'utilité maximale si nous prenons l'objet $i$ est la suivante :
+
+\begin{equation}
+prendre(i, p) = optimale.t[i-1][p - poids[i]] + utilit\acute{e}[obj];
+\end{equation}
+
+Nous pouvions finalement remplir notre tableau de manière récursive, pour $i \neq 0$ :
+
+\begin{equation}
+optimale[i][p] =
+	\begin{cases}
+		laisser(i, p) \text{ si } p < poids[i];	\\
+		max(prendre(i, p), laisser(i, p)) \text{ sinon};
+	\end{cases}
 \end{equation}
 
 %-------------------------------------------------------------------------------
@@ -38,7 +72,7 @@ tab[i][j] = max(tab[i-1] [j], (tab[i-1] [j-poids[i]] + utilite[i])); \\
 %-------------------------------------------------------------------------------
 \subsubsection{Implémentation en C}
 
-Nous avons donc implémenté l'algorithme suivant. \\
+\lstinputlisting[language=C,morekeywords={}]{../code/knapsack.c} 
 
 
 %-------------------------------------------------------------------------------
