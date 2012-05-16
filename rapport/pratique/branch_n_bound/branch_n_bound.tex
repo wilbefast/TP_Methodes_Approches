@@ -52,7 +52,17 @@ Nous proposons d'implémenter l'algorithme récursif présenté ci-dessous.
 \end{algorithmic}
 \end{algorithm}
 
-La borne inférieure est une solution initiale obtenue grâce à une heuristique.
+La borne inférieure est une solution initiale obtenue grâce à une
+heuristique.
+
+L'opération de mise à jour de la solution courante consiste à
+remplacer la solution de l'état actuel (trouvée initialement à partir
+d'un arrondi sur la solution renvoyée par une heuristique) par la
+valeur de la fonction objectif calculée. On a donc une nouvelle
+solution courante, meilleure que l'ancienne. Dans notre algorithme qui
+sera implémenté en Caml avec des appels récursifs, cela consiste
+surtout à stocker la solution dans une liste des solutions (c'est la
+plus petite qui sera retournée à la fin).
 
 \subsubsection{Utilisation du branch and bound pour le TSP}
 
