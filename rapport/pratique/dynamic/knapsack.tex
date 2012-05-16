@@ -11,11 +11,18 @@
 % RIGHT-HAND SIDE
 \hspace{0.5cm}
 \begin{minipage}[b]{0.7\linewidth}
-Le problème de Sac à Dos, ou \og Knapsack \fg{} en Anglais, s'annonce de la manière suivante : nous avons un ensemble d'objets aillant chaqu'un un poids (resp. volume) et une valeur d'utilité. Nous devions choisir parmi ces objets un sous-ensemble donc le poids (resp. volume) totale ne dépasse pas un certain seuil (la capacité de notre sac), mais de tel manière que l'utilité totale soit maximisé.
+Le problème de Sac à Dos, ou \og Knapsack \fg{} en Anglais, s'énonce
+de la manière suivante : nous avons un ensemble d'objets ayant chacun
+un poids (respectivement, un volume) et une valeur d'utilité. Nous
+devions choisir parmi ces objets un sous-ensemble dont le poids
+(respectivement volume) total ne dépasse pas un certain seuil (la
+capacité de notre sac), mais de telle manière que l'utilité totale
+soit maximisée.
 \end{minipage}
 
-Ce problème se modélise en programmation linéaire de la
-manière suivante, où b la capacité du sac, $c_i$ l'utilité et $a_i$ de l'objet i, et $x_i = 1$ si l'objet i est prise et $0$ sinon ~:
+Ce problème se modélise en programmation linéaire de la manière
+suivante, où b est la capacité du sac, $c_i$ l'utilité et $a_i$ de
+l'objet i, et $x_i = 1$ si l'objet i est prise et $0$ sinon ~:
 
 \begin{equation}
 \begin{cases}
@@ -25,7 +32,9 @@ x_i \in\{0, 1\}, i=1\dots n\\
 \end{cases}
 \end{equation}
 
-Le problème de Sac à Dos apparait souvent dans le réel : il existe un grand nombre d'applications économiques (ex: choix d'investissements) et industrielles (ex: découpage de minerai).
+Le problème de Sac à Dos apparaît souvent dans le réel : il existe un
+grand nombre d'applications économiques (ex: choix d'investissements)
+et industrielles (ex: découpage de minerai).
 
 %-------------------------------------------------------------------------------
 % NOTATIONS
@@ -42,13 +51,21 @@ Par la suite nous utiliserons les notations suivantes :
 \item \textbf{optimale[i][p]} : l'utilité maximum atteignable en utilisant les $i$ premières objets et en respectant un poids totale de $p$.
 \end{itemize} 
 
-Nous cherchions à connaitre optimale[n][P]. Nous verrons par la suite qu'il est possible de calculer cette valeur à partir de optimale[n-1][P] et optimale[n-1][P-poids[i]], e cetera de manière récursive.
+Nous cherchons à connaître optimale[n][P]. Nous verrons par la suite
+qu'il est possible de calculer cette valeur à partir de
+optimale[n-1][P] et optimale[n-1][P-poids[i]], et caetera de manière
+récursive.
 
 %-------------------------------------------------------------------------------
 % FORMULAS
 %-------------------------------------------------------------------------------
 \subsection{Formule de récurrence}
-Nous construirons un tableau de résultats intermédiaires ligne par ligne et colonne par colonne. La première ligne du tableau est rempli à la main : évidement l'utilité maximum atteignable qu'avec l'objet $0$ est son utilité à lui, sous réserve que le poids que nous nous permettons est en dessus de $poids[0]$. Ainsi nous arrivons à l'équation \ref{knapsack_rec}.
+Nous construisons un tableau de résultats intermédiaires ligne par
+ligne et colonne par colonne. La première ligne du tableau est remplie
+à la main : évidement l'utilité maximum n'est atteignable qu'avec
+l'objet $0$ et sa propre utilité, sous réserve que le poids que nous
+nous permettons est au-dessus de $poids[0]$. Ainsi nous arrivons à
+l'équation \ref{knapsack_rec}.
 
 \begin{equation}
 \label{knapsack_rec}
@@ -59,7 +76,10 @@ optimale[0][p] =
 	\end{cases} \\
 \end{equation}
 
-Si nous ne prenons pas l'objet $i$ alors nous n'augmentons pas l'utilité maximum par rapport au maximum atteignable avec l'ensemble des objets $0 \dots i-1$. Nous définissons alors l'utilité maximale en laissant l'objet $i$ avec l'équation \ref{laisser}.
+Si nous ne prenons pas l'objet $i$ alors nous n'augmentons pas
+l'utilité maximum par rapport au maximum atteignable avec l'ensemble
+des objets $0 \dots i-1$. Nous définissons alors l'utilité maximale en
+laissant l'objet $i$ avec l'équation \ref{laisser}.
 
 \begin{equation}
 \label{laisser}
@@ -67,14 +87,18 @@ laisser(i, p) = optimale[i-1][p];
 \end{equation}
 
 
-Si par contre l'objet $i$ est prise il faut s'assurer qu'il y ait de la place pour lui, donc nous ajoutons son utilité à l'utilité maximum atteignable avec les objets $0 \dots i-1$ et un poids inférieure ou égale à $p-poids[i]$. Ainsi l'utilité maximale si nous prenons l'objet $i$ est décrit par l'équation \ref{prendre}.
+Si par contre l'objet $i$ est pris, il faut s'assurer qu'il y ait de
+la place pour lui, donc nous ajoutons son utilité à l'utilité maximum
+atteignable avec les objets $0 \dots i-1$ et un poids inférieur ou
+égal à $p-poids[i]$. Ainsi l'utilité maximale si nous prenons l'objet
+$i$ est décrite par l'équation \ref{prendre}.
 
 \begin{equation}
 \label{prendre}
 prendre(i, p) = optimale.t[i-1][p - poids[i]] + utilit\acute{e}[obj];
 \end{equation}
 
-Nous pouvions finalement remplir notre tableau de manière récursive, pour $i \neq 0$, en utilisant l'équation \ref{prendre_ou_laisser}.
+Nous pouvons finalement remplir notre tableau de manière récursive, pour $i \neq 0$, en utilisant l'équation \ref{prendre_ou_laisser}.
 
 \begin{equation}
 \label{prendre_ou_laisser}
@@ -91,7 +115,7 @@ optimale[i][p] =
 %-------------------------------------------------------------------------------
 \subsection{Algorithme}
 
-Nous pouvions finalement proposer l'algorithme \ref{dp_knapsack}.
+Nous pouvons finalement proposer l'algorithme \ref{dp_knapsack}.
 
 \begin{algorithm}[!ht]
 \caption{DP Knapsack}
@@ -118,13 +142,16 @@ Nous pouvions finalement proposer l'algorithme \ref{dp_knapsack}.
 \end{algorithmic}
 \end{algorithm}
 
-Étant donnée que cet algorithme itère sur les poids et les objets, la complexité temporelle de est de $O(nW)$. Il en va de même pour sa complexité mnémonique.
+Étant donné que cet algorithme itère sur les poids et les objets, la
+complexité temporelle est de $O(nW)$. Il en va de même pour sa
+complexité mémoire.
 
 %-------------------------------------------------------------------------------
 % IMPLEMENTATION
 %-------------------------------------------------------------------------------
 \subsubsection{Implémentation en \texttt{C}}
-Une fois énoncé l'algorithme est simple à implémenter. Nous pourtant par contre une structure matrice \texttt{matrix\_t} fait maison : 
+Une fois énoncé, l'algorithme est simple à implémenter. Nous nous
+basons sur notre propre structure de matrice \texttt{matrix\_t}:
 
 \lstinputlisting[language=C,morekeywords={}]{../code/knapsack.c} 
 
@@ -134,14 +161,18 @@ Une fois énoncé l'algorithme est simple à implémenter. Nous pourtant par con
 %-------------------------------------------------------------------------------
 \subsection{Tests et conclusion}
 
-Pour vérifier que notre implémentation respecte bien la complexité théorique de $O(nW)$ nous avions lancés une batterie des tests en faisant varier : 
+Pour vérifier que notre implémentation respecte bien la complexité théorique de $O(nW)$ nous avons lancé une batterie des tests en faisant varier : 
 
 \begin{itemize}
 \item le nombre d'objets, avec la capacité fixé à $5000$,
 \item la capacité, avec un nombre d'objets fixé à $100$.
 \end{itemize}
 
-Les valeurs rapportés dans les figures \ref{knapsack_test_objects} et \ref{knapsack_test_capacity} sont des temps moyennes d'exécution pour $100$ tests. Le poids et l'utilité de chaque objet sont générés aléatoirement mais, mais les poids sont bornés par la capacité (aucun élément n'est jamais plus grand que le sac entier).
+Les valeurs rapportées dans les figures \ref{knapsack_test_objects} et
+\ref{knapsack_test_capacity} sont des temps moyens d'exécution pour
+$100$ tests. Le poids et l'utilité de chaque objet sont générés
+aléatoirement, mais les poids sont bornés par la capacité (aucun
+élément n'est jamais plus grand que le sac entier).
 
 \begin{figure}[ht]
 % LEFT-HAND SIDE
@@ -173,4 +204,5 @@ Les valeurs rapportés dans les figures \ref{knapsack_test_objects} et \ref{knap
 \end{minipage}
 \end{figure}
 
-Notre implémentation est clairement linéaire en le nombre d'objets et la capacité maximum, ce qui correspond bien à la complexité théorique.
+Notre implémentation est clairement linéaire en le nombre d'objets et
+la capacité maximum, ce qui correspond bien à la complexité théorique.

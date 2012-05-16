@@ -11,10 +11,14 @@
 % RIGHT-HAND SIDE
 \hspace{0.5cm}
 \begin{minipage}[b]{0.7\linewidth}
-Le problème de Partition est un problème de décision~: nous voulions savoir si ou non il est possible étant donnée un ensemble $A$ de valeurs de diviser $A$ en deux de telle manière à ce que la somme des valeurs de part et d'autre soit la même.
+Le problème de Partition est un problème de décision~: nous voulons
+savoir si oui ou non il est possible étant donné un ensemble $A$ de
+valeurs de diviser $A$ en deux de telle manière que la somme des
+valeurs de part et d'autre soit la même.
 \end{minipage}
 
-La formule \ref{partition_equation} est une modélisation mathématique de ce problème.
+La formule \ref{partition_equation} est une modélisation mathématique
+de ce problème.
 
 \begin{equation}
 \sum_{a \in (A' \subset A) } = \sum_{b \in (A \backslash A')}
@@ -26,20 +30,39 @@ La formule \ref{partition_equation} est une modélisation mathématique de ce pr
 %-------------------------------------------------------------------------------
 \subsection{Réduction polynomiale}
 
-Il est possible de résoudre Partition en utilisant un algorithme conçu pour résoudre Sac à Dos. Il suffit de passer de l'instance de Partition à une instance de Sac à Dos de capacité maximum $\frac{|A|}{2}$ en associant à chaque valeur $v$ un objet d'utilité $1$ et de poids $v$.
+Il est possible de résoudre Partition en utilisant un algorithme conçu
+pour résoudre Sac à Dos. Il suffit de passer de l'instance de
+Partition à une instance de Sac à Dos de capacité maximum
+$\frac{|A|}{2}$ en associant à chaque valeur $v$ un objet d'utilité
+$1$ et de poids $v$.
 
-L'algorithme du Sac à Dos rempli totalement le sac si et seulement si l'instance original peut être divisé en deux. Nous utiliserons cependant un algorithm spécialisé d'une part parce que les réductions polynomiales restent polynomiales (donc autant prendre un algorithme polynomiale de basse) et d'autre du fait que nous n'y avions pas pensés à l'époque.  
+L'algorithme du Sac à Dos rempli totalement le sac si et seulement si
+l'instance originale peut être divisée en deux. Nous utiliserons
+cependant un algorithme spécialisé, d'une part parce que les
+réductions polynomiales restent polynomiales (donc autant prendre un
+algorithme polynomiale de base) et d'autre part du fait que nous n'y
+avons pas pensé avant l'implémentation.
 
 %-------------------------------------------------------------------------------
 % TECHNIQUE
 %-------------------------------------------------------------------------------
 \subsection{Technique de résolution}
 
-Soit $N$ la somme des valeurs de $A$. Ce que nous voulions savoir est si ou non nous pouvons séparer $A$ en deux sous-ensemble de valeur totale $\frac{N}{2}$. 
+Soit $N$ la somme des valeurs de $A$. Ce que nous voulons savoir est
+si ou non nous pouvons séparer $A$ en deux sous-ensemble de valeur
+totale $\frac{N}{2}$.
 
-L'astuce est d'utiliser un tableau de booléens \emph{somme} dont les indices correspondent à des sommes allant de $0$ à $N$. $somme[s] = \top$ si et seulement si nous sommes capables ajouter des valeurs de $A$ ensemble de tel manière à atteindre la valeur totale $s$. 
+L'astuce est d'utiliser un tableau de booléens \emph{somme} dont les
+indices correspondent à des sommes allant de $0$ à $N$. $somme[s] =
+\top$ si et seulement si nous sommes capables d'ajouter des valeurs de
+$A$ ensemble de manière à atteindre la valeur totale $s$.
 
-Nous nous intéressons finalement au contenu de la case $N/2$ de notre tableau, $somme[N/2]$, mais de base nous ne connaissons que la valeur de $somme[0]$ (toujours vrai). L'équation \ref{partition_rec} nous permet d'étendre par récurrence notre raisonnement de de la somme nulle (qui est toujours une possibilité) jusqu'à la moitié de la somme totale des valeurs.
+Nous nous intéressons finalement au contenu de la case $N/2$ de notre
+tableau, $somme[N/2]$, mais de base nous ne connaissons que la valeur
+de $somme[0]$ (toujours vrai). L'équation \ref{partition_rec} nous
+permet d'étendre par récurrence notre raisonnement, de la somme nulle
+(qui est toujours une possibilité) jusqu'à la moitié de la somme
+totale des valeurs.
 
 \begin{equation}
 \label{partition_rec}
@@ -54,7 +77,8 @@ somme[s] \rightarrow \forall a \in \text{ A } somme[s + a] = \top \text{ sinon} 
 % ALGORITHME
 %-------------------------------------------------------------------------------
 \subsection{Algorithme}
-L'algorithme \ref{dp_partition} applique l'équation \ref{partition_rec} pour résoudre Partition.
+L'algorithme \ref{dp_partition} applique l'équation
+\ref{partition_rec} pour résoudre Partition.
 
 
 \begin{algorithm}[!ht]
@@ -81,7 +105,10 @@ L'algorithme \ref{dp_partition} applique l'équation \ref{partition_rec} pour r�
 \end{algorithmic}
 \end{algorithm}
 
-Nous devions allouer un tableau de taille $\frac{N}{2}$, donc la complexité mémoire de l'algorithme est de $O(N).$ Il faut parcourir ce tableau en entier pour chaqu'un des n valeurs, donc la complexité en temps de calcul est $O(nN)$. 
+Nous devons allouer un tableau de taille $\frac{N}{2}$, donc la
+complexité mémoire de l'algorithme est de $O(N).$ Il faut parcourir ce
+tableau en entier pour chacune des $n$ valeurs, donc la complexité en
+temps de calcul est $O(nN)$.
 
 
 %-------------------------------------------------------------------------------
@@ -89,9 +116,14 @@ Nous devions allouer un tableau de taille $\frac{N}{2}$, donc la complexité mé
 %-------------------------------------------------------------------------------
 \subsection{Implémentation en \texttt{C}}
 \label{implementation_c}
-Il est important de noter l'allocation dynamique ligne 17 qui peut très facilement échouer avec des valeur choisies aléatoirement. La fonction \texttt{rand()} du C rend un entier entre $0$ et $2^{32}$, donc avec $5000$ objets nous pouvions potentiellement allouer un tableau de $10^{13}$ booléens, soit 78 téraoctets de RAM.
+Il est important de noter l'allocation dynamique ligne 17 qui peut
+très facilement échouer avec des valeur choisies aléatoirement. La
+fonction \texttt{rand()} du C rend un entier entre $0$ et $2^{32}$,
+donc avec $5000$ objets nous pouvions potentiellement allouer un
+tableau de $10^{13}$ booléens, soit 78 téraoctets de RAM.
 
-Malheureusement notre machine de tests n'avant que 4 gigaoctets de RAM à disposition, donc des précautions durent être prises :
+Malheureusement notre machine de tests n'ayant que 4 gigaoctets de RAM
+à disposition, des précautions durent être prises :
 
 \vspace{0.5cm}
 
@@ -102,7 +134,11 @@ Malheureusement notre machine de tests n'avant que 4 gigaoctets de RAM à dispos
 %-------------------------------------------------------------------------------
 \subsection{Tests et conclusion}
 
-Pour les raisons explicités dans la section \ref{implementation_c} nous avions du borner les valeurs générés aléatoirement~: $50$ fut choisie comme valeur maximum. Encore une fois les valeur rapportés dans les figures \ref{partition_courbe} et \ref{partition_table} sont des moyennes pour $100$ testes.
+Pour les raisons explicitées dans la section \ref{implementation_c}
+nous avons du borner les valeurs générées aléatoirement~: $50$ fut
+choisie comme valeur maximum. Encore une fois les valeur rapportées
+dans les figures \ref{partition_courbe} et \ref{partition_table} sont
+des moyennes pour $100$ testes.
 
 \begin{figure}[ht]
 % LEFT-HAND SIDE
@@ -150,4 +186,8 @@ Nombre d'objets & t moyenne en ms\\
 \end{minipage}
 \end{figure}
 
-Pour comprendre cette courbe quadratique il faut se rappeler que les valeurs sont générés aléatoirement  entre $0$ et $50$, donc en moyenne la somme des valeurs $N$ est de $25n$. De ce fait $O(nN)$ correspond à $O(n^2)$, donc exactement ce que nous voyons apparaitre lors des tests.
+Pour comprendre cette courbe quadratique il faut se rappeler que les
+valeurs sont générées aléatoirement entre $0$ et $50$, donc en moyenne
+la somme des valeurs $N$ est de $25n$. De ce fait $O(nN)$ correspond à
+$O(n^2)$, donc exactement ce que nous voyons apparaître lors des
+tests.
