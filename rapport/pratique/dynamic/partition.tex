@@ -3,7 +3,18 @@
 %-------------------------------------------------------------------------------
 \subsection{Définition du problème}
 
-Le problème de Partition est un problème de décision~: nous voulions savoir si ou non il est possible étant donnée un ensemble $A$ de valeurs de diviser $A$ en deux de telle manière à ce que la somme des valeurs de part et d'autre soit la même. La formule \ref{partition_equation} est une modélisation mathématique du problème.
+% LEFT-HAND SIDE
+\begin{minipage}[b]{0.3\linewidth}
+\centering
+\includegraphics[height=2cm]{../images/yin_yang.png}
+\end{minipage}
+% RIGHT-HAND SIDE
+\hspace{0.5cm}
+\begin{minipage}[b]{0.7\linewidth}
+Le problème de Partition est un problème de décision~: nous voulions savoir si ou non il est possible étant donnée un ensemble $A$ de valeurs de diviser $A$ en deux de telle manière à ce que la somme des valeurs de part et d'autre soit la même.
+\end{minipage}
+
+La formule \ref{partition_equation} est une modélisation mathématique de ce problème.
 
 \begin{equation}
 \sum_{a \in (A' \subset A) } = \sum_{b \in (A \backslash A')}
