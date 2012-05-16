@@ -5,12 +5,24 @@ de Commerce (TSP).
 \subsection{Détermination de la solution initiale}
 
 Nous nous intéresserons à trois heuristiques en particulier.
-\begin{itemize}
+\begin{enumerate}
 \item Chaîne de poids le plus faible et ajout d'une arête pour le
   cycle
 \item Voisinage 2--opt
 \item Voisinage 3--opt
-\end{itemize}
+\end{enumerate}
+
+La première technique parle d'elle même. 
+
+Les deux techniques suivantes consistent en quelque sorte à tenter de
+recréer une notion de dérivée dans un ensemble de points, en
+définissant une notion de voisinage.
+
+Le voisinage 2--opt consiste à réorganiser les sommets de manière à ce
+qu'une <<~route~>> entre deux sommets qui coupe plusieurs autres sommets ne les coupe plus.
+
+Sur le même principe, le voisinage 3--opt définit une telle
+<<~route~>> entre trois sommets.
 
 \subsection{Algorithme}
 
