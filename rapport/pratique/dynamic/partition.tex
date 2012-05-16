@@ -106,10 +106,11 @@ L'algorithme \ref{dp_partition} applique l'équation
 \end{algorithm}
 
 Nous devons allouer un tableau de taille $\frac{N}{2}$, donc la
-complexité mémoire de l'algorithme est de $O(N).$ Il faut parcourir ce
+complexité mémoire de l'algorithme est de $O(N)$. Il faut parcourir ce
 tableau en entier pour chacune des $n$ valeurs, donc la complexité en
 temps de calcul est $O(nN)$.
 
+À noter que nous connaissons pas de cette manière les valeurs choisies pour dans chaque sous-ensemble de la partition. Nous n'avons en effet qu'une réponse binaire vraie ou faux. Une extension pourrait remplacer les booléens du le tableau avec les ensembles d'objets utilisés pour atteindre chaque somme~: ceci augmenterai pourtant la complexité en mémoire de $O(N)$ à $O(nN)$.
 
 %-------------------------------------------------------------------------------
 % IMPLEMENTATION
