@@ -3,7 +3,16 @@
 %-------------------------------------------------------------------------------
 \subsection{Définition du problème}
 
+% LEFT-HAND SIDE
+\begin{minipage}[b]{0.3\linewidth}
+\centering
+\includegraphics[width=0.7\textwidth]{../images/Knapsack.png}
+\end{minipage}
+% RIGHT-HAND SIDE
+\hspace{0.5cm}
+\begin{minipage}[b]{0.7\linewidth}
 Le problème de Sac à Dos, ou \og Knapsack \fg{} en Anglais, s'annonce de la manière suivante : nous avons un ensemble d'objets aillant chaqu'un un poids (resp. volume) et une valeur d'utilité. Nous devions choisir parmi ces objets un sous-ensemble donc le poids (resp. volume) totale ne dépasse pas un certain seuil (la capacité de notre sac), mais de tel manière que l'utilité totale soit maximisé.
+\end{minipage}
 
 Ce problème se modélise en programmation linéaire de la
 manière suivante, où b la capacité du sac, $c_i$ l'utilité et $a_i$ de l'objet i, et $x_i = 1$ si l'objet i est prise et $0$ sinon ~:
