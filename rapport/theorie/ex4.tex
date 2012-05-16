@@ -38,8 +38,8 @@ Or $\Sigma_{(x,x') \in (Y_1,Y_2)} \geq \Sigma_{(z,z') \in (Y_1,Y_1)}$ et $\Sigma
 
 Globalement au moins la moitié des arêtes doit donc traverser la coupe
 approximative. De plus la coupe optimale est évidement bornée par
-$|E|$, donc $\frac{(Y_1,Y_2)}{(Y_1,Y_2)^*} \geq \frac{|E|}{2|E|}$,
-soit $\frac{(Y_1,Y_2)^*}{(Y_1,Y_2)} \geq 2$, \emph{quod erat
+$|E|$, donc \mbox{$\frac{(Y_1,Y_2)}{(Y_1,Y_2)^*} \geq \frac{|E|}{2|E|}$},
+soit \mbox{$\frac{(Y_1,Y_2)^*}{(Y_1,Y_2)} \geq 2$}, \emph{quod erat
 demonstratum}.
 \end{proof}
 
@@ -68,11 +68,16 @@ donc de montrer que la coupe approximative n'en traverse que 7.
 \end{minipage}
 \end{figure}
 
-Pour l'instant nous n'avons pas réussi à expliciter une telle
-coupe. Pourtant l'algorithme n'est pas optimal~: il est bloqué sur
-$P_4$ avec une coupe de valeur 2 s'il a la malchance de prendre les
-deux extrémités. Dans ce cas, ce n'est alors une erreur
-d'approximation que de $\frac{2}{3}$.
+Pour l'instant nous n'avons pas réussi à expliciter une coupe~:
 
-Peut-être que le taux d'approximation de cet algorithme est en fait
-plus bas que 2\dots
+\begin{itemize}
+\item de valeur 7,
+\item trouvable par l'algorithme approché,
+\item sur lequel l'algorithme se bloquerait par la suite.
+\end{itemize}
+
+Pourtant l'algorithme n'est pas optimal~: il est bien bloqué sur
+$P_4$\footnote{$P_4$ : chemin à quatre sommets} avec une coupe de valeur 2 s'il a la malchance de prendre les deux extrémités (pour $P_4$ la coupe maximum est de 3). Dans ce cas, ce n'est alors un taux
+de approximation de $\frac{3}{2}$, mais nous atteignons pas la borne de 2. 
+
+Avec $C_4$\footnote{$C_4$ : cycle à quatre sommets} nous nous bloquerions sur 2 (et pas le maximum 4), donc nous atteindrions la borne, en prenant deux sommets consécutifs\dots sauf que l'algorithme approché ne prendra jamais deux sommets consécutif car ceci n'augmenterait pas la valeur de la coupe.
