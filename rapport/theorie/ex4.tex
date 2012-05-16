@@ -9,11 +9,11 @@ incidentes au sommet rajouté.
 
 \paragraph{Question 2}
 Montrons que le taux d'approximation est de 2~:
-\begin{proof}Soit $(Y_1,Y_2)$ la coupe approximatif. Supposons pour $\Gamma(x)$ l'ensemble des sommets voisins d'un sommet x~:
+\begin{proof}Soit $(Y_1,Y_2)$ la coupe approximative. Supposons pour $\Gamma(x)$ l'ensemble des sommets voisins d'un sommet x~:
 
 $\exists x \in Y_1 \text{ | } \Gamma(x) \cap Y_1 > \Gamma(x) \cap Y_2$
 
-Dans un tel cas le déplacement du sommet x dans $Y_2$ augmenterai la valeur de la coupe, donc l'algorithme approché ne l'aurait jamais gardé dans $Y_1$. Notre supposition est donc absurde. Nous avions au contraire~:
+Dans un tel cas le déplacement du sommet x dans $Y_2$ augmenterai la valeur de la coupe, donc l'algorithme approché ne l'aurait jamais gardé dans $Y_1$. Notre supposition est donc absurde. Nous avons au contraire~:
 
 $\forall x \in Y_1 \text{ | } \Gamma(x) \cap Y_1 \leq \Gamma(x) \cap Y_2$
 
@@ -36,7 +36,7 @@ Or $\Sigma_{(x,x') \in (Y_1,Y_2)} \geq \Sigma_{(z,z') \in (Y_1,Y_1)}$ et $\Sigma
 \Rightarrow |(Y_1, Y_2)| &\geq& \frac{|E|}{2}
 \end{eqnarray*}
 
-Globalement au moins la moité des arêtes doit donc traverser la coupe
+Globalement au moins la moitié des arêtes doit donc traverser la coupe
 approximative. De plus la coupe optimale est évidement bornée par
 $|E|$, donc $\frac{(Y_1,Y_2)}{(Y_1,Y_2)^*} \geq \frac{|E|}{2|E|}$,
 soit $\frac{(Y_1,Y_2)^*}{(Y_1,Y_2)} \geq 2$, \emph{quod erat
