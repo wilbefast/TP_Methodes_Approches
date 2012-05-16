@@ -36,12 +36,18 @@ Or $\Sigma_{(x,x') \in (Y_1,Y_2)} \geq \Sigma_{(z,z') \in (Y_1,Y_1)}$ et $\Sigma
 \Rightarrow |(Y_1, Y_2)| &\geq& \frac{|E|}{2}
 \end{eqnarray*}
 
-Globalement au moins la moité des arrêtes doivent donc traverser la coupe approximatif. De plus la coupe optimale est évidement borné par $|E|$, donc $\frac{(Y_1,Y_2)}{(Y_1,Y_2)^*} \geq \frac{|E|}{2|E|}$, soit $\frac{(Y_1,Y_2)^*}{(Y_1,Y_2)} \geq 2$, \emph{quod erat demonstrandum}.
+Globalement au moins la moité des arêtes doit donc traverser la coupe
+approximative. De plus la coupe optimale est évidement bornée par
+$|E|$, donc $\frac{(Y_1,Y_2)}{(Y_1,Y_2)^*} \geq \frac{|E|}{2|E|}$,
+soit $\frac{(Y_1,Y_2)^*}{(Y_1,Y_2)} \geq 2$, \emph{quod erat
+demonstratum}.
 \end{proof}
 
 \paragraph{Question 3}
 
-Prenons le graphe figure \ref{coupe_max_instance}. La coupe optimale (figure \ref{coupe_max_opt}) traverse chacun des 15 arrêtes, il suffit donc de montrer que la coupe approximatif n'en traverse que 7. 
+Prenons le graphe figure \ref{coupe_max_instance}. La coupe optimale
+(figure \ref{coupe_max_opt}) traverse chacune des 15 arêtes, il suffit
+donc de montrer que la coupe approximative n'en traverse que 7.
 
 \begin{figure}[ht]
 % LEFT-HAND SIDE
@@ -62,6 +68,11 @@ Prenons le graphe figure \ref{coupe_max_instance}. La coupe optimale (figure \re
 \end{minipage}
 \end{figure}
 
-Pour l'instant nous n'avions pas réussis à expliciter une telle coupe. Pourtant l'algorithme n'est pas optimale~: il sera bloqué sur $P_4$ avec une coupe de valeur 2 s'il avait la mal chance de prendre les deux extrémités. Pour ceci n'est une erreur d'approximation de $frac{2}{3}$.
+Pour l'instant nous n'avons pas réussi à expliciter une telle
+coupe. Pourtant l'algorithme n'est pas optimal~: il est bloqué sur
+$P_4$ avec une coupe de valeur 2 s'il a la malchance de prendre les
+deux extrémités. Dans ce cas, ce n'est alors une erreur
+d'approximation que de $\frac{2}{3}$.
 
-Peut être que la taux d'approximation de cette algorithme est en fait plus basse que 2\dots
+Peut-être que le taux d'approximation de cet algorithme est en fait
+plus bas que 2\dots
