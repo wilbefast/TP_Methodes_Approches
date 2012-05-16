@@ -107,24 +107,22 @@ $\Rightarrow C_{PLNE}=\sum x_iw_i \leq (2x_i^*)w_i \leq 2C_{opt}$ \\
 \begin{itemize}
 \item[] a) Montrons que l'algorithme 2 est 2-approché.
 \begin{proof}
-Soit $C^{*}$ une solution optimale du problème de la couverture de
-sommet. Soit $C$ la solution donnée par l'algorithme. 
-\begin{itemize}
-\item[] $|M| \leq C^{*}$ car deux arêtes adjacentes peuvent être
-  couvertes par un même sommet.
-\item[] $C^{*} \leq C = 2 |M|$ car une arête a deux sommets.
-\item[] On a donc $\frac{C}{C^{*}} \leq \frac{2|M|}{|M|} = 2$.
-\end{itemize}
+Soit $C^{*}$ une solution optimale du problème de la couverture sommet et $C$ la solution donnée par l'algorithme. Notons que les arrêtes correspondants aux couples de sommets u et v choisies à chaque itération de l'algorithme correspondent à un couplage maximale $M$. 
+
+Nous avons donc \mbox{$|M| = 2|C|$}. 2 arrêtes de $M$ ne pouvant, par définition d'un couplage, être couverts par un même sommet de $C^{*}$ nous avons forcément \mbox{$|C^{*}| \geq |M|$}
+
+Or \mbox{$|M| = 2|C|$} donc \mbox{$|C^{*}| \geq 2|C|$} d'où \mbox{$\frac{C^{*}}{C} \leq 2$}.
+
+Nous arrivons donc à un taux d'approximation borné par 2.
 \end{proof}
+
 \item[] b) Il suffit de prendre $C_4$.
-\item[] c) 
-\begin{itemize}
-\item[] Dans le pire des cas donné à la figure 1, l'algorithme renvoie
+\item[] c) Dans le pire des cas donné à la figure 1, l'algorithme renvoie
   une solution $C$ de taille 8. Or la solution optimale $C^*$ pour cette
   instance est de taille 5. En effet, aucun des sommets de plus haut
   degré n'est inclus dans $C^{*}$. Le choix du sommet de plus haut
   degré n'est donc pas une bonne heuristique. 
-\item[] En revanche, on peut remarquer que cet algorithme trouve la
+
+En revanche, on peut remarquer que cet algorithme trouve la
   solution optimale sur $C_4$ (qui était le cas limite de l'algorithme 2).
-\end{itemize}
 \end{itemize}
