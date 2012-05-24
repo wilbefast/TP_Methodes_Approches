@@ -91,31 +91,3 @@ void print_matrix(matrix_t* m)
   puts("");
 
 }
-
-
-
-/* QUERY */
-
-// find the index/value of the minimum cell of this row
-valued_index_t min_col(matrix_t* m, size_t row)
-{
-  // local variables
-  valued_index_t min;
-    min.index = 0;
-    min.value = m->t[row][0];
-  size_t col;
-
-  // search for the column
-  for(col = 0; col < m->n_cols; col++)
-  {
-    if(m->t[row][col] < min.value)
-    {
-      min.index = col;
-      min.value = m->t[row][col];
-    }
-  }
-
-  // return the result
-  return min;
-}
-
